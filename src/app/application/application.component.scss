@@ -1,0 +1,34 @@
+ion-content {
+    color: #333;
+
+    .grid-wrapper {
+
+        .grid-header {
+            padding: .4rem;
+            padding-top: 1rem !important; 
+            font-size: .8rem;
+            font-weight: bold;
+        }
+    }
+
+    .grid-footer {
+        height: 5px;
+        background-color: #f7f7f7;
+    }
+
+    .more-box {
+        height: 1.6rem;
+        line-height: 1.6rem;
+        font-size: .8rem;
+        font-weight: bold;
+        padding: 1rem .4rem;
+
+    }
+
+
+    .card-list-btn {
+        width: 1.6rem;
+        height: 1.6rem;
+        float: right;
+    }
+}

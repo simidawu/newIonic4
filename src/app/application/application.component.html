@@ -1,0 +1,20 @@
+<ion-toolbar>
+  <ion-title>应用</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="showEditBtn()" *ngIf="!showBtn">编辑</ion-button>
+    <ion-button (click)="hideEditBtn()" *ngIf="showBtn">完成</ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ion-content no-bounce>
+  <div class="grid-footer"></div>
+  <div class="grid-wrapper" *ngFor="let items of itemsByGroup">
+    <div class="grid-header">{{items[0].GROUP_NAME|sgChineseConv}}</div>
+    <sg-application-grid [items]="items" type="remove" [showBtn]="showBtn" (onSelect)="moveItemToMoreGroup($event)"
+      (onClick)="goToDetailPage($event)"></sg-application-grid>
+    <div class="grid-footer"></div>
+  </div>
+  <div class="more-box">
+    <span>更多</span>
+    <ion-img class="card-list-btn" src="assets/icon/next.png"></ion-img>
+  </div>
+</ion-content>

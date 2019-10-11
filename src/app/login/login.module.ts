@@ -25,6 +25,7 @@ import { LoginPage } from './login.page';
     ]),
     TranslateModule
   ],
-  declarations: [LoginPage]
+  declarations: [LoginPage],
+  entryComponents: [LoginPage],
 })
 export class LoginPageModule { }

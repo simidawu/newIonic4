@@ -18,6 +18,8 @@ import { LocalStorageService } from './core/services/localStorage.service';
 import { LoginService } from './login/shared/service/login.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PipesModule } from './shared/pipe/pipes.module';
+import { TabsModule } from './tabs/tabs.module';
 
 
 export function createTranslateHttpLoader(http: HttpClient) {
@@ -32,6 +34,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
     BrowserAnimationsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    TabsModule,
     NgZorroAntdModule,
     ReactiveFormsModule,
     FormsModule,
@@ -44,14 +47,10 @@ export function createTranslateHttpLoader(http: HttpClient) {
       },
     }),
     StoreModule.forRoot({
-      userReducer: userReducer,
-      // lineReducer: lineReducer,
-      // lineAllReducer: lineAllReducer,
-      // linesEquipReducer: linesEquipReducer,
-      // linesAllEquipReducer: linesAllEquipReducer,
-      // linesIpqaReducer: linesIpqaReducer,
+      userReducer
     }),
     CoreModule,
+    PipesModule,
   ],
   providers: [
     StatusBar,

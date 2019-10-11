@@ -6,7 +6,7 @@
         <ion-card-subtitle>{{'Login.login-text' | translate}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <form nz-form [formGroup]="LoginForm">
+        <form nz-form [formGroup]="LoginForm" (ngSubmit)="login()">
           <nz-form-item>
             <nz-form-control [nzErrorTip]="usernameErrorTip">
               <nz-input-group nzPrefixIcon="user">
@@ -22,8 +22,8 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <label nz-checkbox>{{'Login.rememberPWD' | translate}}</label>
-            <label nz-checkbox>{{'Login.autoLogin' | translate}}</label>
+            <label nz-checkbox formControlName="rememberPWD">{{'Login.rememberPWD' | translate}}</label>
+            <label nz-checkbox formControlName="autoLogin">{{'Login.autoLogin' | translate}}</label>
           </nz-form-item>
           <nz-form-item>
             <nz-form-control>
