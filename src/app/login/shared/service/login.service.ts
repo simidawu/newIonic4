@@ -27,14 +27,11 @@ export class LoginService {
   ) { }
 
   public async login(username: string, password: string, extra?: any) {
-    // this.showLoading();
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...',
     });
     await loading.present();
     const ADLoginSuccess = await this.myADLogin(username, password, false, extra);
-    // console.log(ADLoginSuccess);
-    // this.loadingCtrl.dismiss();
     loading.dismiss();
     if (ADLoginSuccess) {
       return true;

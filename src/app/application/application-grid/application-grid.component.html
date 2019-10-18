@@ -1,5 +1,5 @@
 <ion-grid>
-  <ion-row align-items-center wrap-reverse>
+  <ion-row  class="ion-align-items-center">
     <ion-col size="3" *ngFor="let item of items" class="grid-col">
       <div class="grid-content" (click)="goToDetailPage(item.MODULE_ID)">
         <a>
@@ -7,13 +7,13 @@
           <div class="grid-name">{{item.MODULE_NAME|sgChineseConv}}</div>
         </a>
       </div>
-      <!-- <button (click)="selectItem(item.MODULE_ID)" *ngIf="(type==='remove') && showBtn" class="action-btn">
+      <button (click)="selectItem(item.MODULE_ID)" *ngIf="(type==='remove') && showBtn" class="action-btn">
         <ion-icon name="remove-circle" class="remove-circle red"></ion-icon>
       </button>
       <button (click)="selectItem(item.MODULE_ID)" *ngIf="(type ==='add') && showBtn" class="action-btn">
         <ion-icon name="add-circle" class="add-circle green"></ion-icon>
       </button>
-      <div class="badge" *ngIf="!showBtn && item.TIPS>0">{{item.TIPS}}</div> -->
+      <div class="badge" *ngIf="!showBtn && item.TIPS>0">{{item.TIPS}}</div>
     </ion-col>
   </ion-row>
 </ion-grid>

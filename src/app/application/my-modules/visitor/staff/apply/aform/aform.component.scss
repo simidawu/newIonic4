@@ -1,0 +1,97 @@
+sg-aform {
+
+  /*重置disabled样式*/
+  // ion-datetime[disabled],
+  // ion-datetime:disabled,
+  // ion-datetime.disabled,
+  // .datetime-disabled,
+  // .item-datetime-disabled ion-label,
+  // .select-disabled,
+  // .item-select-disabled ion-label,
+  // .checkbox-ios.checkbox-disabled,
+  // .item-ios.item-checkbox-disabled ion-label {
+  //   -webkit-opacity: 1;
+  //   opacity: 1;
+  // }
+
+  .lb-disabled {
+    opacity: .4;
+  }
+
+  .mask {
+    background: #eee;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    filter: alpha(opacity=0);
+    opacity: 0;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .red-point {
+    color: red;
+  }
+
+  .green-point {
+    color: green;
+  }
+
+  ion-label {
+    margin: 0 !important;
+  }
+
+  .multi-picker-text {
+    margin: 11px 8px 11px 9px;
+  }
+
+  .searchOut {
+    position: relative;
+    overflow-y: visible;
+  }
+
+  .search {
+    position: absolute;
+    max-height: 199px;
+    overflow-y: scroll;
+    left: 20%;
+    z-index: 1000;
+    width: 79%;
+  }
+
+  .search-result {
+    cursor: pointer;
+    width: 90%;
+  }
+
+  .list-group {
+    margin-top: 0;
+    padding-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 0px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .float-right {
+    display: block;
+    float: right;
+  }
+
+  .visit-btn {
+    padding: 1rem;
+  }
+}

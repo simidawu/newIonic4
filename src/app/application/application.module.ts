@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PipesModule } from '../shared/pipe/pipes.module';
+import { ApplicationRoutingModule } from './application-routing.module';
 import { ApplicationService } from './shared/service/application.service';
+
 import { ApplicationComponent } from './application.component';
 import { MoreApplicationComponent } from './more-application/more-application.component';
 import { ApplicationGridComponent } from './application-grid/application-grid.component';
@@ -15,10 +16,7 @@ import { ApplicationGridComponent } from './application-grid/application-grid.co
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([
-      { path: '', component: ApplicationComponent },
-      { path: 'more', component: MoreApplicationComponent },
-    ]),
+    ApplicationRoutingModule,
     PipesModule
   ],
   declarations: [

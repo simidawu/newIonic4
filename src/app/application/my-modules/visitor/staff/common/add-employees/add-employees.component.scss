@@ -1,0 +1,113 @@
+sg-add-employees {
+    .red-point {
+        color: red;
+    }
+
+    .array_icon {
+        position: relative;
+        display: inline-block;
+        margin: 1% 0%;
+        height: 24px;
+        width: 100%;
+
+
+        .content {
+            z-index: -1;
+            width: 100%;
+            font-size: 18px;
+            position: absolute;
+            text-align: center;
+        }
+
+        .remove {
+            position: absolute;
+            height: 24px;
+            width: 24px;
+            font-size: 22px;
+            left: 35%;
+        }
+
+        .add {
+            position: absolute;
+            height: 22px;
+            width: 22px;
+            font-size: 20px;
+            right: 34%;
+            bottom: 10%;
+        }
+    }
+
+    .search {
+        position: absolute;
+        max-height: 199px;
+        overflow-y: scroll;
+        left: 20%;
+        z-index: 1000;
+        width: 79%;
+    }
+
+    .search-result {
+        cursor: pointer;
+        width: 90%;
+    }
+
+    .list-group {
+        margin-top: 0;
+        padding-left: 0;
+        margin-bottom: 20px;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: 0px;
+        background-color: #fff;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+
+    // .person {
+    //     float: left;
+    //     margin-left: 10px;
+    //     width: 87%;
+    // }
+
+    // .person_icon {
+    //     position: relative;
+    //     margin-left: 5px;
+    //     width: 8%;
+    //     float: right;
+    //     text-align: center;
+    //     line-height: 50px;
+
+    //     .add {
+    //         height: 24px;
+    //         width: 24px;
+    //         font-size: 20px;
+    //     }
+
+    //     .remove {
+    //         height: 24px;
+    //         width: 24px;
+    //         font-size: 20px;
+    //     }
+    // }
+
+    .grid {
+        padding: 0px 5px;
+
+        .row {
+            padding: 0px 5px;
+
+            .col {
+                max-height: 30%;
+            }
+        }
+    }
+
+    ion-alert div.alert-wrapper .alert-radio-group {
+        max-height: 240px;
+    }
+}

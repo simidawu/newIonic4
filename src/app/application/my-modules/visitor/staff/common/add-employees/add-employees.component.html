@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="goBack()">{{'inspection.ipqa.goBack' | translate}}</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="addEmpGroup()">{{'visit.add.add' | translate}}</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="empForm" *ngIf="empForm">
+    <ion-list>
+      <div formArrayName="employees">
+        <div *ngFor="let empgroup of empForm.get('employees').controls;let i=index" [formGroupName]="i">
+          <div class="array_icon">
+            <span class="iconfontyyy remove" (tap)="removeEmpGroup(i)" *ngIf="i>0">&#xe61a;</span>
+            <span
+              class="content">{{'inspection.ipqa.the' | translate}}{{i+1}}{{'inspection.bossCom.group' | translate}}</span>
+          </div>
+          <ion-input type="hidden" formControlName="ID"></ion-input>
+          <ion-item>
+            <ion-label col-4><span class="red-point">*</span>{{'visit.add.visitorname' | translate}}:</ion-label>
+            <ion-input type="text" #name [placeholder]="'visit.add.applicant_placeholder' | translate"
+              (keyup)="searchemployee(name,i)" formControlName="PERSON_NAME" data-v-required="true"></ion-input>
+          </ion-item>
+          <div class="searchOut">
+            <ul class="list-group" [class.search]="employee && currentIndex == i" *ngIf="currentIndex == i">
+              <li *ngFor="let person of employee | async" (tap)="getemployee(i,person)"
+                class="search-result list-group-item">{{person.NICK_NAME}}</li>
+            </ul>
+          </div>
+          <ion-item>
+            <ion-label col-4><span class="red-point">*</span>{{'visit.add.ename' | translate }}:</ion-label>
+            <ion-input formControlName="USER_NAME"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label col-4><span class="red-point">*</span>{{'visit.add.empno' | translate }}:</ion-label>
+            <ion-input formControlName="EMPNO"></ion-input>
+          </ion-item>
+        </div>
+      </div>
+    </ion-list>
+  </form>
+  <div style="margin:0 1rem;">
+    <button ion-button block type="submit" (tap)="submitForm()"
+      [disabled]="empForm.invalid || !isSelectemployee">{{'inspection.ipqa.submit' | translate}}</button>
+  </div>
+
+</ion-content>

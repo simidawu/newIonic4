@@ -20,7 +20,7 @@ export class ApplicationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('应用列表');
+    this.appService.getAllTips();
     this.mySub = this.appService.observeModulesY().subscribe(ms => {
       this.items = ms;
       this.itemsByGroup = this.selectItems(this.items);
@@ -62,11 +62,10 @@ export class ApplicationComponent implements OnInit {
   }
 
   goToMorePage(): void {
-    this.router.navigate(['/more']);
-    // this.navCtrl.push(MoreApplicationComponent);
+    this.router.navigate(['/tabs/application/more']);
   }
 
   goToDetailPage(id: number) {
-    // this.router.go(this.navCtrl, id, this.app);
+    this.router.navigate(['/tabs/application/' + id]);
   }
 }

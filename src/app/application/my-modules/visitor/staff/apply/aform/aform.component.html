@@ -1,0 +1,339 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'visit.tab2' | translate }}</ion-title>
+    <ion-buttons end *ngIf="!isVisitor">
+      <button *ngIf="STATUS == 'NEW' || STATUS == 'CANCELED' || STATUS == 'REJECTED'" ion-button icon-only
+        (click)="delete()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+      <button ion-button icon-only (tap)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <!-- <div id="mask" class="mask"
+    [ngClass]="{'hide': STATUS =='' || STATUS == 'NEW' || STATUS == 'CANCELED' || STATUS == 'REJECTED'}"></div> -->
+  <ion-item-divider class='alert error' *ngIf="errTip">{{errTip}}</ion-item-divider>
+  <form [formGroup]="applyForm" *ngIf="applyForm" (ngSubmit)="saveForm()">
+    <ion-list>
+      <div id="page" style="overflow: hidden;">
+        <ion-input type="hidden" formControlName="ID"></ion-input>
+        <ion-item *ngIf="STATUS !== '' && !isVisitor">
+          <ion-label col-4 class="lb-disabled"><span>&nbsp;</span>{{'visit.add.orderNo' | translate}}:</ion-label>
+          <ion-input formControlName="DOCNO" disabled></ion-input>
+        </ion-item>
+        <!-- 申請人姓名 -->
+        <ion-item-divider *ngIf="myValidators.APPLY_NAME.error" class='alert'>{{myValidators.APPLY_NAME.error}}
+        </ion-item-divider>
+        <ion-item class="searchOut" [class.has-error]="myValidators.APPLY_NAME.error"
+          [class.has-success]="myValidators.APPLY_NAME.pass">
+          <ion-label col-4 [ngClass]="{'lb-disabled': cantEdit}"><span *ngIf="!isVisitor"
+              class="red-point">*</span><span *ngIf="isVisitor">&nbsp;</span>{{'visit.add.applicant' | translate}}:
+          </ion-label>
+          <ion-input type="text" #name [placeholder]="'visit.add.applicant_placeholder' | translate"
+            (keyup)="searchapplicant(name)" formControlName="APPLY_NAME" data-v-required="true"
+            data-v-required-message="请选择申请人" [disabled]="cantEdit"></ion-input>
+        </ion-item>
+        <div class="searchOut">
+          <ul class="list-group" [class.search]="colleague">
+            <li *ngFor="let person of colleague | async" (tap)="getcolleague(person)"
+              class="search-result list-group-item">{{person.NICK_NAME}}</li>
+            <!-- class="search-result list-group-item">{{person.AGENT_NAME}}</li> -->
+          </ul>
+        </div>
+        <!-- 申請人分機 -->
+        <ion-item *ngIf="!isVisitor">
+          <ion-label col-4 [ngClass]="{'lb-disabled': cantEdit}">
+            <span>&nbsp;</span>{{'visit.add.applyTel' | translate}}:</ion-label>
+          <ion-input formControlName="APPLY_TEL" [disabled]="cantEdit"></ion-input>
+        </ion-item>
+        <!-- 申請人電話 -->
+        <ion-item-divider *ngIf="APPLY_MOBILE_Error && !myValidators.APPLY_MOBILE.error" class='alert'>
+          {{APPLY_MOBILE_Error}}</ion-item-divider>
+        <ion-item-divider *ngIf="myValidators.APPLY_MOBILE.error" class='alert'>{{myValidators.APPLY_MOBILE.error}}
+        </ion-item-divider>
+        <ion-item [class.has-error]="myValidators.APPLY_MOBILE.error"
+          [class.has-success]="myValidators.APPLY_MOBILE.pass">
+          <ion-label col-4 [ngClass]="{'lb-disabled': cantEdit}"><span *ngIf="!isVisitor"
+              class="red-point">*</span><span *ngIf="isVisitor">&nbsp;</span>{{'visit.add.applyPhone' | translate}}:
+          </ion-label>
+          <ion-input formControlName="APPLY_MOBILE" [disabled]="cantEdit"></ion-input>
+        </ion-item>
+        <!-- 申請時間 -->
+        <ion-item *ngIf="STATUS !== ''">
+          <ion-label col-4 class="lb-disabled"><span>&nbsp;</span>{{'visit.add.applyTime' | translate}}:</ion-label>
+          <ion-input formControlName="CREATION_DATE" disabled></ion-input>
+        </ion-item>
+        <!-- 費用部門 -->
+        <div *ngIf="((type === 'vip') || (type === 'ctm') || (type === 'emp')) && !isVisitor">
+          <ion-item-divider *ngIf="myValidators.CHARGE_DEPTNAME.error" class='alert'>
+            {{myValidators.CHARGE_DEPTNAME.error}}
+          </ion-item-divider>
+          <ion-item class="searchOut" [class.has-error]="myValidators.CHARGE_DEPTNAME.error"
+            [class.has-success]="myValidators.CHARGE_DEPTNAME.pass">
+            <ion-label col-4 [ngClass]="{'lb-disabled': cantEdit}"><span *ngIf="!isVisitor"
+                class="red-point">*</span>{{'visit.add.CostDept' | translate}}:</ion-label>
+            <ion-input type="text" #deptname [placeholder]="'visit.add.constDept_placeholder' | translate"
+              (keyup)="searchdept(deptname)" formControlName="CHARGE_DEPTNAME" data-v-required="true"
+              data-v-required-message="请选择部门" [disabled]="cantEdit"></ion-input>
+          </ion-item>
+          <div class="searchOut">
+            <ul class="list-group" [class.search]="DeptList">
+              <li *ngFor="let dept of DeptList | async" (tap)="getdeptlist(dept.SHORT_NAME)"
+                class="search-result list-group-item">{{dept.SHORT_NAME}}</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 到訪公司 -->
+        <ion-item-divider *ngIf="myValidators.ACESS_COMPANY_NAME.error" class='alert'>
+          {{myValidators.ACESS_COMPANY_NAME.error}}</ion-item-divider>
+        <ion-item [class.has-error]="myValidators.ACESS_COMPANY_NAME.error"
+          [class.has-success]="myValidators.ACESS_COMPANY_NAME.pass">
+          <ion-label col-4 [ngClass]="{'lb-disabled': cantEdit}"><span *ngIf="!isVisitor"
+              class="red-point">*</span><span *ngIf="isVisitor">&nbsp;</span>{{'visit.add.visitCompany' | translate}}:
+          </ion-label>
+          <ion-input formControlName="ACESS_COMPANY_NAME" [disabled]="cantEdit"></ion-input>
+        </ion-item>
+        <!-- 進廠時間 -->
+        <ion-item-divider *ngIf="timeError" class='alert'>{{timeError}}</ion-item-divider>
+        <ion-item [class.has-error]="myValidators.START_DATE.error" [class.has-success]="myValidators.START_DATE.pass">
+          <ion-label col-4><span *ngIf="!isVisitor" class="red-point">*</span><span
+              *ngIf="isVisitor">&nbsp;</span>{{'visit.add.startTime' | translate}}:</ion-label>
+          <ion-datetime formControlName="START_DATE" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"
+            [cancelText]="'attendance.cancle' | translate" [doneText]="'attendance.confirm' | translate"
+            [disabled]="cantEdit"></ion-datetime>
+        </ion-item>
+        <!-- 出廠時間 -->
+        <ion-item [class.has-error]="myValidators.END_DATE.error" [class.has-success]="myValidators.END_DATE.pass">
+          <ion-label col-4><span *ngIf="!isVisitor" class="red-point">*</span><span
+              *ngIf="isVisitor">&nbsp;</span>{{'visit.add.endTime' | translate}}:</ion-label>
+          <ion-datetime formControlName="END_DATE" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"
+            [cancelText]="'attendance.cancle' | translate" [doneText]="'attendance.confirm' | translate"
+            [disabled]="cantEdit"></ion-datetime>
+        </ion-item>
+        <!-- 到訪事由 -->
+        <ion-item-divider *ngIf="myValidators.ACESS_REASON.error" class='alert'>{{myValidators.ACESS_REASON.error}}
+        </ion-item-divider>
+        <ion-item [class.has-error]="myValidators.ACESS_REASON.error"
+          [class.has-success]="myValidators.ACESS_REASON.pass">
+          <ion-label col-4 [ngClass]="{'lb-disabled': cantEdit}"><span *ngIf="!isVisitor"
+              class="red-point">*</span><span *ngIf="isVisitor">&nbsp;</span>{{'visit.add.visitReason' | translate}}:
+          </ion-label>
+          <ion-input formControlName="ACESS_REASON" [disabled]="cantEdit"></ion-input>
+        </ion-item>
+        <!-- 特殊區域 -->
+        <div *ngIf="((type === 'vip') || (type === 'ctm') || (type === 'emp')) && !isVisitor">
+          <ion-item>
+            <ion-label col-4><span>&nbsp;</span>{{'visit.add.specArea' | translate}}:</ion-label>
+            <ion-select col-8 [cancelText]="'attendance.cancle' | translate" [okText]="'attendance.confirm' | translate"
+              formControlName="specArea" multiple="true" [disabled]="cantEdit">
+              <ion-option *ngFor="let item of specarealist" [value]="item.ID">{{item.AREA_NAME}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <!-- 是否就餐 -->
+          <ion-item *ngIf="!isVisitor">
+            <ion-label col-4><span>&nbsp;</span>{{'visit.add.isEat' | translate}}:</ion-label>
+            <ion-checkbox color="#3773F7" item-end formControlName="FREE_MEAL" [disabled]="cantEdit"></ion-checkbox>
+          </ion-item>
+        </div>
+        <!-- 無線需求 -->
+        <ion-item *ngIf="type !== 'build'">
+          <ion-label col-4><span>&nbsp;</span>{{'visit.add.isWifi' | translate}}:</ion-label>
+          <ion-checkbox color="#3773F7" item-end formControlName="NETWORK" [disabled]="cantEdit"></ion-checkbox>
+        </ion-item>
+        <div *ngIf="type == 'build'">
+          <!-- 廠內現場監工姓名 -->
+          <ion-item-divider *ngIf="myValidators.OVERSEER_IN.error" class='alert'>
+            {{myValidators.OVERSEER_IN.error}}</ion-item-divider>
+          <ion-item [class.has-error]="myValidators.OVERSEER_IN.error"
+            [class.has-success]="myValidators.OVERSEER_IN.pass">
+            <ion-label col-6 [ngClass]="{'lb-disabled': cantEdit}"><span
+                [ngClass]="{'red-point': !isVisitor, 'green-point': isVisitor }">*</span>{{'visit.add.inOverseer' | translate}}:
+            </ion-label>
+            <ion-input formControlName="OVERSEER_IN" [disabled]="cantEdit"></ion-input>
+          </ion-item>
+          <!-- 廠內現場監工電話 -->
+          <ion-item-divider *ngIf="OVERSEER_INTEL_Error && !myValidators.OVERSEER_INTEL.error" class='alert'>
+            {{OVERSEER_INTEL_Error}}</ion-item-divider>
+          <ion-item-divider *ngIf="myValidators.OVERSEER_INTEL.error" class='alert'>
+            {{myValidators.OVERSEER_INTEL.error}}</ion-item-divider>
+          <ion-item [class.has-error]="myValidators.OVERSEER_INTEL.error"
+            [class.has-success]="myValidators.OVERSEER_INTEL.pass">
+            <ion-label col-6 [ngClass]="{'lb-disabled': cantEdit}"><span
+                [ngClass]="{'red-point': !isVisitor, 'green-point': isVisitor }">*</span>{{'visit.add.inOverseerPhone' | translate}}:
+            </ion-label>
+            <ion-input formControlName="OVERSEER_INTEL" [disabled]="cantEdit"></ion-input>
+          </ion-item>
+          <!-- 廠外現場監工姓名 -->
+          <ion-item-divider *ngIf="myValidators.OVERSEER_OUT.error" class='alert'>{{myValidators.OVERSEER_OUT.error}}
+          </ion-item-divider>
+          <ion-item [class.has-error]="myValidators.OVERSEER_OUT.error"
+            [class.has-success]="myValidators.OVERSEER_OUT.pass">
+            <ion-label col-6 [ngClass]="{'lb-disabled': cantEdit}"><span
+                [ngClass]="{'red-point': !isVisitor, 'green-point': isVisitor }">*</span>{{'visit.add.outOverseer' | translate}}:
+            </ion-label>
+            <ion-input formControlName="OVERSEER_OUT" [disabled]="cantEdit"></ion-input>
+          </ion-item>
+          <!-- 廠外現場監工電話 -->
+          <ion-item-divider *ngIf="OVERSEER_OUTTEL_Error && !myValidators.OVERSEER_OUTTEL.error" class='alert'>
+            {{OVERSEER_OUTTEL_Error}}</ion-item-divider>
+          <ion-item-divider *ngIf="myValidators.OVERSEER_OUTTEL.error" class='alert'>
+            {{myValidators.OVERSEER_OUTTEL.error}}</ion-item-divider>
+          <ion-item [class.has-error]="myValidators.OVERSEER_OUTTEL.error"
+            [class.has-success]="myValidators.OVERSEER_OUTTEL.pass">
+            <ion-label col-6 [ngClass]="{'lb-disabled': cantEdit}"><span
+                [ngClass]="{'red-point': !isVisitor, 'green-point': isVisitor }">*</span>{{'visit.add.outOverseerPhone' | translate}}:
+            </ion-label>
+            <ion-input formControlName="OVERSEER_OUTTEL" [disabled]="cantEdit"></ion-input>
+          </ion-item>
+          <!-- 施工負責人姓名 -->
+          <ion-item-divider *ngIf="myValidators.CHARGE.error" class='alert'>{{myValidators.CHARGE.error}}
+          </ion-item-divider>
+          <ion-item [class.has-error]="myValidators.CHARGE.error" [class.has-success]="myValidators.CHARGE.pass">
+            <ion-label col-8 [ngClass]="{'lb-disabled': cantEdit}"><span
+                [ngClass]="{'red-point': !isVisitor, 'green-point': isVisitor }">*</span>{{'visit.add.workHeader' | translate}}:
+            </ion-label>
+            <ion-input formControlName="CHARGE" [disabled]="cantEdit"></ion-input>
+          </ion-item>
+          <!-- 施工負責人電話 -->
+          <ion-item-divider *ngIf="CHARGE_TEL_Error && !myValidators.CHARGE_TEL.error" class='alert'>
+            {{CHARGE_TEL_Error}}</ion-item-divider>
+          <ion-item-divider *ngIf="myValidators.CHARGE_TEL.error" class='alert'>{{myValidators.CHARGE_TEL.error}}
+          </ion-item-divider>
+          <ion-item [class.has-error]="myValidators.CHARGE_TEL.error"
+            [class.has-success]="myValidators.CHARGE_TEL.pass">
+            <ion-label col-8 [ngClass]="{'lb-disabled': cantEdit}"><span
+                [ngClass]="{'red-point': !isVisitor, 'green-point': isVisitor }">*</span>{{'visit.add.workHeaderPhone' | translate}}:
+            </ion-label>
+            <ion-input formControlName="CHARGE_TEL" [disabled]="cantEdit"></ion-input>
+          </ion-item>
+        </div>
+        <!-- 到訪區域 -->
+        <ion-item-divider *ngIf="myValidators.visitArea.error" class='alert'>{{myValidators.visitArea.error}}
+        </ion-item-divider>
+        <ion-item [class.has-error]="myValidators.visitArea.error" [class.has-success]="myValidators.visitArea.pass">
+          <ion-label col-4><span *ngIf="!isVisitor" class="red-point">*</span><span
+              *ngIf="isVisitor">&nbsp;</span>{{'visit.add.visitArea' | translate}}:</ion-label>
+          <ion-select col-8 [placeholder]="'visit.add.visitArea_placeholder' | translate"
+            [cancelText]="'attendance.cancle' | translate" [okText]="'attendance.confirm' | translate"
+            formControlName="visitArea" multiple="true" [disabled]="cantEdit">
+            <ion-option *ngFor="let item of arealist" [value]="item.ID">{{item.AREA_NAME}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <!-- 被邀訪客電話 -->
+        <div *ngIf="type !== 'build'">
+          <ion-item-divider *ngIf="ACESS_TEL_Error" class='alert'>{{ACESS_TEL_Error}}</ion-item-divider>
+          <ion-item [class.has-error]="myValidators.ACESS_TEL.error" [class.has-success]="myValidators.ACESS_TEL.pass">
+            <ion-label col-6 [ngClass]="{'lb-disabled': cantEdit}"><span *ngIf="!isVisitor"
+                class="red-point">*</span><span *ngIf="isVisitor">&nbsp;</span>{{'visit.add.visitorPhone' | translate}}:
+            </ion-label>
+            <ion-input formControlName="ACESS_TEL" [placeholder]="'visit.add.visitorPhone_placeholder' | translate"
+              [disabled]="cantEdit">
+            </ion-input>
+          </ion-item>
+        </div>
+        <!-- 到訪人員 -->
+        <ion-item-divider *ngIf="myValidators.visitors.error" class='alert'>{{myValidators.visitors.error}}
+        </ion-item-divider>
+        <ion-item [class.has-error]="myValidators.visitors.error" [class.has-success]="myValidators.visitors.pass">
+          <ion-label col-4><span
+              [ngClass]="{'red-point': !isVisitor, 'green-point': isVisitor }">*</span>{{'visit.add.visitors' | translate}}:
+          </ion-label>
+          <ion-input formControlName="visitors" readonly></ion-input>
+          <button ion-button type="button" item-end (tap)="addvisitor()"
+            *ngIf="(cantEdit || outcantEdit ) && visitorsdata.length == 0"
+            col-2>{{'visit.add.addvisitor' | translate}}</button>
+          <button ion-button type="button" item-end (tap)="addvisitor()"
+            *ngIf="(cantEdit || outcantEdit ) && visitorsdata.length !== 0"
+            col-2>{{'visit.add.editvisitor' | translate}}</button>
+        </ion-item>
+        <!-- 物品登記 -->
+        <ion-item *ngIf="(type === 'ctm') || (type === 'emp') || (type === 'visit')">
+          <ion-label col-4><span *ngIf="isVisitor" class="green-point">*</span><span
+              *ngIf="!isVisitor">&nbsp;</span>{{'visit.add.goodsList' | translate}}:</ion-label>
+          <ion-input formControlName="goodsList" readonly></ion-input>
+          <button ion-button type="button" item-end (tap)="registerGoods()"
+            *ngIf="(cantEdit || outcantEdit ) && goodsdata.length == 0"
+            col-2>{{'visit.add.addgoods' | translate}}</button>
+          <button ion-button type="button" item-end (tap)="registerGoods()"
+            *ngIf="(cantEdit || outcantEdit ) && goodsdata.length !== 0"
+            col-2>{{'visit.add.editgoods' | translate}}</button>
+        </ion-item>
+        <!-- 施工物品登記 -->
+        <ion-item *ngIf=" type === 'build'">
+          <ion-label col-4><span *ngIf="isVisitor" class="green-point">*</span><span
+              *ngIf="!isVisitor">&nbsp;</span>{{'visit.add.bulidgoods' | translate}}:</ion-label>
+          <ion-select col-8 [placeholder]="'visit.add.goodType_placeholder' | translate"
+            [cancelText]="'attendance.cancle' | translate" [okText]="'attendance.confirm' | translate"
+            formControlName="toolTypeSelect" #typename>
+            <ion-option *ngFor="let item of toolTypeList" [value]="item.LOOKUP_CODE">{{item.LOOKUP_CODE}}</ion-option>
+          </ion-select>
+          <button ion-button type="button" item-end (tap)="registerGoods(typename)"
+            *ngIf="(cantEdit || outcantEdit ) && goodsdata.length == 0"
+            col-2>{{'visit.add.addgoods' | translate}}</button>
+          <button ion-button type="button" item-end (tap)="registerGoods(typename)"
+            *ngIf="(cantEdit || outcantEdit ) && goodsdata.length !== 0"
+            col-2>{{'visit.add.editgoods' | translate}}</button>
+        </ion-item>
+        <!-- 施工物品明細 -->
+        <ion-item *ngIf=" type === 'build' && goodsdata.length !== 0">
+          <ion-input style="padding-left:8rem; " formControlName="goodsList" readonly></ion-input>
+        </ion-item>
+        <!-- 備註 -->
+        <ion-item>
+          <ion-label col-2><span *ngIf="isVisitor" class="green-point">*</span><span
+              *ngIf="!isVisitor">&nbsp;</span>{{'visit.add.remark' | translate}}:</ion-label>
+          <ion-textarea rows="3" cols="20" formControlName="REMARK" [readonly]="cantEdit && outcantEdit"></ion-textarea>
+        </ion-item>
+      </div>
+      <!-- 外部访客提交：只做修改 -->
+      <div class="visit-btn" *ngIf="isVisitor && (STATUS == '' || STATUS == 'NEW')">
+        <button ion-button block type="submit"
+          [disabled]="applyForm.invalid || this.timeError !=='' || this.APPLY_MOBILE_Error !=='' || this.ACESS_TEL_Error !=='' || this.OVERSEER_INTEL_Error !=='' || this.OVERSEER_OUTTEL_Error !=='' || this.CHARGE_TEL_Error !==''">
+          {{'inspection.ipqa.submit' | translate}}</button>
+      </div>
+      <!-- 外部访客去签到 -->
+      <div class="visit-btn" *ngIf="isVisitor && scanType !== '' && STATUS == 'APPROVED'">
+        <button ion-button block type="button" (tap)="snedApply()">{{ 'visit.add.tosign' | translate}}</button>
+      </div>
+      <!-- 內部保存與送簽 -->
+      <ion-grid *ngIf="(STATUS == '' || STATUS == 'NEW') && !isVisitor ">
+        <ion-row>
+          <ion-col width-50>
+            <ion-buttons left>
+              <button ion-button class="submit" type="submit"
+                [disabled]="applyForm.invalid || this.timeError !=='' || this.APPLY_MOBILE_Error !=='' || this.ACESS_TEL_Error !=='' || this.OVERSEER_INTEL_Error !=='' || this.OVERSEER_OUTTEL_Error !=='' || this.CHARGE_TEL_Error !=='' || !isSelectcolleague || !isSelectDept">{{'visit.add.save' | translate}}</button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col width-50>
+            <ion-buttons right>
+              <button ion-button class="submit" type="button"
+                [disabled]="applyForm.invalid || isSending  || this.timeError !=='' || this.APPLY_MOBILE_Error !=='' || this.ACESS_TEL_Error !=='' || this.OVERSEER_INTEL_Error !=='' || this.OVERSEER_OUTTEL_Error !=='' || this.CHARGE_TEL_Error !=='' || !isSelectcolleague || !isSelectDept"
+                (tap)="sendForm()">{{'visit.add.send' | translate}}</button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!-- 內部取消送簽與重新送簽 -->
+      <ion-grid *ngIf="!isVisitor && (STATUS == 'WAITING' || STATUS == 'CANCELED' || STATUS == 'REJECTED')">
+        <ion-row>
+          <ion-col width-50>
+            <ion-buttons left>
+              <button ion-button class="submit" type="button" [disabled]="STATUS !== 'WAITING' || isSending"
+                (click)="cancelSign()">{{'attendance.callbackSign' | translate}}</button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col width-50>
+            <ion-buttons right>
+              <button ion-button class="submit" type="button"
+                [disabled]="applyForm.invalid || this.timeError !=='' || this.APPLY_MOBILE_Error !=='' || this.ACESS_TEL_Error !=='' || this.OVERSEER_INTEL_Error !=='' || this.OVERSEER_OUTTEL_Error !=='' || this.CHARGE_TEL_Error !==''|| STATUS == 'WAITING' || isSending || !isSelectcolleague || !isSelectDept"
+                (tap)="sendForm()">{{'visit.add.send' | translate}}</button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </form>
+</ion-content>

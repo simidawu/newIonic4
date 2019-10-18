@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="goBack()">{{'inspection.ipqa.goBack' | translate}}</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="addGoodGroup()">{{'visit.add.add' | translate}}</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="visitForm" *ngIf="visitForm">
+    <ion-list>
+      <div formArrayName="visits">
+        <div *ngFor="let visitgroup of visitForm.get('visits').controls;let i=index" [formGroupName]="i">
+          <div class="array_icon"><span class="iconfontyyy remove" (tap)="removeGoodGroup(i)"
+              *ngIf="i>0">&#xe61a;</span><span
+              class="content">{{'inspection.ipqa.the' | translate}}{{i+1}}{{'inspection.bossCom.group' | translate}}</span>
+          </div>
+          <ion-input type="hidden" formControlName="ID"></ion-input>
+          <ion-item>
+            <ion-label col-4><span class="red-point">*</span>{{'visit.add.visitorname' | translate }}:</ion-label>
+            <ion-input formControlName="PERSON_NAME"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label col-4>&nbsp;{{'visit.add.visitorcard' | translate }}:</ion-label>
+            <ion-input formControlName="CREDENTIALS_NO"></ion-input>
+          </ion-item>
+          <!-- <ion-item>
+            <ion-label col-8>{{'visit.add.ismaincard' | translate }}:</ion-label>
+            <ion-checkbox color="#3773F7" item-end formControlName="isMain"></ion-checkbox>
+          </ion-item> -->
+        </div>
+      </div>
+    </ion-list>
+  </form>
+  <div style="margin:0 1rem;"><button ion-button block type="submit" (tap)="submitForm()"
+      [disabled]="visitForm.invalid">{{'inspection.ipqa.submit' | translate}}</button></div>
+
+</ion-content>

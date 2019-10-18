@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'visit.tab' | translate}}</ion-title>
+    <sg-back-button></sg-back-button>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-down" [refreshingText]="'refreshing' | translate"></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="formData">
+    <ion-card *ngFor="let data of formData" (click)="toDetail(data)">
+      <ion-card-header>
+        <ion-card-title>
+          <span>{{'visit.search.createTime' | translate}} : {{data.APPLY_DATE}}</span>
+          <span class="order-status"
+            [ngClass]="{'approve': data.STATUS =='APPROVED', 'reject': data.STATUS =='REJECT', 'waiting': data.STATUS =='WAITING', 'invaild': data.STATUS =='INVALID'}">{{data.CNSTATUS}}</span>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div>{{data.DOCNO}}</div>
+        <div>{{data.ACESS_COMPANY_NAME}}</div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div class="no-data" *ngIf="formData == ''">{{'visit.search.noresult' | translate}}</div>
+</ion-content>

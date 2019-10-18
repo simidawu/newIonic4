@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons start *ngIf="formPage !=='setting'">
+      <button ion-button (click)="goBack()">{{'inspection.ipqa.goBack' | translate}}</button>
+    </ion-buttons>
+    <!-- <ion-buttons end>
+      <button ion-button (click)="submitForm()"
+        [disabled]="goodForm.invalid">{{'inspection.ipqa.submit' | translate}}</button>
+    </ion-buttons> -->
+    <ion-buttons end>
+        <button ion-button (click)="addGoodGroup()">{{'visit.add.add' | translate}}</button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item-divider class='alert error' *ngIf="errTip">{{errTip}}</ion-item-divider>
+  <form [formGroup]="goodForm" *ngIf="goodForm">
+    <ion-list>
+      <div formArrayName="goods">
+        <div *ngFor="let goodgroup of goodForm.get('goods').controls;let i=index" [formGroupName]="i">
+          <div class="array_icon">
+            <span class="iconfontyyy remove" (tap)="removeGoodGroup(i)" *ngIf="i>0">&#xe61a;</span>
+            <span class="content">{{'inspection.ipqa.the' | translate}}{{i+1}}{{'inspection.bossCom.group' | translate}}</span>
+            <span class="iconfontyyy add" (tap)="addGoodGroup(i)">&#xe60b;</span>
+            <!-- &#xe60b; &#xe671;-->
+          </div>
+          <ion-input type="hidden" formControlName="ID"></ion-input>
+          <ion-item>
+            <ion-label col-4><span class="red-point">*</span>{{'visit.add.goodname' | translate }}:</ion-label>
+            <ion-input formControlName="GOODS_NAME" col-8></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label col-4><span class="red-point">*</span>{{'visit.add.goodnums' | translate }}:</ion-label>
+            <ion-input formControlName="GOODS_QUANTITY" col-8></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label col-4><span class="red-point">*</span>{{'visit.add.unit' | translate }}:</ion-label>
+            <ion-input formControlName="GOODS_UNIT" col-8></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label col-4>&nbsp;{{'visit.add.goodbrand' | translate }}:</ion-label>
+            <ion-input formControlName="GOODS_BRAND" col-8></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label col-4>&nbsp;{{'visit.add.goodmodel' | translate }}:</ion-label>
+            <ion-input formControlName="GOODS_MODEL" col-8></ion-input>
+          </ion-item>
+        </div>
+      </div>
+    </ion-list>
+  </form>
+  <div style="margin:0 1rem;"><button ion-button block type="submit" (tap)="submitForm()"
+    [disabled]="goodForm.invalid">{{'inspection.ipqa.submit' | translate}}</button></div>
+</ion-content>

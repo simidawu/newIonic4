@@ -1,0 +1,4 @@
+<ion-list no-lines class="myList">
+  <button *ngIf="type == 'apply'" ion-item (tap)="toSignList()">{{'visit.add.signlist' | translate}}</button>
+  <button *ngIf="type == 'check'" ion-item (tap)="toReleaseList()">{{'visit.add.historylist' | translate}}</button>
+</ion-list>

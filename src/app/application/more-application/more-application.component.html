@@ -1,10 +1,11 @@
-<ion-header>
-
-    <ion-buttons end>
-      <ion-button (click)="showEditBtn()" *ngIf="!showBtn">编辑</ion-button>
-      <ion-button (click)="hideEditBtn()" *ngIf="showBtn">完成</ion-button>
-    </ion-buttons>
-</ion-header>
+<ion-toolbar>
+  <ion-title>隐藏应用</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="showEditBtn()" *ngIf="!showBtn">编辑</ion-button>
+    <ion-button (click)="hideEditBtn()" *ngIf="showBtn">完成</ion-button>
+  </ion-buttons>
+</ion-toolbar>
 <ion-content no-bounce>
-  <sg-application-grid [items]="items" type="add" [showBtn]="showBtn" (onSelect)="moveItemToAppPage($event)" (onClick)="goToDetailPage($event)"></sg-application-grid>
+  <sg-application-grid [items]="items" type="add" [showBtn]="showBtn" (onSelect)="moveItemToAppPage($event)"
+    (onClick)="goToDetailPage($event)"></sg-application-grid>
 </ion-content>
