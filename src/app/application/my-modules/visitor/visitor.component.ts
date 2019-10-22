@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params,ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { PluginService } from '../../../core/services/plugin.service';
 // import { InspectionCommonService } from '../inspection/shared/service/inspectionCommon.service';
 import { User_Update_Privilege } from './../../../shared/actions/user.action';
@@ -27,9 +28,13 @@ export class VisitorComponent implements OnInit {
     private $store: Store<MyStore>,
     // private inspectionCommonService: InspectionCommonService,
   ) {
-    activateInfo.queryParams.subscribe(queryParams => {
-      this.moduleID = queryParams.id;
-    });
+    // activateInfo.queryParams.subscribe(queryParams => {
+    //   this.moduleID = queryParams.id;
+    // });
+    this.activateInfo.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+      this.moduleID = params.get('id'))
+    );
   }
 
   privilegeList: {
@@ -46,12 +51,8 @@ export class VisitorComponent implements OnInit {
   admin = false;
 
   async ngOnInit() {
-    console.log('visit');
+    // console.log('visit');
     console.log(this.moduleID);
-
-
-
-    // let moduleID = this.navParams.get('moduleID');
 
     // let loading = this.plugin.createLoading();
     // loading.present();

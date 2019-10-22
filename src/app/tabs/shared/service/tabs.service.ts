@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class TabsService {
       this.router.events.pipe(
         filter((event) => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
-        console.log(event);
+        // console.log(event);
         this.showHideTabs(event);
       });
     });
@@ -23,16 +23,16 @@ export class TabsService {
   private showHideTabs(e: any) {
     // 将urlAfterRedirects拆分成一个数组
     const urlssArray = e.urlAfterRedirects.split('/');
-    console.log(urlssArray);
+    // console.log(urlssArray);
     // 获取parenturl
     const pageUrlParents = urlssArray[urlssArray.length - 2];
-    console.log("父：" + pageUrlParents);
+    // console.log("父：" + pageUrlParents);
     if (pageUrlParents === 'tabs') {
       console.log('show');
-      this.showTabs();
+      // this.showTabs();
     } else {
       console.log('hide');
-      this.hideTabs();
+      // this.hideTabs();
     }
   }
 

@@ -3,6 +3,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { VisitorComponent } from './visitor.component';
 import { VisitorRoutingModule } from './visitor-routing.module';
 import { VisitorService } from './shared/service/visitor.service';
+import { HomeComponent } from './staff/home/home.component';
+import { ApplyComponent } from './staff/apply/apply.component';
+import { RouterModule, Routes } from '@angular/router';
 
 
 @NgModule({
@@ -10,8 +13,12 @@ import { VisitorService } from './shared/service/visitor.service';
     VisitorRoutingModule,
     TranslateModule.forChild(),
   ],
-  declarations: [VisitorComponent],
-  entryComponents: [VisitorComponent],
+  declarations: [
+    VisitorComponent,
+    HomeComponent,
+    ApplyComponent
+  ],
+  // entryComponents: [HomeComponent],
   providers: [
     VisitorService
   ]

@@ -66,6 +66,45 @@ export class ApplicationComponent implements OnInit {
   }
 
   goToDetailPage(id: number) {
-    this.router.navigate(['/tabs/application/' + id]);
+    const page = this.translateID(id);
+    // console.log(page);
+    // this.router.navigate(['/tabs/application/' + page, { moduleID: id }]);
+    this.router.navigate(['/tabs/application/' + page]);
+  }
+
+  translateID(id: number) {
+    let url = '';
+    switch (id) {
+      case 1:
+        url = 'book';
+        break;
+      case 21:
+        url = 'attendance';
+        break;
+      case 22:
+        url = 'signature';
+        break;
+      case 61:
+        url = 'inspection';
+        break;
+      case 81:
+        url = 'activity';
+        break;
+      case 26023:
+        url = 'survey';
+        break;
+      case 26031:
+        url = 'reservation';
+        break;
+      case 26273:
+        url = 'visitor';
+        break;
+      case -1:
+        url = 'tax';
+        break;
+      default:
+        break;
+    }
+    return url;
   }
 }
