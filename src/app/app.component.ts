@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 
 import { LoginService } from './login/shared/service/login.service';
+import { TabsService } from './tabs/shared/service/tabs.service';
 
 declare var window: any;
 
@@ -41,6 +42,7 @@ export class AppComponent {
     private plugin: PluginService,
     private localStorageService: LocalStorageService,
     private loginService: LoginService,
+    private tabsService: TabsService,
   ) {
     this.initializeApp();
   }
@@ -78,7 +80,7 @@ export class AppComponent {
       await localStorage2.setItem2('appVersion', environment.appVersion);
     }
     // console.log(this.user);
-    if (!this.user || !this.user.username || !this.user.password) { 
+    if (!this.user || !this.user.username || !this.user.password) {
       console.log(2);
       const user = await this.localStorageService.getItem2('currentUser');
       // console.log(user, 1);

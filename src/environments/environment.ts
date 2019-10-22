@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8082/',
+  // baseUrl: 'http://localhost:8082/',
+  baseUrl: 'http://10.86.3.57:8082/',
   staticBaseUrl: 'http://webapi.mic.com.cn/',
   companyID: 'MSL',
   maxGrade: 1, // 记录该公司最高级部门的等级,如顺达是1

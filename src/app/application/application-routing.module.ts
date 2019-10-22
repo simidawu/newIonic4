@@ -5,7 +5,7 @@ import { MoreApplicationComponent } from './more-application/more-application.co
 
 const AppsRoutes: Routes = [
   {
-    path: 'apps',
+    path: '',
     component: ApplicationComponent,
   },
   { path: 'more', component: MoreApplicationComponent },
@@ -19,11 +19,6 @@ const AppsRoutes: Routes = [
   { path: '26031', component: MoreApplicationComponent },
   { path: '26273', loadChildren: () => import('./my-modules/visitor/visitor.module').then(m => m.VisitorModule) },
   { path: '-1', component: MoreApplicationComponent },
-  {
-    path: '',
-    redirectTo: 'apps',
-    pathMatch: 'full'
-  }
 ];
 
 @NgModule({
