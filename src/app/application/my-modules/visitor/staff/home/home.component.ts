@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { VisitorService } from '../../shared/service/visitor.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sg-home',
@@ -11,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class HomeComponent implements OnInit {
 
   constructor(
+    private router: Router,
     public navCtrl: NavController,
     private visitorService: VisitorService,
     private translate: TranslateService,
@@ -88,6 +90,9 @@ export class HomeComponent implements OnInit {
 
   toDetail(formData: any) {
     console.log('todetail');
+    // this.router.navigate(['/tabs/application/visitor/aform', { formData: formData.LOT_NO }]);
+    // this.router.navigate(['/modules/ihub/pk-edit', formData], { skipLocationChange: true });
+    // this.router.navigate(['/end/dataDrive/edit', formData]);
     // this.navCtrl.push('AformComponent', {
     //   formData: formData,
     // });

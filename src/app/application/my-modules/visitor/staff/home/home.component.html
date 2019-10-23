@@ -7,7 +7,7 @@
 
 <ion-content>
 
-    <ion-card *ngFor="let data of formData">
+    <ion-card *ngFor="let data of formData" (click)="toDetail(data)">
       <ion-card-header>
         <ion-card-subtitle>
           申請時間 : {{data.APPLY_DATE}}

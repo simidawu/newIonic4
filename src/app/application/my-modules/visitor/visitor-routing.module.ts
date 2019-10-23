@@ -10,6 +10,7 @@ const VisitorRoutes: Routes = [
     path: '', component: VisitorComponent, children: [
       { path: 'home', component: HomeComponent },
       { path: 'apply', component: ApplyComponent },
+      { path: 'aform', component: AformComponent },
       {
         path: '',
         redirectTo: 'home',
