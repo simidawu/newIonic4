@@ -1,28 +1,26 @@
-<p>home!</p>
-<!-- <ion-header>
-  <ion-navbar>
-    <ion-title>{{'visit.tab' | translate}}</ion-title>
-    <sg-back-button></sg-back-button>
-  </ion-navbar>
-</ion-header>
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>訪客預約</ion-title>
+</ion-toolbar>
+
 <ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-down" [refreshingText]="'refreshing' | translate"></ion-refresher-content>
-  </ion-refresher>
-  <div *ngIf="formData">
-    <ion-card *ngFor="let data of formData" (click)="toDetail(data)">
+
+    <ion-card *ngFor="let data of formData">
       <ion-card-header>
-        <ion-card-title>
-          <span>{{'visit.search.createTime' | translate}} : {{data.APPLY_DATE}}</span>
-          <span class="order-status"
-            [ngClass]="{'approve': data.STATUS =='APPROVED', 'reject': data.STATUS =='REJECT', 'waiting': data.STATUS =='WAITING', 'invaild': data.STATUS =='INVALID'}">{{data.CNSTATUS}}</span>
-        </ion-card-title>
+        <ion-card-subtitle>
+          申請時間 : {{data.APPLY_DATE}}
+          <span class="order-status" [ngClass]="{'approve': data.STATUS =='APPROVED', 'reject': data.STATUS =='REJECT', 'waiting': data.STATUS =='WAITING', 'invaild': data.STATUS =='INVALID'}">{{data.CNSTATUS}}</span>
+        </ion-card-subtitle>
+        <ion-card-title>{{data.DOCNO}}</ion-card-title>
+        
       </ion-card-header>
+
       <ion-card-content>
-        <div>{{data.DOCNO}}</div>
-        <div>{{data.ACESS_COMPANY_NAME}}</div>
+        {{data.ACESS_COMPANY_NAME}}
       </ion-card-content>
     </ion-card>
-  </div>
-  <div class="no-data" *ngIf="formData == ''">{{'visit.search.noresult' | translate}}</div>
-</ion-content> -->
+
+
+</ion-content>

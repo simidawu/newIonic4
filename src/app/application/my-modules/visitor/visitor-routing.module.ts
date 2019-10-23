@@ -7,16 +7,19 @@ import { HomeComponent } from './staff/home/home.component';
 
 const VisitorRoutes: Routes = [
   {
-    path: 'visitor',
-    component: VisitorComponent,
-    children: [
+    path: '', component: VisitorComponent, children: [
       { path: 'home', component: HomeComponent },
       { path: 'apply', component: ApplyComponent },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/application/visitor/home',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];

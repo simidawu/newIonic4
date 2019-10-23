@@ -7,7 +7,7 @@ import { HomeComponent } from './home.component';
   declarations: [HomeComponent],
   imports: [
     IonicModule,
-    TranslateModule.forChild(),
+    TranslateModule,
   ],
   entryComponents: [HomeComponent],
 })

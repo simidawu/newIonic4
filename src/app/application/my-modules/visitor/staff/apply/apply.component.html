@@ -1,105 +1,58 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>{{'visit.tab2' | translate}}</ion-title>
-    <sg-back-button></sg-back-button>
-  </ion-navbar>
-</ion-header>
-
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>单据申请</ion-title>
+</ion-toolbar>
 <ion-content>
   <ion-card>
-    <ion-item (click)="toOrder('vip')">
-      <ion-avatar item-start>
-        <img src="assets/icon/vip.png">
-      </ion-avatar>
-      <h2>{{'visit.apply.type1' | translate}}</h2>
-      <p style="font-size:0.6rem;">{{'visit.apply.applyremark1' | translate}}</p>
-      <button ion-button icon-only clear item-end>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item (click)="toOrder('ctm')">
-      <ion-avatar item-start>
-        <img src="assets/icon/ctm.png">
-      </ion-avatar>
-      <h2>{{'visit.apply.type2' | translate}}</h2>
-      <p style="font-size:0.6rem;">{{'visit.apply.applyremark2' | translate}}</p>
-      <button ion-button icon-only clear item-end>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item (click)="toOrder('emp')">
-      <ion-avatar item-start>
-        <img src="assets/icon/emp.png">
-      </ion-avatar>
-      <h2>{{'visit.apply.type3' | translate}}</h2>
-      <p style="font-size:0.6rem;">{{'visit.apply.applyremark3' | translate}}</p>
-      <button ion-button icon-only clear item-end>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item (click)="toOrder('visit')">
-      <ion-avatar item-start>
+    <ion-item lines="none" lines="none" (click)="toOrder('visit')">
+      <ion-avatar slot="start">
         <img src="assets/icon/visits.png">
       </ion-avatar>
-      <h2>{{'visit.apply.type4' | translate}}</h2>
-      <button ion-button icon-only clear item-end>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+      <ion-label>
+        <h2>访客申请</h2>
+      </ion-label>
+      <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
-    <ion-item (click)="toOrder('build')">
-      <ion-avatar item-start>
+    <ion-item lines="none" (click)="toOrder('ctm')">
+      <ion-avatar slot="start">
+        <img src="assets/icon/ctm.png">
+      </ion-avatar>
+      <ion-label>
+        <h2>客户申请</h2>
+        <p>VIP使用对象以外的客户</p>
+      </ion-label>
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" (click)="toOrder('emp')">
+      <ion-avatar slot="start">
+        <img src="assets/icon/emp.png">
+      </ion-avatar>
+      <ion-label>
+        <h2>集团员工申请</h2>
+        <p>集团内部出差或支援人员</p>
+      </ion-label>
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" (click)="toOrder('vip')">
+      <ion-avatar slot="start">
+        <img src="assets/icon/vip.png">
+      </ion-avatar>
+      <ion-label>
+        <h2>VIP申请</h2>
+        <p>副总级(含)以上客户、稽核人员和政府人员</p>
+      </ion-label>
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" (click)="toOrder('build')">
+      <ion-avatar slot="start">
         <img src="assets/icon/build.png">
       </ion-avatar>
-      <h2>{{'visit.apply.type5' | translate}}</h2>
-      <button ion-button icon-only clear item-end>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+      <ion-label>
+        <h2>施工申请</h2>
+      </ion-label>
+      <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
   </ion-card>
-  <!-- 
-    <ion-card (click)="toOrder('vip')">
-    <ion-card-header>
-      <span><img src="../../../../../../assets/icon/vip.png"></span>
-      <span>{{'visit.apply.type1' | translate}}</span>
-      <span style="float:right;">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </span>
-    </ion-card-header>
-  </ion-card>
-  <ion-card (click)="toOrder('ctm')">
-    <ion-card-header>
-      <span><img src="../../../../../../assets/icon/ctm.png"></span>
-      <span>{{'visit.apply.type2' | translate}}</span>
-      <span style="float:right;">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </span>
-    </ion-card-header>
-  </ion-card>
-  <ion-card (click)="toOrder('emp')">
-    <ion-card-header>
-      <span><img src="../../../../../../assets/icon/emp.png"></span>
-      <span>{{'visit.apply.type3' | translate}}</span>
-      <span style="float:right;">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </span>
-    </ion-card-header>
-  </ion-card>
-  <ion-card (click)="toOrder('visit')">
-    <ion-card-header>
-      <span><img src="../../../../../../assets/icon/visits.png"></span>
-      <span>{{'visit.apply.type4' | translate}}</span>
-      <span style="float:right;">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </span>
-    </ion-card-header>
-  </ion-card>
-  <ion-card (click)="toOrder('build')">
-    <ion-card-header>
-      <span><img src="../../../../../../assets/icon/build.png"></span>
-      <span>{{'visit.apply.type5' | translate}}</span>
-      <span style="float:right;">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </span>
-    </ion-card-header>
-  </ion-card> -->
 </ion-content>

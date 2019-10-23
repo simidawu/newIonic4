@@ -1,4 +1,4 @@
-sg-apply {
+
 
     ion-card {
         box-shadow: 0 0 0 #fff !important;
@@ -9,10 +9,6 @@ sg-apply {
         margin: 1rem 0 !important;
     }
 
-    .item-ios.item-block .item-inner {
-        padding-right: 0 !important;
-    }
-
     ion-avatar ion-img,
     ion-avatar img {
         border-radius: 0% !important;
@@ -21,28 +17,10 @@ sg-apply {
         height: 36px;
     }
 
-    .item-ios [item-end] {
-        margin: 0 !important;
+    ion-label > p {
+        font-size:0.6rem;
     }
 
     ion-icon {
         color: #333 !important;
     }
-
-    ion-card-header {
-        padding: 5px !important;
-
-        span {
-            vertical-align: top;
-            height: 3rem;
-            line-height: 3rem;
-
-            img {
-                display: inline-block !important;
-                width: 3rem !important;
-                height: 3rem !important;
-                margin-right: 1rem;
-            }
-        }
-    }
-}
