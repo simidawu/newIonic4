@@ -1,27 +1,26 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button></ion-back-button>
-  </ion-buttons>
-  <ion-title>首页</ion-title>
-  <!-- <ion-title>{{'Visitor.module.name' | translate}}</ion-title> -->
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/application"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'Visitor.module.name' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-
+  <div *ngIf="formData">
     <ion-card *ngFor="let data of formData" (click)="toDetail(data)">
       <ion-card-header>
         <ion-card-subtitle>
-          申請時間 : {{data.APPLY_DATE}}
+          {{'Visitor.application.applyTime' | translate}} : {{data.APPLY_DATE}}
           <span class="order-status" [ngClass]="{'approve': data.STATUS =='APPROVED', 'reject': data.STATUS =='REJECT', 'waiting': data.STATUS =='WAITING', 'invaild': data.STATUS =='INVALID'}">{{data.CNSTATUS}}</span>
         </ion-card-subtitle>
         <ion-card-title>{{data.DOCNO}}</ion-card-title>
-        
       </ion-card-header>
-
       <ion-card-content>
         {{data.ACESS_COMPANY_NAME}}
       </ion-card-content>
     </ion-card>
-
-
+  </div>
+  <div class="no-data" *ngIf="formData === ''">{{'Visitor.module.noresult' | translate}}</div>
 </ion-content>

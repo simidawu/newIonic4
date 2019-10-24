@@ -6,11 +6,11 @@ import { AformComponent } from './aform.component';
 
 @NgModule({
   imports: [
-    TranslateModule.forChild(),
+    TranslateModule,
     SharedModule,
     // MultiPickerModule,
   ],
   declarations: [AformComponent],
   entryComponents: [AformComponent],
 })
-export class EquipComponentModule {}
+export class AformComponentModule {}

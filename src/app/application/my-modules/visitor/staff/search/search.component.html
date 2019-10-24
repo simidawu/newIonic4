@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/application"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'Visitor.module.tab_search' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <form #templateForm="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label>{{'visit.search.orderNo' | translate}}</ion-label>
+        <ion-input name="orderNo" [(ngModel)]="orderNo"></ion-input>
+      </ion-item>
+
+      <div *ngIf="role =='ADMIN'">
+        <ion-item>
+          <ion-label>{{'visit.search.applicant' | translate}}</ion-label>
+          <ion-input type="text" #name [placeholder]="'visit.add.applicant_placeholder' | translate"
+            (keyup)="searchapplicant(name)" name="applicant" [(ngModel)]="applicant" data-v-required="true"></ion-input>
+        </ion-item>
+        <div class="searchOut">
+          <ul class="list-group" [class.search]="colleague">
+            <li *ngFor="let person of colleague | async" (tap)="getcolleague(person.AGENT_NAME)"
+              class="search-result list-group-item">{{person.AGENT_NAME}}</li>
+          </ul>
+        </div>
+      </div>
+      <ion-item>
+        <ion-label>{{'visit.search.s_create_date' | translate}}</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" name="s_create_date" [(ngModel)]="s_create_date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'visit.search.e_create_date' | translate}}</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" name="e_create_date" [(ngModel)]="e_create_date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'visit.search.s_apply_date' | translate}}</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" name="s_apply_date" [(ngModel)]="s_apply_date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'visit.search.e_apply_date' | translate}}</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" name="e_apply_date" [(ngModel)]="e_apply_date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'visit.search.orderStatus' | translate}}</ion-label>
+        <ion-select interface="popover" name="type" [(ngModel)]="type">
+          <ion-option value="NEW">{{'visit.statu' | translate}}</ion-option>
+          <ion-option value="WAITING">{{'visit.statu1' | translate}}</ion-option>
+          <ion-option value="REJECTED">{{'visit.statu2' | translate}}</ion-option>
+          <ion-option value="APPROVED">{{'visit.statu3' | translate}}</ion-option>
+          <ion-option value="CANCELED">{{'visit.statu4' | translate}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <div class="btn-box">
+      <div class="little-btn">
+        <button ion-button block (click)="Reset()">{{'visit.search.reset' | translate}}</button>
+      </div>
+      <div class="little-btn">
+        <button ion-button block (click)="submitForm()">{{'visit.search.search' | translate}}</button>
+      </div>
+    </div>
+  </form> -->
+</ion-content>

@@ -1,0 +1,45 @@
+ion-content {
+    background: #ccc;
+
+    ion-card-subtitle {
+        font-size: 1rem;
+
+        .order-status {
+            float: right;
+            // margin-right: 2rem;
+            font-weight: 400;
+        }
+
+        .approve {
+            color: #0ec254;
+        }
+
+        .reject {
+            color: red;
+        }
+
+        .waiting {
+            color: #3880ff;
+        }
+
+        .invaild {
+            color: #555;
+        }
+    }
+
+    ion-card-content {
+        padding-top: 0 !important;
+        color: #333 !important;
+        font-weight: bold;
+    }
+}
+
+
+
+.no-data {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #999;
+    text-align: center;
+    margin-top: 10%;
+}

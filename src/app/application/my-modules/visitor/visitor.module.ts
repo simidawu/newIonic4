@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { VisitorRoutingModule } from './visitor-routing.module';
+
 import { VisitorService } from './shared/service/visitor.service';
-import { RouterModule } from '@angular/router';
+
 import { VisitorComponent } from './visitor.component';
 import { HomeComponent } from './staff/home/home.component';
-import { VisitorRoutingModule } from './visitor-routing.module';
 import { ApplyComponent } from './staff/apply/apply.component';
+import { AdminComponent } from './staff/admin/admin.component';
+import { SearchComponent } from './staff/search/search.component';
+import { CheckComponent } from './staff/check/check.component';
 // import { AformComponent } from './staff/apply/aform/aform.component';
 
 
@@ -15,17 +21,16 @@ import { ApplyComponent } from './staff/apply/apply.component';
     VisitorComponent,
     HomeComponent,
     ApplyComponent,
+    SearchComponent,
     // AformComponent,
+    CheckComponent,
+    AdminComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
     VisitorRoutingModule,
-  //   RouterModule.forChild([
-  //     { path: '', component: VisitorComponent },
-  //     { path: 'home', component: HomeComponent },
-  //     { path: 'apply', component: ApplyComponent },
-  // ])
+    TranslateModule
   ],
   providers: [VisitorService],
 })

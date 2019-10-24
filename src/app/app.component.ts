@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { Platform } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -16,10 +16,10 @@ import { LocalStorageService } from './core/services/localStorage.service';
 
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-
+import { filter } from 'rxjs/operators';
 import { LoginService } from './login/shared/service/login.service';
-import { TabsService } from './tabs/shared/service/tabs.service';
-
+import { injectStyles } from 'shadow-dom-inject-styles';
+import { element } from 'protractor';
 declare var window: any;
 
 @Component({
@@ -31,7 +31,6 @@ export class AppComponent {
 
   user: UserState;
   updateProg: Observable<number>;
-
   constructor(
     private router: Router,
     private platform: Platform,
@@ -42,7 +41,7 @@ export class AppComponent {
     private plugin: PluginService,
     private localStorageService: LocalStorageService,
     private loginService: LoginService,
-    private tabsService: TabsService,
+    private el: ElementRef,
   ) {
     this.initializeApp();
   }
@@ -68,22 +67,23 @@ export class AppComponent {
           }
         });
       }
+      this.router.events.pipe(
+        filter((event) => event instanceof NavigationEnd)
+      ).subscribe((event: NavigationEnd) => {
+        this.showHideTabs(event);
+      });
     });
   }
 
   async appInit() {
-    console.log(1);
     await this.localStorageService.init();
     window['localStorage2'] = this.localStorageService;
     const appVersion = await localStorage2.getItem2('appVersion');
     if (!appVersion) {
       await localStorage2.setItem2('appVersion', environment.appVersion);
     }
-    // console.log(this.user);
     if (!this.user || !this.user.username || !this.user.password) {
-      console.log(2);
       const user = await this.localStorageService.getItem2('currentUser');
-      // console.log(user, 1);
       if (user) {
         if (user.hasOwnProperty('rememberPWD') && !user.rememberPWD) {
           user.password = '';
@@ -163,5 +163,34 @@ export class AppComponent {
       }
     }
     this.translate.use(targetLang);
+  }
+
+  private showHideTabs(e: any) {
+    // 将urlAfterRedirects拆分成一个数组
+    const urlssArray = e.urlAfterRedirects.split('/');
+    // 获取parenturl
+    const pageUrlParents = urlssArray[urlssArray.length - 2];
+    if (pageUrlParents === 'tabs') {
+      this.tabsDisplayType('show');
+    } else {
+      this.tabsDisplayType('hide');
+    }
+  }
+
+  public tabsDisplayType(type: string) {
+    let times = 0;
+    if (type === 'show') {
+      times = 600;
+    }
+    setTimeout(() => {
+      const tabBar = (this.el.nativeElement.querySelector(' ion-tabs > ion-tab-bar#FirstTabBar') as HTMLElement);
+      // console.dir(tabBar);
+      // console.log(tabBar.style);
+      if (type === 'hide') {
+        tabBar.style.display = 'none';
+      } else {
+        tabBar.style.display = 'flex';
+      }
+    }, times);
   }
 }

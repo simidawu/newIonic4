@@ -1,8 +1,8 @@
 {
-  "App":{
-    "contact":"通讯录",
-    "application":"应用",
-    "me":"我的"
+  "App": {
+    "contact": "通讯录",
+    "application": "应用",
+    "me": "我的"
   },
   "Login": {
     "title": "MITAC",
@@ -35,11 +35,11 @@
   "Visitor": {
     "module": {
       "name": "访客预约",
-      "tab_home": "记录",
-      "tab_apply": "申请",
-      "tab_search": "查询",
-      "tab_check": "检查",
-      "tab_admin": "设置",
+      "tab_home": "申请记录",
+      "tab_apply": "单据申请",
+      "tab_search": "单据查询",
+      "tab_check": "通信管理",
+      "tab_admin": "系统设置",
       "tab_out": "访客申请单查询",
       "statu_new": "待送签",
       "statu_waiting": "签核中",
@@ -94,6 +94,53 @@
       "bulidgoods": "施工物品",
       "remark": "备注"
     },
+    "search": {
+      "title": "预约单查询",
+      "result-title": "查询结果",
+      "applicant": "单据申请人",
+      "applyTime": "到访时间",
+      "s_apply_date": "到访时间始",
+      "e_apply_date": "到访时间止",
+      "s_create_date": "申请时间始",
+      "e_create_date": "申请时间止",
+      "endTime": "有效期止",
+      "orderStatus": "单据状态",
+      "searchpl": "请输入手机号码查询单据...",
+      "noresult": "—没有找到相关单据—"
+    },
+    "check": {
+      "gatelist": "大门通行管理",
+      "floorlist": "大楼通行管理",
+      "mainlist": "今日预约列表",
+      "checklist": "物品检查清单",
+      "visitorshistory": "人员放行记录",
+      "goodshistory": "物品放行记录",
+      "intervaltime": "进出时间",
+      "accompany": "陪同",
+      "enterstatu": "进入厂区",
+      "leavestatu": "离开厂区",
+      "status": "状态",
+      "status-choose": "状态选择",
+      "visitor_err": "请至少勾选一名来访人员",
+      "finish": "关闭单据",
+      "finish_message": "是否关闭该单据？",
+      "finish_error": "单据未签核完成，请联系陪同人员进行处理！",
+      "status_error": "请选择有效的状态！",
+      "no_data": "-没有相关放行记录-"
+    },
+    "admin": {
+      "role": "系统管理员设定",
+      "director": "区域负责人设定",
+      "tool": "施工物品预设定",
+      "areaname": "区域名称",
+      "directorname": "负责人",
+      "role_network": "网络管理员",
+      "role_food": "伙食管理员",
+      "role_foodmail": "伙食Mail接收人",
+      "edit": "维护",
+      "submit_success": "提交成功",
+      "submit_failed": "提交失败"
+    },
     "placeholder": {
       "applicant_placeholder": "请输入姓名、工号查询",
       "constDept_placeholder": "请输入部门名称查询",
@@ -104,12 +151,14 @@
     }
   },
   "alert": "警告",
-  "error": "错误",
+  "back": "返回",
   "cancel": "取消",
   "confirm": "確定",
-  "edit":"编辑",
-  "complete":"完成",
-  "more":"更多",
-  "back":"返回",
+  "complete": "完成",
+  "edit": "编辑",
+  "error": "错误",
+  "more": "更多",
+  "reset": "重置",
+  "search": "查询",
   "autologin_err": "本地账号名或密码已失效,账号验证失败,请重新验证"
 }

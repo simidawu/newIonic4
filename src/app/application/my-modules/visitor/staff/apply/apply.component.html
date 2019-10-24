@@ -1,9 +1,12 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button></ion-back-button>
-  </ion-buttons>
-  <ion-title>单据申请</ion-title>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/application"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'Visitor.module.tab_apply' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
   <ion-card>
     <ion-item lines="none" lines="none" (click)="toOrder('visit')">
@@ -11,7 +14,7 @@
         <img src="assets/icon/visits.png">
       </ion-avatar>
       <ion-label>
-        <h2>访客申请</h2>
+        <h2>{{'Visitor.application.type4' | translate}}</h2>
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
@@ -20,8 +23,8 @@
         <img src="assets/icon/ctm.png">
       </ion-avatar>
       <ion-label>
-        <h2>客户申请</h2>
-        <p>VIP使用对象以外的客户</p>
+        <h2>{{'Visitor.application.type2' | translate}}</h2>
+        <p>{{'Visitor.application.applyremark2' | translate}}</p>
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
@@ -30,8 +33,8 @@
         <img src="assets/icon/emp.png">
       </ion-avatar>
       <ion-label>
-        <h2>集团员工申请</h2>
-        <p>集团内部出差或支援人员</p>
+        <h2>{{'Visitor.application.type3' | translate}}</h2>
+        <p>{{'Visitor.application.applyremark3' | translate}}</p>
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
@@ -40,8 +43,8 @@
         <img src="assets/icon/vip.png">
       </ion-avatar>
       <ion-label>
-        <h2>VIP申请</h2>
-        <p>副总级(含)以上客户、稽核人员和政府人员</p>
+        <h2>{{'Visitor.application.type1' | translate}}</h2>
+        <p>{{'Visitor.application.applyremark1' | translate}}</p>
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
@@ -50,7 +53,7 @@
         <img src="assets/icon/build.png">
       </ion-avatar>
       <ion-label>
-        <h2>施工申请</h2>
+        <h2>{{'Visitor.application.type5' | translate}}</h2>
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>

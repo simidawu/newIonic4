@@ -44,20 +44,16 @@ export class TabsService {
   public tabsDisplayType(type: string) {
     setTimeout(() => {
       const tabBar = document.getElementById('FirstTabBar');
-      console.log(tabBar, 1);
+      // console.log(tabBar, 1);
       // const toolbar = (this.el.nativeElement.querySelector('ion-app > ion-tabs') as HTMLElement);
       const styles = `
         .tabbar-hide {
           display: none !important;
         }
       `;
-      injectStyles(tabBar, '.tabbar-hide', styles);
+      if (type === 'show') {
+        injectStyles(tabBar, '.tabbar-hide', styles);
+      }
     }, 100);
-    // if (type === 'show') {
-    //   tabBar.style.display = 'flex';
-    // } else {
-    //   tabBar.style.display = 'none';
-    // }
-
   }
 }
