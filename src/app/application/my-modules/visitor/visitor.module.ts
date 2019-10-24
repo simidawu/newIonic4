@@ -7,6 +7,7 @@ import { VisitorComponent } from './visitor.component';
 import { HomeComponent } from './staff/home/home.component';
 import { VisitorRoutingModule } from './visitor-routing.module';
 import { ApplyComponent } from './staff/apply/apply.component';
+// import { AformComponent } from './staff/apply/aform/aform.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { ApplyComponent } from './staff/apply/apply.component';
     VisitorComponent,
     HomeComponent,
     ApplyComponent,
+    // AformComponent,
   ],
   imports: [
     CommonModule,

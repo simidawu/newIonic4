@@ -52,7 +52,7 @@ export class VisitorComponent implements OnInit {
 
   async ngOnInit() {
     // console.log('visit');
-    console.log(this.moduleID);
+    // console.log(this.moduleID);
 
     // let loading = this.plugin.createLoading();
     // loading.present();

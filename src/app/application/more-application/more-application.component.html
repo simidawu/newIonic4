@@ -1,8 +1,10 @@
 <ion-toolbar>
-  <ion-title>隐藏应用</ion-title>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
   <ion-buttons slot="end">
-    <ion-button (click)="showEditBtn()" *ngIf="!showBtn">编辑</ion-button>
-    <ion-button (click)="hideEditBtn()" *ngIf="showBtn">完成</ion-button>
+    <ion-button (click)="showEditBtn()" *ngIf="!showBtn">{{'edit' | translate}}</ion-button>
+    <ion-button (click)="hideEditBtn()" *ngIf="showBtn">{{'complete' | translate}}</ion-button>
   </ion-buttons>
 </ion-toolbar>
 <ion-content no-bounce>

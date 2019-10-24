@@ -1,8 +1,8 @@
 <ion-toolbar>
-  <ion-title>应用</ion-title>
+  <ion-title>{{'App.application' | translate}}</ion-title>
   <ion-buttons slot="end">
-    <ion-button (click)="showEditBtn()" *ngIf="!showBtn">编辑</ion-button>
-    <ion-button (click)="hideEditBtn()" *ngIf="showBtn">完成</ion-button>
+    <ion-button (click)="showEditBtn()" *ngIf="!showBtn">{{'edit' | translate}}</ion-button>
+    <ion-button (click)="hideEditBtn()" *ngIf="showBtn">{{'complete' | translate}}</ion-button>
   </ion-buttons>
 </ion-toolbar>
 <ion-content no-bounce>
@@ -14,7 +14,7 @@
     <div class="grid-footer"></div>
   </div>
   <div class="more-box" (click)="goToMorePage()">
-    <span>更多</span>
+    <span>{{'more' | translate}}</span>
     <ion-img class="card-list-btn" src="assets/icon/next.png"></ion-img>
   </div>
 </ion-content>

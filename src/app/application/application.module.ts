@@ -9,6 +9,8 @@ import { ApplicationService } from './shared/service/application.service';
 import { ApplicationComponent } from './application.component';
 import { MoreApplicationComponent } from './more-application/more-application.component';
 import { ApplicationGridComponent } from './application-grid/application-grid.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { TabsService } from '../tabs/shared/service/tabs.service';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { ApplicationGridComponent } from './application-grid/application-grid.co
     FormsModule,
     IonicModule,
     ApplicationRoutingModule,
-    PipesModule
+    TranslateModule.forChild(),
+    PipesModule,
   ],
   declarations: [
     ApplicationComponent,
@@ -35,7 +38,8 @@ import { ApplicationGridComponent } from './application-grid/application-grid.co
     ApplicationGridComponent,
   ],
   providers: [
-    ApplicationService
+    ApplicationService,
+    TabsService
   ]
 })
 export class ApplicationModule { }

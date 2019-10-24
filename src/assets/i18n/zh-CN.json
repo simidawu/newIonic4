@@ -1,4 +1,9 @@
 {
+  "App":{
+    "contact":"通讯录",
+    "application":"应用",
+    "me":"我的"
+  },
   "Login": {
     "title": "MITAC",
     "login": "登录",
@@ -102,5 +107,9 @@
   "error": "错误",
   "cancel": "取消",
   "confirm": "確定",
+  "edit":"编辑",
+  "complete":"完成",
+  "more":"更多",
+  "back":"返回",
   "autologin_err": "本地账号名或密码已失效,账号验证失败,请重新验证"
 }

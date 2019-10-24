@@ -3,14 +3,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabsRoutingModule } from './tabs-routing.module';
 import { TabsComponent } from './tabs.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { TabsService } from './shared/service/tabs.service';
 
 @NgModule({
   imports: [
     CommonModule,
     TabsRoutingModule,
-    SharedModule
+    TranslateModule,
+    SharedModule,
   ],
   declarations: [TabsComponent],
-  providers: [],
+  providers: [TabsService],
 })
 export class TabsModule { }

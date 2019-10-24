@@ -1,4 +1,9 @@
 {
+  "App": {
+    "contact": "通訊錄",
+    "application": "應用",
+    "me": "我的"
+  },
   "Login": {
     "title": "MITAC",
     "login": "登錄",
@@ -81,7 +86,7 @@
       "ename": "員工英文名",
       "empno": "員工工號",
       "goodsList": "攜帶物品",
-       "goodname": "物品名稱",
+      "goodname": "物品名稱",
       "goodmodel": "物品型號",
       "goodbrand": "物品品牌",
       "goodnums": "物品數量",
@@ -102,5 +107,8 @@
   "error": "錯誤",
   "cancel": "取消",
   "confirm": "確定",
+  "edit": "編輯",
+  "complete": "完成",
+  "more":"更多",
   "autologin_err": "本地賬號名或密碼已失效，賬號驗證失敗，請重新驗證！"
 }

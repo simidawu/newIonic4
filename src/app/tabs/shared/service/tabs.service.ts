@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { injectStyles } from 'shadow-dom-inject-styles';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -9,6 +11,7 @@ export class TabsService {
   constructor(
     private router: Router,
     private platform: Platform,
+    // private el: ElementRef,
   ) {
     this.platform.ready().then(() => {
       this.router.events.pipe(
@@ -29,26 +32,32 @@ export class TabsService {
     // console.log("父：" + pageUrlParents);
     if (pageUrlParents === 'tabs') {
       console.log('show');
-      // this.showTabs();
+      this.tabsDisplayType('show');
     } else {
       console.log('hide');
-      // this.hideTabs();
+      this.tabsDisplayType('hide');
     }
   }
 
-  public hideTabs() {
-    const tabBar = document.getElementById('FirstTabBar');
-    console.log(tabBar, 1);
-    if (tabBar.style.display !== 'none') {
-      tabBar.style.display = 'node';
-    }
-  }
 
-  public showTabs() {
-    const tabBar = document.getElementById('FirstTabBar');
-    console.log(tabBar, 2);
-    if (tabBar.style.display !== 'flex') {
-      tabBar.style.display = 'flex';
-    }
+
+  public tabsDisplayType(type: string) {
+    setTimeout(() => {
+      const tabBar = document.getElementById('FirstTabBar');
+      console.log(tabBar, 1);
+      // const toolbar = (this.el.nativeElement.querySelector('ion-app > ion-tabs') as HTMLElement);
+      const styles = `
+        .tabbar-hide {
+          display: none !important;
+        }
+      `;
+      injectStyles(tabBar, '.tabbar-hide', styles);
+    }, 100);
+    // if (type === 'show') {
+    //   tabBar.style.display = 'flex';
+    // } else {
+    //   tabBar.style.display = 'none';
+    // }
+
   }
 }
