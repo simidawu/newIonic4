@@ -7,7 +7,48 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="primary">
+  <ion-card>
+    <div class="search-form">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4" nzFor="orderNo">{{'Visitor.application.orderNo' | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <!-- <input nz-input id="orderNo" /> -->
+          <app-colleague-searcher [(ngModel)]="orderNo"></app-colleague-searcher>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4" nzFor="applicant">{{'Visitor.search.applicant' | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <input nz-input id="applicant" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">时间</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-date-picker [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="yyyy-MM-dd"
+            nzPlaceHolder="Start" (ngModelChange)="onStartChange($event)"
+            (nzOnOpenChange)="handleStartOpenChange($event)">
+          </nz-date-picker>
+          <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="yyyy-MM-dd" nzPlaceHolder="End"
+            [nzOpen]="endOpen" (ngModelChange)="onEndChange($event)" (nzOnOpenChange)="handleEndOpenChange($event)">
+          </nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">{{'Visitor.search.orderStatus' | translate}}</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <nz-select nzAllowClear nzPlaceHolder="-请选择-">
+            <nz-option nzValue="NEW" [nzLabel]="'Visitor.module.statu_new' | translate"></nz-option>
+            <nz-option nzValue="WAITING" [nzLabel]="'Visitor.module.statu_waiting' | translate"></nz-option>
+            <nz-option nzValue="REJECTED" [nzLabel]="'Visitor.module.statu_reject' | translate"></nz-option>
+            <nz-option nzValue="APPROVED" [nzLabel]="'Visitor.module.statu_approve' | translate"></nz-option>
+            <nz-option nzValue="CANCELED" [nzLabel]="'Visitor.module.statu_cancel' | translate"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </ion-card>
   <!-- <form #templateForm="ngForm">
     <ion-list>
       <ion-item>
@@ -47,11 +88,11 @@
       <ion-item>
         <ion-label>{{'visit.search.orderStatus' | translate}}</ion-label>
         <ion-select interface="popover" name="type" [(ngModel)]="type">
-          <ion-option value="NEW">{{'visit.statu' | translate}}</ion-option>
-          <ion-option value="WAITING">{{'visit.statu1' | translate}}</ion-option>
-          <ion-option value="REJECTED">{{'visit.statu2' | translate}}</ion-option>
-          <ion-option value="APPROVED">{{'visit.statu3' | translate}}</ion-option>
-          <ion-option value="CANCELED">{{'visit.statu4' | translate}}</ion-option>
+          <ion-select-option value="NEW">{{'visit.statu' | translate}}</ion-select-option>
+          <ion-select-option value="WAITING">{{'visit.statu1' | translate}}</ion-select-option>
+          <ion-select-option value="REJECTED">{{'visit.statu2' | translate}}</ion-select-option>
+          <ion-select-option value="APPROVED">{{'visit.statu3' | translate}}</ion-select-option>
+          <ion-select-option value="CANCELED">{{'visit.statu4' | translate}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>

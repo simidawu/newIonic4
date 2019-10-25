@@ -10,7 +10,6 @@ import { ApplicationComponent } from './application.component';
 import { MoreApplicationComponent } from './more-application/more-application.component';
 import { ApplicationGridComponent } from './application-grid/application-grid.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { TabsService } from '../tabs/shared/service/tabs.service';
 
 
 @NgModule({
@@ -39,7 +38,6 @@ import { TabsService } from '../tabs/shared/service/tabs.service';
   ],
   providers: [
     ApplicationService,
-    TabsService
   ]
 })
 export class ApplicationModule { }

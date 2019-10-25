@@ -1,25 +1,30 @@
 import { NgModule } from '@angular/core';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { RouteReuseStrategy } from '@angular/router';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouteReuseStrategy } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Store, StoreModule } from '@ngrx/store';
 import { userReducer } from './shared/reducers/user.reducer';
 
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 import { LocalStorageService } from './core/services/localStorage.service';
-import { LoginService } from './login/shared/service/login.service';
-import { AppComponent } from './app.component';
+
 import { AppRoutingModule } from './app-routing.module';
-import { PipesModule } from './shared/pipe/pipes.module';
+import { AppComponent } from './app.component';
 import { TabsModule } from './tabs/tabs.module';
+import { LoginService } from './login/shared/service/login.service';
 
 
 export function createTranslateHttpLoader(http: HttpClient) {
@@ -35,11 +40,9 @@ export function createTranslateHttpLoader(http: HttpClient) {
     IonicModule.forRoot({
       backButtonText: '返回'
     }),
+    NgZorroAntdModule,
     AppRoutingModule,
     TabsModule,
-    NgZorroAntdModule,
-    ReactiveFormsModule,
-    FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -52,7 +55,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
       userReducer
     }),
     CoreModule,
-    PipesModule,
+    SharedModule,
   ],
   providers: [
     StatusBar,

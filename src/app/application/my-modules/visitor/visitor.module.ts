@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { VisitorRoutingModule } from './visitor-routing.module';
 
@@ -13,6 +10,7 @@ import { ApplyComponent } from './staff/apply/apply.component';
 import { AdminComponent } from './staff/admin/admin.component';
 import { SearchComponent } from './staff/search/search.component';
 import { CheckComponent } from './staff/check/check.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 // import { AformComponent } from './staff/apply/aform/aform.component';
 
 
@@ -27,10 +25,8 @@ import { CheckComponent } from './staff/check/check.component';
     AdminComponent,
   ],
   imports: [
-    CommonModule,
-    IonicModule,
+    SharedModule,
     VisitorRoutingModule,
-    TranslateModule
   ],
   providers: [VisitorService],
 })

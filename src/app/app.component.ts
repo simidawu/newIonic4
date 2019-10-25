@@ -18,7 +18,6 @@ import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { LoginService } from './login/shared/service/login.service';
-import { injectStyles } from 'shadow-dom-inject-styles';
 import { element } from 'protractor';
 declare var window: any;
 

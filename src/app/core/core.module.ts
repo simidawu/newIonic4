@@ -20,11 +20,13 @@ import { ValidateService } from './services/validate.service';
 import { NgValidatorExtendService } from './services/ng-validator-extend.service';
 import { EncryptUtilService } from './services/encryptUtil.service';
 import { CacheService } from './services/cache.service';
+import { AppService } from './services/app.service';
 
 @NgModule({
   imports: [CommonModule, HttpModule],
   declarations: [],
   providers: [
+    AppService,
     MyHttpService,
     PluginService,
     ValidateService,
