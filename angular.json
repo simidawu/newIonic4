@@ -43,6 +43,9 @@
               },
               {
                 "input": "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css"
+              },
+              {
+                "input": "node_modules/ng-zorro-antd-mobile/src/ng-zorro-antd-mobile.min.css"
               }
             ],
             "scripts": []

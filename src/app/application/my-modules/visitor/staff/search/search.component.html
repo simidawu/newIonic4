@@ -6,14 +6,13 @@
     <ion-title>{{'Visitor.module.tab_search' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content color="primary">
   <ion-card>
     <div class="search-form">
       <nz-form-item>
         <nz-form-label [nzSpan]="4" nzFor="orderNo">{{'Visitor.application.orderNo' | translate}}</nz-form-label>
         <nz-form-control [nzSpan]="8">
-            <input nz-input id="orderNo" />
+          <input nz-input id="orderNo" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -23,20 +22,33 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="4">时间</nz-form-label>
+        <nz-form-label [nzSpan]="4">申请时间</nz-form-label>
         <nz-form-control [nzSpan]="8">
-          <nz-date-picker [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="yyyy-MM-dd" nzPlaceHolder="Start" 
-          (ngModelChange)="onStartChange($event)" (nzOnOpenChange)="handleStartOpenChange($event)">
-          </nz-date-picker>
-          <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="yyyy-MM-dd" nzPlaceHolder="End"
-            [nzOpen]="endOpen" (ngModelChange)="onEndChange($event)" (nzOnOpenChange)="handleEndOpenChange($event)">
-          </nz-date-picker>
+          <div class="time-item" (click)="chooseCreateTime()">
+            <span *ngIf="!this.createTime.show">
+              <div class="time-data">{{ this.createTime.startdate }}</div>
+              <div class="time-symbol">&nbsp;&nbsp;~&nbsp;&nbsp;</div>
+              <div class="time-data">{{ this.createTime.enddate }}</div>
+            </span>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">到访时间</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <div class="time-item" (click)="chooseApplyTime()">
+            <span *ngIf="!this.applyTime.show">
+              <div class="time-data">{{ this.applyTime.startdate }}</div>
+              <div class="time-symbol">&nbsp;&nbsp;~&nbsp;&nbsp;</div>
+              <div class="time-data">{{ this.applyTime.enddate }}</div>
+            </span>
+          </div>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="4">{{'Visitor.search.orderStatus' | translate}}</nz-form-label>
-        <nz-form-control [nzSpan]="8">
-          <nz-select nzAllowClear nzPlaceHolder="-请选择-">
+        <nz-form-control [nzSpan]="20">
+          <nz-select [style.width]="'100%'" [(ngModel)]="type" nzAllowClear nzPlaceHolder="-请选择-">
             <nz-option nzValue="NEW" [nzLabel]="'Visitor.module.statu_new' | translate"></nz-option>
             <nz-option nzValue="WAITING" [nzLabel]="'Visitor.module.statu_waiting' | translate"></nz-option>
             <nz-option nzValue="REJECTED" [nzLabel]="'Visitor.module.statu_reject' | translate"></nz-option>
@@ -46,61 +58,21 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </ion-card>
-  <!-- <form #templateForm="ngForm">
-    <ion-list>
-      <ion-item>
-        <ion-label>{{'visit.search.orderNo' | translate}}</ion-label>
-        <ion-input name="orderNo" [(ngModel)]="orderNo"></ion-input>
-      </ion-item>
-
-      <div *ngIf="role =='ADMIN'">
-        <ion-item>
-          <ion-label>{{'visit.search.applicant' | translate}}</ion-label>
-          <ion-input type="text" #name [placeholder]="'visit.add.applicant_placeholder' | translate"
-            (keyup)="searchapplicant(name)" name="applicant" [(ngModel)]="applicant" data-v-required="true"></ion-input>
-        </ion-item>
-        <div class="searchOut">
-          <ul class="list-group" [class.search]="colleague">
-            <li *ngFor="let person of colleague | async" (tap)="getcolleague(person.AGENT_NAME)"
-              class="search-result list-group-item">{{person.AGENT_NAME}}</li>
-          </ul>
-        </div>
-      </div>
-      <ion-item>
-        <ion-label>{{'visit.search.s_create_date' | translate}}</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" name="s_create_date" [(ngModel)]="s_create_date"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'visit.search.e_create_date' | translate}}</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" name="e_create_date" [(ngModel)]="e_create_date"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'visit.search.s_apply_date' | translate}}</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" name="s_apply_date" [(ngModel)]="s_apply_date"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'visit.search.e_apply_date' | translate}}</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD" name="e_apply_date" [(ngModel)]="e_apply_date"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{'visit.search.orderStatus' | translate}}</ion-label>
-        <ion-select interface="popover" name="type" [(ngModel)]="type">
-          <ion-select-option value="NEW">{{'visit.statu' | translate}}</ion-select-option>
-          <ion-select-option value="WAITING">{{'visit.statu1' | translate}}</ion-select-option>
-          <ion-select-option value="REJECTED">{{'visit.statu2' | translate}}</ion-select-option>
-          <ion-select-option value="APPROVED">{{'visit.statu3' | translate}}</ion-select-option>
-          <ion-select-option value="CANCELED">{{'visit.statu4' | translate}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-    <div class="btn-box">
-      <div class="little-btn">
-        <button ion-button block (click)="Reset()">{{'visit.search.reset' | translate}}</button>
-      </div>
-      <div class="little-btn">
-        <button ion-button block (click)="submitForm()">{{'visit.search.search' | translate}}</button>
-      </div>
+    <div>
+      
     </div>
-  </form> -->
+  </ion-card>
+  <Calendar [className]="am-calendar" [(ngModel)]="this.createTime.date"
+    [enterDirection]="this.createTime.enterDirection" [visible]="this.createTime.show"
+    [minDate]="this.createTime.minDate" [maxDate]="this.createTime.maxDate" [pickTime]="this.createTime.pickTime"
+    [type]="this.createTime.type" [rowSize]="this.createTime.rowSize" [showShortcut]="this.createTime.showShortcut"
+    [infinite]="this.createTime.infinite" [defaultValue]="this.createTime.defaultValue" (onCancel)="createTimeCancel()"
+    (onConfirm)="createTimeConfirm($event)"></Calendar>
+
+  <Calendar [className]="am-calendar" [(ngModel)]="this.applyTime.date"
+    [enterDirection]="this.applyTime.enterDirection" [visible]="this.applyTime.show"
+    [minDate]="this.applyTime.minDate" [maxDate]="this.applyTime.maxDate" [pickTime]="this.applyTime.pickTime"
+    [type]="this.applyTime.type" [rowSize]="this.applyTime.rowSize" [showShortcut]="this.applyTime.showShortcut"
+    [infinite]="this.applyTime.infinite" [defaultValue]="this.applyTime.defaultValue" (onCancel)="applyTimeCancel()"
+    (onConfirm)="applyTimeConfirm($event)"></Calendar>
 </ion-content>

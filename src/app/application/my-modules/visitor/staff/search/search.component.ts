@@ -1,33 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { CalendarState } from '../../shared/models/calendar.model';
 import { VisitorService } from '../../shared/service/visitor.service';
 import * as moment from 'moment';
+
 
 @Component({
   selector: 'sg-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
+
 export class SearchComponent implements OnInit {
 
   User: any;
+  applyTime: CalendarState;
+  createTime: CalendarState;
   orderNo = '';
   applicant = '';
   tempempno = '';
-  startValue: Date | null = null;
-  endValue: Date | null = null;
-  endOpen = false;
-  s_apply_date = '';
-  e_apply_date = '';
-  s_create_date = '';
-  e_create_date = '';
   type = '';
   role = '';
-
-  isSelectcolleague = false; // 判断是否正确选择申请人
-  tempcolleague = ''; // 临时作保存的中间申请人
-  colleague = ''; // 搜索得到的申请人
-
+  starttime = new Date(new Date().setDate(1));
+  endtime = new Date(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0));
   constructor(
     private visitorService: VisitorService,
   ) { }
@@ -36,71 +30,81 @@ export class SearchComponent implements OnInit {
     this.User = JSON.parse(localStorage.getItem('currentUser'));
     this.applicant = this.User.empno;
     this.tempempno = this.User.id;
+    this.applyTime = {
+      date: null,
+      defaultValue: undefined,
+      show: false,
+      pickTime: false,
+      type: 'range',
+      enterDirection: '',
+      rowSize: 'normal',
+      showShortcut: true,
+      infinite: true,
+      startdate: '',
+      enddate: '',
+      minDate: new Date(+new Date() - 31536000000),
+      maxDate: new Date(+new Date() + 31536000000),
+    };
+    // 申请时间设置默认值
+    this.createTime = Object.assign({}, this.applyTime);
+    this.createTime.startdate = moment(this.starttime).format('YYYY-MM-DD');
+    this.createTime.enddate = moment(this.endtime).format('YYYY-MM-DD');
+    // setTimeout(() => {
+    //   this.createTime = this.applyTime;
+    //   this.createTime.startdate = moment(this.starttime).format('YYYY-MM-DD');
+    //   this.createTime.enddate = moment(this.endtime).format('YYYY-MM-DD');
+    // }, 0);
     console.log(this);
   }
 
-  // ionViewDidEnter() {
-  //   this.init();
-  //   this.role = this.navParams.get('role');
-  // }
 
 
-  init(r?: any) {
-    this.orderNo = '';
-    this.applicant = '';
-    if (r === undefined) {
-      this.s_create_date = moment(new Date().setDate(1)).format('YYYY-MM-DD');
-      this.e_create_date = moment(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)).format('YYYY-MM-DD');
-    } else {
-      this.s_create_date = '';
-      this.e_create_date = '';
-    }
-    this.s_apply_date = '';
-    this.e_apply_date = '';
-    this.type = '';
-    this.tempempno = '';
+  /*申请时间*/
+  chooseCreateTime() {
+    // 第一个时间区间
+    this.createTime.show = true;
+    this.createTime.defaultValue = [this.starttime, this.endtime];
   }
 
-  disabledStartDate = (startValue: Date): boolean => {
-    if (!startValue || !this.endValue) {
-      return false;
-    }
-    return startValue.getTime() > this.endValue.getTime();
-  };
-
-  disabledEndDate = (endValue: Date): boolean => {
-    if (!endValue || !this.startValue) {
-      return false;
-    }
-    return endValue.getTime() <= this.startValue.getTime();
-  };
-
-  onStartChange(date: Date): void {
-    this.startValue = date;
+  createTimeCancel() {
+    this.createTime.show = false;
   }
 
-  onEndChange(date: Date): void {
-    this.endValue = date;
+  createTimeConfirm(value) {
+    const startdate = moment(value.startDate).format('YYYY-MM-DD');
+    const enddate = moment(value.endDate).format('YYYY-MM-DD');
+    this.createTime = {
+      ...this.createTime,
+      ...{ show: false, startdate, enddate }
+    };
+    this.createTimeCancel();
   }
 
-  handleStartOpenChange(open: boolean): void {
-    if (!open) {
-      this.endOpen = true;
-    }
-    console.log('handleStartOpenChange', open, this.endOpen);
+
+
+  /*到访时间*/
+  chooseApplyTime() {
+    // 第二个时间区间
+    this.applyTime.show = true;
   }
 
-  handleEndOpenChange(open: boolean): void {
-    console.log(open);
-    this.endOpen = open;
+  applyTimeCancel() {
+    this.applyTime.show = false;
   }
+
+  applyTimeConfirm(value) {
+    this.applyTime.startdate = moment(value.startDate).format('YYYY-MM-DD');
+    this.applyTime.enddate = moment(value.endDate).format('YYYY-MM-DD');
+    this.applyTimeCancel();
+  }
+
+
 
   // 重置
-  Reset() {
-    this.init(1);
-  }
+  Reset() { }
 
 
+  // 查询
   async submitForm() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let userid, apply_empno;
@@ -120,10 +124,10 @@ export class SearchComponent implements OnInit {
       userid: userid,
       apply_empno: apply_empno,
       docno: this.orderNo,
-      s_apply_date: this.s_apply_date,
-      e_apply_date: this.e_apply_date,
-      s_create_date: this.s_create_date,
-      e_create_date: this.e_create_date,
+      s_apply_date: this.applyTime.startdate,
+      e_apply_date: this.applyTime.enddate,
+      s_create_date: this.createTime.startdate,
+      e_create_date: this.createTime.enddate,
       status: this.type,
       phone: '',
       check: '',

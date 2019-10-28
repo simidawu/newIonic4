@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -41,6 +42,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
       backButtonText: '返回'
     }),
     NgZorroAntdModule,
+    NgZorroAntdMobileModule,
     AppRoutingModule,
     TabsModule,
     HttpClientModule,

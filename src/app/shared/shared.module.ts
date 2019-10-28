@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from './pipe/pipes.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { TranslateModule } from '@ngx-translate/core';
 import { ColleagueSearcherComponent } from './components/inputs/colleague-searcher/colleague-searcher.component';
 
@@ -12,6 +13,7 @@ import { ColleagueSearcherComponent } from './components/inputs/colleague-search
     CommonModule,
     IonicModule,
     NgZorroAntdModule,
+    NgZorroAntdMobileModule,
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
@@ -24,6 +26,7 @@ import { ColleagueSearcherComponent } from './components/inputs/colleague-search
     CommonModule,
     IonicModule,
     NgZorroAntdModule,
+    NgZorroAntdMobileModule,
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
