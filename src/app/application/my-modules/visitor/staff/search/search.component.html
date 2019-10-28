@@ -13,22 +13,20 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="4" nzFor="orderNo">{{'Visitor.application.orderNo' | translate}}</nz-form-label>
         <nz-form-control [nzSpan]="8">
-          <!-- <input nz-input id="orderNo" /> -->
-          <app-colleague-searcher [(ngModel)]="orderNo"></app-colleague-searcher>
+            <input nz-input id="orderNo" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="4" nzFor="applicant">{{'Visitor.search.applicant' | translate}}</nz-form-label>
         <nz-form-control [nzSpan]="8">
-          <input nz-input id="applicant" />
+          <app-colleague-searcher [(ngModel)]="applicant"></app-colleague-searcher>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="4">时间</nz-form-label>
-        <nz-form-control [nzSpan]="20">
-          <nz-date-picker [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="yyyy-MM-dd"
-            nzPlaceHolder="Start" (ngModelChange)="onStartChange($event)"
-            (nzOnOpenChange)="handleStartOpenChange($event)">
+        <nz-form-control [nzSpan]="8">
+          <nz-date-picker [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="yyyy-MM-dd" nzPlaceHolder="Start" 
+          (ngModelChange)="onStartChange($event)" (nzOnOpenChange)="handleStartOpenChange($event)">
           </nz-date-picker>
           <nz-date-picker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="yyyy-MM-dd" nzPlaceHolder="End"
             [nzOpen]="endOpen" (ngModelChange)="onEndChange($event)" (nzOnOpenChange)="handleEndOpenChange($event)">

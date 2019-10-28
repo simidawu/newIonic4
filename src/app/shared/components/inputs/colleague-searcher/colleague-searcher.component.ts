@@ -74,8 +74,9 @@ export class ColleagueSearcherComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           (data: any) => {
-            if (data.length > 0) {
-              const val = data.find(
+            const datas = JSON.parse(data['_body']);
+            if (datas.length > 0) {
+              const val = datas.find(
                 d =>
                   d.EMPNO === value ||
                   d.NICK_NAME === value ||

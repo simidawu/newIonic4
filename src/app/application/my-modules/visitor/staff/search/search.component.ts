@@ -12,10 +12,11 @@ export class SearchComponent implements OnInit {
 
   User: any;
   orderNo = '';
-
-  applicant: string;
-  tempempno: string;
-
+  applicant = '';
+  tempempno = '';
+  startValue: Date | null = null;
+  endValue: Date | null = null;
+  endOpen = false;
   s_apply_date = '';
   e_apply_date = '';
   s_create_date = '';
@@ -33,7 +34,9 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.User = JSON.parse(localStorage.getItem('currentUser'));
-    this.orderNo = this.User.empno;
+    this.applicant = this.User.empno;
+    this.tempempno = this.User.id;
+    console.log(this);
   }
 
   // ionViewDidEnter() {
@@ -58,11 +61,39 @@ export class SearchComponent implements OnInit {
     this.tempempno = '';
   }
 
+  disabledStartDate = (startValue: Date): boolean => {
+    if (!startValue || !this.endValue) {
+      return false;
+    }
+    return startValue.getTime() > this.endValue.getTime();
+  };
 
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
+  disabledEndDate = (endValue: Date): boolean => {
+    if (!endValue || !this.startValue) {
+      return false;
+    }
+    return endValue.getTime() <= this.startValue.getTime();
+  };
+
+  onStartChange(date: Date): void {
+    this.startValue = date;
   }
 
+  onEndChange(date: Date): void {
+    this.endValue = date;
+  }
+
+  handleStartOpenChange(open: boolean): void {
+    if (!open) {
+      this.endOpen = true;
+    }
+    console.log('handleStartOpenChange', open, this.endOpen);
+  }
+
+  handleEndOpenChange(open: boolean): void {
+    console.log(open);
+    this.endOpen = open;
+  }
 
   // 重置
   Reset() {
