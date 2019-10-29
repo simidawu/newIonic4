@@ -11,6 +11,7 @@ import { AdminComponent } from './staff/admin/admin.component';
 import { SearchComponent } from './staff/search/search.component';
 import { CheckComponent } from './staff/check/check.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ResultListComponent } from './staff/search/result-list/result-list.component';
 // import { AformComponent } from './staff/apply/aform/aform.component';
 
 
@@ -20,6 +21,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HomeComponent,
     ApplyComponent,
     SearchComponent,
+    ResultListComponent,
     // AformComponent,
     CheckComponent,
     AdminComponent,

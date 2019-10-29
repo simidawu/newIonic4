@@ -12,10 +12,10 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="4" nzFor="orderNo">{{'Visitor.application.orderNo' | translate}}</nz-form-label>
         <nz-form-control [nzSpan]="8">
-          <input nz-input id="orderNo" />
+          <input nz-input [(ngModel)]="orderNo" />
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
+      <nz-form-item *ngIf="role === 'VISIT_ADMIN'">
         <nz-form-label [nzSpan]="4" nzFor="applicant">{{'Visitor.search.applicant' | translate}}</nz-form-label>
         <nz-form-control [nzSpan]="8">
           <app-colleague-searcher [(ngModel)]="applicant"></app-colleague-searcher>
@@ -58,9 +58,14 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div>
-      
-    </div>
+    <div class="btn-box">
+        <div class="little-btn">
+          <ion-button expand="block" (click)="Reset()">{{'reset' | translate}}</ion-button>
+        </div>
+        <div class="little-btn">
+          <ion-button expand="block" (click)="submitForm()">{{'search' | translate}}</ion-button>
+        </div>
+      </div>
   </ion-card>
   <Calendar [className]="am-calendar" [(ngModel)]="this.createTime.date"
     [enterDirection]="this.createTime.enterDirection" [visible]="this.createTime.show"

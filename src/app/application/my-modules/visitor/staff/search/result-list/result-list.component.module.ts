@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { ResultListComponent } from './result-list.component';
 
 @NgModule({
   declarations: [ResultListComponent],
   imports: [
-    IonicModule,
-    TranslateModule,
+    SharedModule
   ],
   entryComponents: [ResultListComponent],
 })

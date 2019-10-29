@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NavParams, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { VisitorService } from '../../../shared/service/visitor.service';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'sg-result-list',
@@ -12,40 +14,39 @@ import { VisitorService } from '../../../shared/service/visitor.service';
 export class ResultListComponent implements OnInit {
 
   constructor(
-    public navParams: NavParams,
-    public navCtrl: NavController,
+    private route: ActivatedRoute,
     private visitorService: VisitorService,
     private translate: TranslateService,
   ) { }
 
+  param: any;
   formData: any[];
   translateTexts: any = {};
 
 
-  ionViewWillEnter() {
-    this.Init();
-  }
-
-
   ngOnInit() {
-    this.Init();
+    this.subscribeTranslateText();
+    this.route.params.subscribe((params: any) => {
+      this.param = params;
+      console.log(this.param);
+    });
+    // this.Init();
   }
 
 
   async Init() {
-    this.subscribeTranslateText();
-    let searchdata = this.navParams.get('searchdata');
+    let searchdata = '';
     let res = await this.visitorService.getApplyList(searchdata);
     this.formData = res.json();
     if (this.formData) {
       for (let i = 0; i < this.formData.length; i++) {
-        if (this.formData[i].STATUS == 'NEW') {
+        if (this.formData[i].STATUS === 'NEW') {
           this.formData[i].CNSTATUS = this.translateTexts['visit.statu'];
-        } else if (this.formData[i].STATUS == 'WAITING') {
+        } else if (this.formData[i].STATUS === 'WAITING') {
           this.formData[i].CNSTATUS = this.translateTexts['visit.statu1'];
-        } else if (this.formData[i].STATUS == 'REJECT') {
+        } else if (this.formData[i].STATUS === 'REJECT') {
           this.formData[i].CNSTATUS = this.translateTexts['visit.statu2'];
-        } else if (this.formData[i].STATUS == 'APPROVED') {
+        } else if (this.formData[i].STATUS === 'APPROVED') {
           this.formData[i].CNSTATUS = this.translateTexts['visit.statu3'];
         } else {
           this.formData[i].CNSTATUS = this.translateTexts['visit.statu4'];

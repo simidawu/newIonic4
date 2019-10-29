@@ -1,22 +1,22 @@
-<ion-tabs>
+<ion-tabs *ngIf="ready">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="search">
+    <ion-tab-button tab="search" *ngIf="common || set || admin">
       <ion-icon name="search"></ion-icon>
       <ion-label>{{'Visitor.module.tab_search' | translate}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="apply">
+    <ion-tab-button tab="apply" *ngIf="common || set || admin">
       <ion-icon name="create"></ion-icon>
       <ion-label>{{'Visitor.module.tab_apply' | translate}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="home">
+    <ion-tab-button tab="home" *ngIf="common || set || admin">
       <ion-icon name="home"></ion-icon>
       <ion-label>{{'Visitor.module.tab_home' | translate}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="check">
+    <ion-tab-button tab="check" *ngIf="security || set || admin">
       <ion-icon name="hand"></ion-icon>
       <ion-label>{{'Visitor.module.tab_check' | translate}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="admin">
+    <ion-tab-button tab="admin" *ngIf="admin">
       <ion-icon name="filing"></ion-icon>
       <ion-label>{{'Visitor.module.tab_admin' | translate}}</ion-label>
     </ion-tab-button>

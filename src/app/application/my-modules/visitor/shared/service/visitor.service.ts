@@ -1,16 +1,22 @@
 import { Config } from '../config/config';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { MyHttpService } from '../../../../../core/services/myHttp.service';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { tify, sify } from '../../../../../shared/utils/chinese-conv/';
 import { environment } from '../../../../../../environments/environment';
 import * as moment from 'moment';
-import { map } from 'rxjs/operators';
+import { ApplicationService } from 'src/app/application/shared/service/application.service';
 @Injectable()
 export class VisitorService {
-  constructor(private http: Http, private myHttp: MyHttpService) { }
+  role = '';
+  constructor(
+    private http: Http,
+    private myHttp: MyHttpService,
+    private app: ApplicationService,
+  ) { }
 
 
   // 獲取今天日期

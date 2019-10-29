@@ -17,7 +17,10 @@ const AppsRoutes: Routes = [
   { path: '81', component: MoreApplicationComponent },
   { path: '26023', component: MoreApplicationComponent },
   { path: '26031', component: MoreApplicationComponent },
-  { path: 'visitor', loadChildren: () => import('./my-modules/visitor/visitor.module').then(m => m.VisitorModule) },
+  {
+    path: 'visitor',
+    loadChildren: () => import('./my-modules/visitor/visitor.module').then(m => m.VisitorModule),
+  },
   { path: '-1', component: MoreApplicationComponent },
 ];
 

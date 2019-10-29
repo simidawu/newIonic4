@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CalendarState } from '../../shared/models/calendar.model';
 import { VisitorService } from '../../shared/service/visitor.service';
 import * as moment from 'moment';
@@ -22,14 +23,19 @@ export class SearchComponent implements OnInit {
   role = '';
   starttime = new Date(new Date().setDate(1));
   endtime = new Date(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0));
+
   constructor(
     private visitorService: VisitorService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.User = JSON.parse(localStorage.getItem('currentUser'));
+    this.role = localStorage.getItem('visitorrole');
     this.applicant = this.User.empno;
     this.tempempno = this.User.id;
+    this.type = '';
     this.applyTime = {
       date: null,
       defaultValue: undefined,
@@ -45,16 +51,38 @@ export class SearchComponent implements OnInit {
       minDate: new Date(+new Date() - 31536000000),
       maxDate: new Date(+new Date() + 31536000000),
     };
-    // 申请时间设置默认值
     this.createTime = Object.assign({}, this.applyTime);
+    // 申请时间设置默认值
     this.createTime.startdate = moment(this.starttime).format('YYYY-MM-DD');
     this.createTime.enddate = moment(this.endtime).format('YYYY-MM-DD');
-    // setTimeout(() => {
-    //   this.createTime = this.applyTime;
-    //   this.createTime.startdate = moment(this.starttime).format('YYYY-MM-DD');
-    //   this.createTime.enddate = moment(this.endtime).format('YYYY-MM-DD');
-    // }, 0);
     console.log(this);
+  }
+
+
+  init() {
+    this.applicant = this.User.empno;
+    this.tempempno = this.User.id;
+    this.type = '';
+    this.orderNo = '';
+    this.applyTime = {
+      date: null,
+      defaultValue: undefined,
+      show: false,
+      pickTime: false,
+      type: 'range',
+      enterDirection: '',
+      rowSize: 'normal',
+      showShortcut: true,
+      infinite: true,
+      startdate: '',
+      enddate: '',
+      minDate: new Date(+new Date() - 31536000000),
+      maxDate: new Date(+new Date() + 31536000000),
+    };
+    this.createTime = Object.assign({}, this.applyTime);
+    // 申请时间设置默认值
+    this.createTime.startdate = moment(this.starttime).format('YYYY-MM-DD');
+    this.createTime.enddate = moment(this.endtime).format('YYYY-MM-DD');
   }
 
 
@@ -98,31 +126,31 @@ export class SearchComponent implements OnInit {
     this.applyTimeCancel();
   }
 
-
-
   // 重置
-  Reset() { }
+  Reset() {
+    this.init();
+  }
 
 
   // 查询
   async submitForm() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    let userid, apply_empno;
-    if (this.role == 'ADMIN') {
-      if (this.applicant == '') {
+    console.log(this.applicant);
+    let userid, empno;
+    if (this.role === 'VISIT_ADMIN') {
+      if (this.applicant === '') {
         userid = '';
-        apply_empno = '';
+        empno = '';
       } else {
         userid = this.tempempno;
-        apply_empno = this.applicant;
+        empno = this.applicant;
       }
     } else {
-      userid = currentUser.id;
+      userid = this.User.id;
     }
 
     let data = {
       userid: userid,
-      apply_empno: apply_empno,
+      apply_empno: empno,
       docno: this.orderNo,
       s_apply_date: this.applyTime.startdate,
       e_apply_date: this.applyTime.enddate,
@@ -132,9 +160,8 @@ export class SearchComponent implements OnInit {
       phone: '',
       check: '',
     };
-    // this.navCtrl.push('ResultListComponent', {
-    //   searchdata: data,
-    // });
+    
+    this.router.navigate(['/tabs/application/visitor/result', data]);
   }
 
 }

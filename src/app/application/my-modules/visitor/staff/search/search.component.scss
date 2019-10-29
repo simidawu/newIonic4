@@ -39,3 +39,17 @@ nz-form-label {
 .am-calendar {
   color:#333;
 }
+
+.btn-box {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.little-btn {
+  width: 45%;
+
+  ion-button {
+    height: 2rem ;
+  }
+}

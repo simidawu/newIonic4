@@ -8,6 +8,7 @@ import { SearchComponent } from './staff/search/search.component';
 import { AformComponent } from './staff/apply/aform/aform.component';
 import { CheckComponent } from './staff/check/check.component';
 import { AdminComponent } from './staff/admin/admin.component';
+import { ResultListComponent } from './staff/search/result-list/result-list.component';
 
 
 
@@ -18,6 +19,7 @@ const VisitorRoutes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'apply', component: ApplyComponent },
       { path: 'search', component: SearchComponent },
+      { path: 'result', component: ResultListComponent },
       { path: 'check', component: CheckComponent },
       { path: 'admin', component: AdminComponent },
       // { path: 'aform', component: AformComponent },

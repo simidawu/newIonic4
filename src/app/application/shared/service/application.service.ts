@@ -94,6 +94,13 @@ export class ApplicationService {
       })
       .catch(err => console.log(err));
   }
+
+   // 获取权限
+   getPrivilege(moduleId: number) {
+    return this.myHttp.get(
+      environment.baseUrl + 'Guid/GetUserFunctions' + `?moduleID=${moduleId}`,
+    );
+  }
 }
 
 export class ModuleTip {
