@@ -9,6 +9,7 @@ import { AformComponent } from './staff/apply/aform/aform.component';
 import { CheckComponent } from './staff/check/check.component';
 import { AdminComponent } from './staff/admin/admin.component';
 import { ResultListComponent } from './staff/search/result-list/result-list.component';
+import { FormComponent } from './staff/apply/form/form.component';
 
 
 
@@ -18,6 +19,8 @@ const VisitorRoutes: Routes = [
     path: '', component: VisitorComponent, children: [
       { path: 'home', component: HomeComponent },
       { path: 'apply', component: ApplyComponent },
+      { path: 'aform/:id', component: AformComponent },
+      { path: 'form', component: FormComponent },
       { path: 'search', component: SearchComponent },
       { path: 'result', component: ResultListComponent },
       { path: 'check', component: CheckComponent },

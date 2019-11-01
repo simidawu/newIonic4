@@ -9,7 +9,7 @@
 
 <ion-content>
   <div *ngIf="formData">
-    <ion-card *ngFor="let data of formData" (click)="toDetail(data)">
+    <ion-card *ngFor="let data of formData" (click)="toDetail(data.ID)">
       <ion-card-header>
         <ion-card-subtitle>
           {{'Visitor.application.applyTime' | translate}} : {{data.APPLY_DATE}}

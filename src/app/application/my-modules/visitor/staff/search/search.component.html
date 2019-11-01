@@ -24,24 +24,26 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="4">申请时间</nz-form-label>
         <nz-form-control [nzSpan]="8">
-          <div class="time-item" (click)="chooseCreateTime()">
-            <span *ngIf="!this.createTime.show">
+          <div class="item-box">
+            <div class="time-item" *ngIf="!this.createTime.show" (click)="chooseCreateTime()">
               <div class="time-data">{{ this.createTime.startdate }}</div>
-              <div class="time-symbol">&nbsp;&nbsp;~&nbsp;&nbsp;</div>
+              <div class="time-symbol">~</div>
               <div class="time-data">{{ this.createTime.enddate }}</div>
-            </span>
+            </div>
+            <Icon [type]="'cross-circle-o'" (click)="ctimeClear()"></Icon>
           </div>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="4">到访时间</nz-form-label>
         <nz-form-control [nzSpan]="8">
-          <div class="time-item" (click)="chooseApplyTime()">
-            <span *ngIf="!this.applyTime.show">
+          <div class="item-box">
+            <div class="time-item" *ngIf="!this.applyTime.show" (click)="chooseApplyTime()">
               <div class="time-data">{{ this.applyTime.startdate }}</div>
-              <div class="time-symbol">&nbsp;&nbsp;~&nbsp;&nbsp;</div>
+              <div class="time-symbol">~</div>
               <div class="time-data">{{ this.applyTime.enddate }}</div>
-            </span>
+            </div>
+            <Icon [type]="'cross-circle-o'" (click)="atimeClear()"></Icon>
           </div>
         </nz-form-control>
       </nz-form-item>
@@ -59,25 +61,24 @@
       </nz-form-item>
     </div>
     <div class="btn-box">
-        <div class="little-btn">
-          <ion-button expand="block" (click)="Reset()">{{'reset' | translate}}</ion-button>
-        </div>
-        <div class="little-btn">
-          <ion-button expand="block" (click)="submitForm()">{{'search' | translate}}</ion-button>
-        </div>
+      <div class="little-btn">
+        <ion-button expand="block" (click)="Reset()">{{'reset' | translate}}</ion-button>
       </div>
+      <div class="little-btn">
+        <ion-button expand="block" (click)="submitForm()">{{'search' | translate}}</ion-button>
+      </div>
+    </div>
   </ion-card>
+  <Calendar [className]="am-calendar" [(ngModel)]="this.applyTime.date" [enterDirection]="this.applyTime.enterDirection"
+    [visible]="this.applyTime.show" [minDate]="this.applyTime.minDate" [maxDate]="this.applyTime.maxDate"
+    [pickTime]="this.applyTime.pickTime" [type]="this.applyTime.type" [rowSize]="this.applyTime.rowSize"
+    [showShortcut]="this.applyTime.showShortcut" [infinite]="this.applyTime.infinite"
+    [defaultValue]="this.applyTime.defaultValue" (onCancel)="applyTimeCancel()" (onConfirm)="applyTimeConfirm($event)">
+  </Calendar>
   <Calendar [className]="am-calendar" [(ngModel)]="this.createTime.date"
     [enterDirection]="this.createTime.enterDirection" [visible]="this.createTime.show"
     [minDate]="this.createTime.minDate" [maxDate]="this.createTime.maxDate" [pickTime]="this.createTime.pickTime"
     [type]="this.createTime.type" [rowSize]="this.createTime.rowSize" [showShortcut]="this.createTime.showShortcut"
     [infinite]="this.createTime.infinite" [defaultValue]="this.createTime.defaultValue" (onCancel)="createTimeCancel()"
     (onConfirm)="createTimeConfirm($event)"></Calendar>
-
-  <Calendar [className]="am-calendar" [(ngModel)]="this.applyTime.date"
-    [enterDirection]="this.applyTime.enterDirection" [visible]="this.applyTime.show"
-    [minDate]="this.applyTime.minDate" [maxDate]="this.applyTime.maxDate" [pickTime]="this.applyTime.pickTime"
-    [type]="this.applyTime.type" [rowSize]="this.applyTime.rowSize" [showShortcut]="this.applyTime.showShortcut"
-    [infinite]="this.applyTime.infinite" [defaultValue]="this.applyTime.defaultValue" (onCancel)="applyTimeCancel()"
-    (onConfirm)="applyTimeConfirm($event)"></Calendar>
 </ion-content>

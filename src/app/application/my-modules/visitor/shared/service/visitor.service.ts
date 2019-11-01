@@ -81,6 +81,15 @@ export class VisitorService {
     );
   }
 
+  getApplyData(id: number) {
+    return this.myHttp.get(
+      Config.getApplyDataUrl + '?id=' + id
+    ).then(res => {
+      const data = res.json();
+      return Promise.resolve(data);
+    });
+  }
+
 
   // 根據ID獲取員工信息
   getEmployee(id: string) {
@@ -151,7 +160,10 @@ export class VisitorService {
       + '?type=' + type
       + '&id=' + id
       + '&tag=' + tag
-    );
+    ).then(res => {
+      const data = res.json();
+      return Promise.resolve(data);
+    });
   }
 
 

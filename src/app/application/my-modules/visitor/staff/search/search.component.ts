@@ -131,6 +131,16 @@ export class SearchComponent implements OnInit {
     this.init();
   }
 
+  ctimeClear() {
+    this.createTime.startdate = '';
+    this.createTime.enddate = '';
+  }
+
+  atimeClear() {
+    this.applyTime.startdate = '';
+    this.applyTime.enddate = '';
+  }
+
 
   // 查询
   async submitForm() {
@@ -160,7 +170,7 @@ export class SearchComponent implements OnInit {
       phone: '',
       check: '',
     };
-    
+    console.log(data);
     this.router.navigate(['/tabs/application/visitor/result', data]);
   }
 

@@ -88,14 +88,15 @@ export class HomeComponent implements OnInit {
   }
 
 
-  toDetail(formData: any) {
+  toDetail(id: any) {
     console.log('todetail');
-    // this.router.navigate(['/tabs/application/visitor/aform', { formData: formData.LOT_NO }]);
-    // this.router.navigate(['/modules/ihub/pk-edit', formData], { skipLocationChange: true });
-    // this.router.navigate(['/end/dataDrive/edit', formData]);
-    // this.navCtrl.push('AformComponent', {
-    //   formData: formData,
-    // });
+    // this.router.navigate(['/tabs/application/visitor/aform', id]);
+    this.router.navigate(['/tabs/application/visitor/form'], {
+      queryParams: {
+        id: id,
+        type: 'text'
+      }
+    });
   }
 
 }

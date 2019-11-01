@@ -12,7 +12,8 @@ import { SearchComponent } from './staff/search/search.component';
 import { CheckComponent } from './staff/check/check.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ResultListComponent } from './staff/search/result-list/result-list.component';
-// import { AformComponent } from './staff/apply/aform/aform.component';
+import { AformComponent } from './staff/apply/aform/aform.component';
+import { FormComponent } from './staff/apply/form/form.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ResultListComponent } from './staff/search/result-list/result-list.comp
     ApplyComponent,
     SearchComponent,
     ResultListComponent,
-    // AformComponent,
+    AformComponent,
+    FormComponent,
     CheckComponent,
     AdminComponent,
   ],

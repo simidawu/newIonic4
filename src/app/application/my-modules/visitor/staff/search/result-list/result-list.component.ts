@@ -28,28 +28,28 @@ export class ResultListComponent implements OnInit {
     this.subscribeTranslateText();
     this.route.params.subscribe((params: any) => {
       this.param = params;
-      console.log(this.param);
     });
-    // this.Init();
+    this.Init();
   }
 
 
   async Init() {
-    let searchdata = '';
-    let res = await this.visitorService.getApplyList(searchdata);
+    console.log(this.param);
+    const res = await this.visitorService.getApplyList(this.param);
     this.formData = res.json();
+    console.log(this.formData);
     if (this.formData) {
       for (let i = 0; i < this.formData.length; i++) {
         if (this.formData[i].STATUS === 'NEW') {
-          this.formData[i].CNSTATUS = this.translateTexts['visit.statu'];
+          this.formData[i].CNSTATUS = this.translateTexts['Visitor.module.statu_new'];
         } else if (this.formData[i].STATUS === 'WAITING') {
-          this.formData[i].CNSTATUS = this.translateTexts['visit.statu1'];
+          this.formData[i].CNSTATUS = this.translateTexts['Visitor.module.statu_waiting'];
         } else if (this.formData[i].STATUS === 'REJECT') {
-          this.formData[i].CNSTATUS = this.translateTexts['visit.statu2'];
+          this.formData[i].CNSTATUS = this.translateTexts['Visitor.module.statu_reject'];
         } else if (this.formData[i].STATUS === 'APPROVED') {
-          this.formData[i].CNSTATUS = this.translateTexts['visit.statu3'];
+          this.formData[i].CNSTATUS = this.translateTexts['Visitor.module.statu_approve'];
         } else {
-          this.formData[i].CNSTATUS = this.translateTexts['visit.statu4'];
+          this.formData[i].CNSTATUS = this.translateTexts['Visitor.module.statu_cancel'];
         }
       }
     }
@@ -59,11 +59,11 @@ export class ResultListComponent implements OnInit {
   subscribeTranslateText() {
     this.translate
       .get([
-        'visit.statu',
-        'visit.statu1',
-        'visit.statu2',
-        'visit.statu3',
-        'visit.statu4',
+        'Visitor.module.statu_new',
+        'Visitor.module.statu_waiting',
+        'Visitor.module.statu_reject',
+        'Visitor.module.statu_approve',
+        'Visitor.module.statu_cancel',
       ])
       .subscribe(res => {
         this.translateTexts = res;
