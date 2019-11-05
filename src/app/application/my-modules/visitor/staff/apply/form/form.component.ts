@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController, ModalController, PopoverController, LoadingController, ToastController } from '@ionic/angular';
@@ -24,6 +24,11 @@ import { AddGoodsComponent } from '../../common/add-goods/add-goods.component';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
+  value = '';
+  error = false;
+
+  name = '选择';
+  values = new Date();
 
   constructor(
     private route: ActivatedRoute,
@@ -90,11 +95,15 @@ export class FormComponent implements OnInit {
       }
     });
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    // 獲取所有區域
+    const list: any = await this.visitorService.getArea(this.type);
+    this.specarealist = list.filter(value => value.MACHINE_ID);
+    this.arealist = list.filter(value => !value.MACHINE_ID);
     if (this.fid > 0) {
       const res = await this.visitorService.getApplyData(this.fid);
       console.log(res);
       this.formData = res[0];
-      this.type = this.formData.TYPE;
+      // this.type = this.formData.TYPE;
       this.status = this.formData.STATUS;
       this.applyList = this.formData;
       this.applyList.toolTypeSelect = '';
@@ -171,9 +180,6 @@ export class FormComponent implements OnInit {
         gdata.push(newone);
       }
       this.applyList.goodsList = gdata.join(',');
-
-
-
     } else {
       // 新增單據
       this.applyList = {
@@ -231,9 +237,7 @@ export class FormComponent implements OnInit {
     if (this.type === 'vip' || this.type === 'ctm' || this.type === 'emp') {
       this.applyList.NETWORK = true;
     }
-    const list: any = await this.visitorService.getArea(this.type);
-    this.specarealist = list[0].filter(value => value.MACHINE_ID);
-    this.arealist = list[0].filter(value => !value.MACHINE_ID);
+
   }
 
   subscribeTranslateText() {
@@ -323,6 +327,40 @@ export class FormComponent implements OnInit {
     },
       { validator: this.status === '' || this.status === 'NEW' || this.status === 'CANCELED' ? [this.timeCheck.bind(this)] : '' },
     );
+  }
+
+
+
+  currentDateFormat(date: Date, format: string = 'yyyy-mm-dd HH:MM'): any {
+    const pad = (n: number): string => (n < 10 ? `0${n}` : n.toString());
+    if (date.toString() === '') {
+      date = new Date();
+    }
+    return format
+      .replace('yyyy', pad(date.getFullYear()))
+      .replace('mm', pad(date.getMonth() + 1))
+      .replace('dd', pad(date.getDate()))
+      .replace('HH', pad(date.getHours()))
+      .replace('MM', pad(date.getMinutes()))
+      .replace('ss', pad(date.getSeconds()));
+  }
+
+  onOk(result: Date) {
+    this.name = this.currentDateFormat(result, 'yyyy-mm-dd');
+    this.values = result;
+  }
+
+  formatIt(date: Date, form: string) {
+    const pad = (n: number) => (n < 10 ? `0${n}` : n);
+    const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+    const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    if (form === 'YYYY-MM-DD') {
+      return dateStr;
+    }
+    if (form === 'HH:mm') {
+      return timeStr;
+    }
+    return `${dateStr} ${timeStr}`;
   }
 
   timeCheck(control: FormGroup): any {
@@ -535,6 +573,30 @@ export class FormComponent implements OnInit {
       bind,
     );
     return newValidator;
+  }
+
+  async presentPopover(myEvent: any) {
+    const popover = await this.popoverCtrl.create({
+      component: VFormMenuComponent,
+      componentProps: {
+        this: this,
+        data: this.applyList.DOCNO,
+        type: 'apply'
+      },
+      event: myEvent,
+    }
+    );
+    return await popover.present();
+  }
+
+  inputChange(e) {
+    const value = e.replace(/\s/g, '');
+    if (value.length < 11 && value.length > 0) {
+      this.error = true;
+    } else {
+      this.error = false;
+    }
+    this.value = e;
   }
 
 }

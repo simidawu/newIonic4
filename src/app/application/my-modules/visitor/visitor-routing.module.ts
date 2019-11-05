@@ -19,13 +19,12 @@ const VisitorRoutes: Routes = [
     path: '', component: VisitorComponent, children: [
       { path: 'home', component: HomeComponent },
       { path: 'apply', component: ApplyComponent },
-      { path: 'aform/:id', component: AformComponent },
+      { path: 'aform', component: AformComponent },
       { path: 'form', component: FormComponent },
       { path: 'search', component: SearchComponent },
       { path: 'result', component: ResultListComponent },
       { path: 'check', component: CheckComponent },
       { path: 'admin', component: AdminComponent },
-      // { path: 'aform', component: AformComponent },
       {
         path: '',
         redirectTo: 'home',

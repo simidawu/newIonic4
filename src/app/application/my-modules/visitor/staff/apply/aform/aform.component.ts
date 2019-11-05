@@ -3,7 +3,6 @@ import {
   AlertController,
   ModalController,
   PopoverController,
-  NavParams,
   Events,
   LoadingController,
 } from '@ionic/angular';
@@ -26,7 +25,8 @@ import { VFormMenuComponent } from '../../common/vform-menu/vform-menu.component
 import { AddEmployeesComponent } from '../../common/add-employees/add-employees.component';
 import { AddVisitorsComponent } from '../../common/add-visitors/add-visitors.component';
 import { AddGoodsComponent } from '../../common/add-goods/add-goods.component';
-
+import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'sg-aform',
@@ -74,10 +74,10 @@ export class AformComponent implements OnInit {
   };
 
   title = ''; // 单据申请
-
+  fid = 0;  // 單據id
   type = ''; // 单据类型
-  STATUS = ''; // 单据状态
-
+  status = ''; // 单据状态
+  user = []; //  當前登錄用戶
   cantEdit = false; // 字段是否允许修改
   outcantEdit = true; // 字段是否允许外部访客修改
 
@@ -116,12 +116,12 @@ export class AformComponent implements OnInit {
   CHARGE_TEL_Error = '';
 
   constructor(
+    private route: ActivatedRoute,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public navCtrl: NavController,
     public popoverCtrl: PopoverController,
-    public navParams: NavParams,
     private plugin: PluginService,
     private visitorService: VisitorService,
     private events: Events,
@@ -129,37 +129,49 @@ export class AformComponent implements OnInit {
     private validateService: ValidateService,
   ) { }
 
-  ionViewWillEnter() {
-    this.scanType = this.navParams.get('scanType') === undefined ? '' : this.navParams.get('scanType'); // 申请进入还是申请离开
-  }
-
   async ngOnInit() {
-    const formData = this.navParams.get('formData');
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.subscribeTranslateText();
-    if (formData) {
-      // console.log(formData);
-      this.isVisitor = this.navParams.get('outtype') === undefined ? false : this.navParams.get('outtype'); // 外部访客还是内部员工
-      this.type = formData.TYPE;
-      if (this.type === 'vip') {
-        this.title = this.translateTexts['Visitor.application.type1'];
-      } else if (this.type === 'ctm') {
-        this.title = this.translateTexts['Visitor.application.type2'];
-      } else if (this.type === 'emp') {
-        this.title = this.translateTexts['Visitor.application.type3'];
-      } else if (this.type === 'visit') {
-        this.title = this.translateTexts['Visitor.application.type4'];
+    this.route.queryParams.subscribe((p) => {
+      console.log(p);
+      if (p.id === undefined) {
+        // 新增單據
+        this.type = p.type === undefined ? '' : p.type;
       } else {
-        this.title = this.translateTexts['Visitor.application.type5'];
+        this.fid = p.id === undefined ? '' : p.id;
+        this.scanType = p.scanType === undefined ? '' : p.scanType;
+        this.isVisitor = p.isVisitor === undefined ? false : p.isVisitor;
+
       }
-      this.STATUS = formData.STATUS;
-      this.applyList = formData;
+    });
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    // 獲取所有區域
+    const list: any = await this.visitorService.getArea(this.type);
+    this.specarealist = list.filter(value => value.MACHINE_ID);
+    this.arealist = list.filter(value => !value.MACHINE_ID);
+    if (this.fid > 0) {
+      const res = await this.visitorService.getApplyData(this.fid);
+      this.formData = res[0];
+      console.log(this.formData);
+      this.status = this.formData.STATUS;
+      this.applyList = this.formData;
       this.applyList.toolTypeSelect = '';
-      this.tempcolleague = formData.APPLY_NAME;
-      this.tempDept = formData.CHARGE_DEPTNAME;
+
+      if (this.formData.FREE_MEAL === 'Y') {
+        this.applyList.FREE_MEAL = true;
+      } else {
+        this.applyList.FREE_MEAL = false;
+      }
+
+      if (this.formData.NETWORK === 'Y') {
+        this.applyList.NETWORK = true;
+      } else {
+        this.applyList.NETWORK = false;
+      }
+
+      this.applyList.CREATION_DATE = moment(this.formData.CREATION_DATE).format('YYYY-MM-DD');
 
       if (!this.isVisitor) {
-        if (this.STATUS === 'WAITING' || this.STATUS === 'APPROVED') {
+        if (this.status === 'WAITING' || this.status === 'APPROVED') {
           this.cantEdit = true;
         }
       } else {
@@ -167,38 +179,15 @@ export class AformComponent implements OnInit {
         this.outcantEdit = false;
       }
 
-      if (formData.PROCESS_FLAG === 1) {
+      if (this.formData.PROCESS_FLAG === 1) {
         this.isSending = true;
       }
-      // 获取特殊门禁和到访区域
-      const list = await this.visitorService.getArea(this.type);
-      const newlist: any[] = list.json();
-      this.specarealist = newlist.filter(value => value.MACHINE_ID);
-      this.arealist = newlist.filter(value => !value.MACHINE_ID);
 
-      if (formData.FREE_MEAL === 'Y') {
-        this.applyList.FREE_MEAL = true;
-      } else {
-        this.applyList.FREE_MEAL = false;
-      }
+      this.DeptNo = this.formData.CHARGE_DEPTNO;
 
-      if (formData.NETWORK === 'Y') {
-        this.applyList.NETWORK = true;
-      } else {
-        this.applyList.NETWORK = false;
-      }
-
-      if (formData.APPLY_DATE !== '') {
-        this.applyList.CREATION_DATE = formData.APPLY_DATE;
-      }
-
-      this.APPLY_EMPNO = formData.APPLY_EMPNO;
-      this.APPLY_SITE = formData.APPLY_SITE;
-      this.DeptNo = formData.CHARGE_DEPTNO;
-
-      if (formData.AREA_IDS !== '') {
+      if (this.formData.AREA_IDS !== '') {
         let dataArr1: any[] = [];
-        const areaArr = formData.AREA_IDS.split(",");
+        const areaArr = this.formData.AREA_IDS.split(",");
 
         this.specarealist.forEach(value => {
           if (areaArr.includes(value.ID + "")) {
@@ -219,7 +208,7 @@ export class AformComponent implements OnInit {
         this.applyList.visitArea = [];
       }
 
-      this.visitorsdata = formData.visitorsdata;
+      this.visitorsdata = this.formData.visitorsdata;
 
       let vdata = [];
       for (let i = 0; i <= this.visitorsdata.length - 1; i++) {
@@ -227,22 +216,19 @@ export class AformComponent implements OnInit {
       }
       this.applyList.visitors = vdata.join(',');
 
-      this.goodsdata = formData.goodsdata;
+      this.goodsdata = this.formData.goodsdata;
 
       let gdata = [];
       for (let i = 0; i <= this.goodsdata.length - 1; i++) {
         this.goodsdata[i].GOODS_BRAND = this.goodsdata[i].GOODS_BRAND == null ? '' : this.goodsdata[i].GOODS_BRAND;
         this.goodsdata[i].GOODS_MODEL = this.goodsdata[i].GOODS_MODEL == null ? '' : this.goodsdata[i].GOODS_MODEL;
-        let newone = this.goodsdata[i].GOODS_BRAND + this.goodsdata[i].GOODS_MODEL + this.goodsdata[i].GOODS_NAME + this.goodsdata[i].GOODS_QUANTITY + this.goodsdata[i].GOODS_UNIT;
+        let newone = this.goodsdata[i].GOODS_BRAND + this.goodsdata[i].GOODS_MODEL + this.goodsdata[i].GOODS_NAME
+          + this.goodsdata[i].GOODS_QUANTITY + this.goodsdata[i].GOODS_UNIT;
         gdata.push(newone);
       }
       this.applyList.goodsList = gdata.join(',');
-      // 初始化
-      this.init(this.applyList);
-      this.MyValidatorControl = this.initValidator(this.applyList);
-      this.myValidators = this.MyValidatorControl.validators;
-
     } else {
+      // 新增單據
       this.applyList = {
         ID: 0,
         DOCNO: '',
@@ -271,110 +257,34 @@ export class AformComponent implements OnInit {
         CHARGE_TEL: '',
         toolTypeSelect: ''
       };
-
-      this.type = this.navParams.get('type') === undefined ? '' : this.navParams.get('type');
-      if (this.type === 'vip') {
-        this.title = this.translateTexts['Visitor.application.type1'];
-      } else if (this.type === 'ctm') {
-        this.title = this.translateTexts['Visitor.application.type2'];
-      } else if (this.type === 'emp') {
-        this.applyList.FREE_MEAL = true;
-        this.title = this.translateTexts['Visitor.application.type3'];
-      } else if (this.type === 'visit') {
-        this.title = this.translateTexts['Visitor.application.type4'];
-      } else if (this.type === 'build') {
-        const data = await this.visitorService.getLookUpType(
-          'GOODS_TYPE',
-        );
-        this.toolTypeList = data.json();
-        this.title = this.translateTexts['Visitor.application.type5'];
-      } else {
-        this.title = this.translateTexts['Visitor.module.tab_apply'];
-      }
-      if (this.type === 'vip' || this.type === 'ctm' || this.type === 'emp') {
-        this.applyList.NETWORK = true;
-      }
-
-      // 获取特殊门禁和到访区域
-      const list = await this.visitorService.getArea(this.type);
-      const newlist: any[] = list.json();
-
-      this.specarealist = newlist.filter(value => value.MACHINE_ID);
-      this.arealist = newlist.filter(value => !value.MACHINE_ID);
-
-      this.APPLY_EMPNO = currentUser.empno;
-      this.APPLY_SITE = currentUser.companyId;
-
-      // 初始化
-      this.init(this.applyList);
-
-      this.MyValidatorControl = this.initValidator(this.applyList);
-      this.myValidators = this.MyValidatorControl.validators;
-      if (!this.isVisitor) {
-        const dept = await this.visitorService.getAllDepts(currentUser.department);
-        this.DeptNo = dept[0]['DEPTNO'];
-        this.applyForm.controls['APPLY_NAME'].setValue(currentUser.nickname);
-        this.tempcolleague = currentUser.nickname;
-        this.applyForm.controls['APPLY_MOBILE'].setValue(currentUser.mobile);
-        this.applyForm.controls['APPLY_TEL'].setValue(currentUser.telephone);
-        this.applyForm.controls['CHARGE_DEPTNAME'].setValue(currentUser.department);
-        this.tempDept = currentUser.department;
-      }
     }
-    this.isSelectcolleague = true;
-    this.isSelectDept = true;
 
-    // 监听来访人员
-    this.events.subscribe('service:fillinVisitors', (data: any) => {
-      this.applyForm.controls['visitors'].setValue(data.namedata);
-      this.visitorsdata = data.data;
-    });
-
-    // 监听物品登记
-    this.events.subscribe('service:fillinGoods', (data: any) => {
-      this.applyForm.controls['goodsList'].setValue(data.namedata);
-      this.goodsdata = data.data;
-    });
-
-    this.colleague = this.searchTerms
-      .asObservable().pipe(
-        timeout(300),
-        distinctUntilChanged(),
-        switchMap(term => {
-          if (term.trim().length > 0) {
-            return this.visitorService.getAgent(term);
-          } else {
-            // return Observable.of<any>([]);
-            return of<any>([]);
-          }
-        }),
-        catchError(error => {
-          console.log(error);
-          // return Observable.of<any>([]);
-          return of<any>([]);
-        })
+    // 初始化
+    this.init(this.applyList);
+    this.MyValidatorControl = this.initValidator(this.applyList);
+    this.myValidators = this.MyValidatorControl.validators;
+    if (this.type === 'vip') {
+      this.title = this.translateTexts['Visitor.application.type1'];
+    } else if (this.type === 'ctm') {
+      this.title = this.translateTexts['Visitor.application.type2'];
+    } else if (this.type === 'emp') {
+      this.applyList.FREE_MEAL = true;
+      this.title = this.translateTexts['Visitor.application.type3'];
+    } else if (this.type === 'visit') {
+      this.title = this.translateTexts['Visitor.application.type4'];
+    } else if (this.type === 'build') {
+      const data = await this.visitorService.getLookUpType(
+        'GOODS_TYPE',
       );
+      this.toolTypeList = data.json();
+      this.title = this.translateTexts['Visitor.application.type5'];
+    } else {
+      this.title = this.translateTexts['Visitor.module.tab_apply'];
+    }
+    if (this.type === 'vip' || this.type === 'ctm' || this.type === 'emp') {
+      this.applyList.NETWORK = true;
+    }
 
-    this.DeptList = this.searchDept
-      .asObservable().pipe(
-        timeout(300),
-        distinctUntilChanged(),
-        switchMap((term: string) => {
-          if (term.trim().length > 0) {
-            return this.visitorService.getDepts(term);
-          } else {
-            // return Observable.of<any>([]);
-            return of<any>([]);
-          }
-        }),
-        catchError(error => {
-          console.log(error);
-          // return Observable.of<any>([]);
-          return of<any>([]);
-        })
-      );
-
-    this.addSubcribe();
   }
 
   addSubcribe() {
@@ -483,7 +393,7 @@ export class AformComponent implements OnInit {
       REMARK: [form.REMARK],
       toolTypeSelect: [form.toolTypeSelect],
     },
-      { validator: this.STATUS === '' || this.STATUS === 'NEW' || this.STATUS === 'CANCELED' ? [this.timeCheck.bind(this)] : '' },
+      { validator: this.status === '' || this.status === 'NEW' || this.status === 'CANCELED' ? [this.timeCheck.bind(this)] : '' },
     );
   }
 
