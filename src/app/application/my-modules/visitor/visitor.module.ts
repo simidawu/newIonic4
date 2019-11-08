@@ -14,6 +14,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ResultListComponent } from './staff/search/result-list/result-list.component';
 import { AformComponent } from './staff/apply/aform/aform.component';
 import { FormComponent } from './staff/apply/form/form.component';
+import { MainlistComponent } from './staff/check/mainlist/mainlist.component';
+import { CheckDetailComponent } from './staff/check/check-detail/check-detail.component';
 
 
 @NgModule({
@@ -27,6 +29,8 @@ import { FormComponent } from './staff/apply/form/form.component';
     FormComponent,
     CheckComponent,
     AdminComponent,
+    MainlistComponent,
+    CheckDetailComponent,
   ],
   imports: [
     SharedModule,

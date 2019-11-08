@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sg-check',
@@ -9,14 +9,17 @@ import { NavController, Platform } from '@ionic/angular';
 export class CheckComponent implements OnInit {
 
   constructor(
-    public navCtrl: NavController,
-    private platform: Platform,
+    private router: Router,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   toCheckList(type: string) {
-    // this.navCtrl.push('MainlistComponent', { type: type });
+    this.router.navigate(['/tabs/application/visitor/mainlist'], {
+      queryParams: {
+        type: type
+      }
+    });
   }
 
 }

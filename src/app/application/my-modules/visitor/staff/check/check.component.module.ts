@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { CheckComponent } from './check.component';
-
-
 
 @NgModule({
   declarations: [CheckComponent],
   imports: [
-    IonicModule,
-    TranslateModule,
+    SharedModule,
   ],
   entryComponents: [CheckComponent],
 })

@@ -1,0 +1,100 @@
+ion-segment {
+  background: #fff;
+  padding: 0 10px;
+
+  ion-segment-button {
+    border: 0px !important;
+  }
+
+  .segment-button-checked {
+    color: #333;
+    font-size: .9rem;
+    font-weight: bold;
+
+    .bolder-sm {
+      border: 2px solid #3880ff;
+      width: 2rem;
+      margin: 0 auto;
+    }
+  }
+}
+
+ion-content {
+  .overscroll {
+    background: #fafafa !important;
+  }
+
+}
+
+.red-point {
+  color: red;
+}
+
+.person-list {
+  margin-left: 1.4rem;
+  border-bottom: 1px solid #c8c7cc;
+
+  .person-item {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    font-size: 1rem;
+
+    .person-name {
+      flex: 90%;
+      margin-left: 1rem;
+    }
+
+    .person-cardID {
+      margin-left: 10px;
+    }
+  }
+}
+
+ion-button {
+  margin: 0 1rem;
+}
+
+ion-card {
+  background: #fafafa !important;
+  
+  ion-card-header {
+    ion-card-subtitle {
+      color: #3880ff;
+      font-weight: bold;
+      font-size: 1.2rem !important;
+    }
+  }
+
+  .data-list {
+    padding: .8rem;
+    font-size: 1rem;
+
+    .data-name {
+      font-weight: bold;
+    }
+
+    .data-status {
+      float: right;
+    }
+
+    .leave {
+      color: #3880ff;
+    }
+
+    .enter {
+      color: #0ec254;
+    }
+  }
+}
+
+
+
+
+.no-data {
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #999;
+  text-align: center;
+  margin-top: 10%;
+}

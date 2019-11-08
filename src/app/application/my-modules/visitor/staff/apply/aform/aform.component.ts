@@ -1045,4 +1045,8 @@ export class AformComponent implements OnInit {
     }
   }
 
+
+  goback() {
+    history.go(-1);
+  }
 }

@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/application/visitor/check"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'Visitor.check.mainlist' | translate}}</ion-title>
+  </ion-toolbar>
+  <div *ngIf="type == 'gate' && recordCounts > 0 " class="badge">{{recordCounts}}</div>
+  <div *ngIf="type == 'gate'">
+    <ion-segment mode="md" [value]="status" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="other">
+        <ion-label>{{'Visitor.application.type1' | translate}}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="visit">
+        <ion-label>{{'Visitor.application.type4' | translate}}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="build">
+        <ion-label>{{'Visitor.application.type5' | translate}}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="apply">
+        <ion-label>{{'Visitor.application.type6' | translate}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div *ngIf="type == 'floor'">
+    <ion-segment mode="md" [value]="status" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="other">
+        {{'Visitor.application.type1' | translate}}
+        <div class="bolder-sm"></div>
+      </ion-segment-button>
+      <ion-segment-button value="visit">
+        {{'Visitor.application.type4' | translate}}
+        <div class="bolder-sm"></div>
+      </ion-segment-button>
+      <ion-segment-button value="build">
+        {{'Visitor.application.type5' | translate}}
+        <div class="bolder-sm"></div>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-down" [refreshingText]="'refreshing' | translate"></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="listData.length !== 0">
+    <ion-card (click)="presentPrompt(item)" *ngFor="let item of listData">
+      <ion-card-header>
+        <ion-card-subtitle>
+          {{'Visitor.check.intervaltime' | translate}} : {{item.START_DATE}} — {{item.END_DATE}}
+        </ion-card-subtitle>
+        <ion-card-title>
+          <div>
+            {{item.DOCNO}}
+            <span class="order-status"
+              [ngClass]="{'enter': item.STATUS =='APPROVED', 'leave': item.STATUS !=='APPROVED'}">{{item.CNSTATUS}}
+            </span>
+          </div>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="conmpany">{{item.ACESS_COMPANY_NAME}}</div>
+        <div class="accopmany">
+          {{item.APPLY_NAME}} — {{item.APPLY_MOBILE}}
+          <span *ngIf="item.APPLY_TEL !== null"> /
+            {{item.APPLY_TEL}}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

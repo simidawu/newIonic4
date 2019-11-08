@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeComponent } from './home.component';
+
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
-    IonicModule,
-    TranslateModule,
+    SharedModule,
   ],
   entryComponents: [HomeComponent],
 })

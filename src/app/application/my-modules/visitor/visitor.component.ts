@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PluginService } from '../../../core/services/plugin.service';
-// import { InspectionCommonService } from '../inspection/shared/service/inspectionCommon.service';
-import { User_Update_Privilege } from './../../../shared/actions/user.action';
 import { MyStore } from './../../../shared/store';
 import { Store } from '@ngrx/store';
 import { LoadingController } from '@ionic/angular';
@@ -79,3 +76,23 @@ export class VisitorComponent implements OnInit {
     this.ready = true;
   }
 }
+
+
+// import { Component } from '@angular/core';
+
+// @Component({
+//   selector: 'sg-visitor',
+//   templateUrl: 'visitor.component.html',
+//   styleUrls: ['./visitor.component.scss'],
+// })
+// export class VisitorComponent {
+//   hidden = false;
+//   fullScreen = false;
+//   tabbarStyle: object = { height: '400px' };
+//   selectedIndex = 1;
+
+//   tabBarTabOnPress(pressParam: any) {
+//     console.log('onPress Params: ', pressParam);
+//     this.selectedIndex = pressParam.index;
+//   }
+// }

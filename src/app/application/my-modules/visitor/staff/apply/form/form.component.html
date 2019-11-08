@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>返回
+      </ion-button>
+    </ion-buttons>
     <ion-title>{{title}}</ion-title>
     <ion-buttons slot="end" *ngIf="!isVisitor">
       <ion-button *ngIf="STATUS == 'NEW' || STATUS == 'CANCELED' || STATUS == 'REJECTED'" (click)="delete()">
@@ -14,74 +19,158 @@
 <ion-content>
   <form [formGroup]="applyForm" *ngIf="applyForm" (ngSubmit)="saveForm()">
     <div class="am-list-body">
-      <!-- <InputItem [disabled]="true" [value]="'style of disabled InputItem'" [content]="'姓名'"></InputItem> -->
       <!-- 單據編號 -->
-      <InputItem formControlName="DOCNO" [editable]="false" [content]="'Visitor.application.orderNo' | translate">
-      </InputItem>
+      <nz-form-item>
+        <nz-form-label nzFor="orderNo">{{'Visitor.application.orderNo' | translate}}</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="DOCNO" readonly />
+        </nz-form-control>
+      </nz-form-item>
       <!-- 單據申請人 -->
-      <nz-form-item style="margin:0px;margin-left: 15px;border-bottom: 1px solid #f9f9f9;">
-        <nz-form-label style="padding:0;margin-right:5px;display: inline-block;width: 6rem;font-size:17px;color:#000;"
-          nzFor="applicant">{{'Visitor.search.applicant' | translate}}</nz-form-label>
-        <nz-form-control style="display:inline-block;width:calc(100% - 7rem);float:none;">
+      <nz-form-item>
+        <nz-form-label nzFor="applicant">{{'Visitor.search.applicant' | translate}}</nz-form-label>
+        <nz-form-control>
           <app-colleague-searcher formControlName="APPLY_NAME"></app-colleague-searcher>
         </nz-form-control>
       </nz-form-item>
       <!-- 申請人分機 -->
-      <InputItem formControlName="APPLY_TEL" [content]="'Visitor.application.applyTel' | translate"></InputItem>
+      <nz-form-item>
+        <nz-form-label nzFor="applyTel">{{'Visitor.application.applyTel' | translate}}</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="APPLY_TEL" />
+        </nz-form-control>
+      </nz-form-item>
       <!-- 申請人電話 -->
-      <InputItem formControlName="APPLY_MOBILE" [clear]="true" [type]="'phone'" [error]="error"
-        (onChange)="inputChange($event)" [content]="'Visitor.application.applyPhone' | translate"></InputItem>
+      <nz-form-item>
+        <nz-form-label nzFor="applyPhone">{{'Visitor.application.applyPhone' | translate}}</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="APPLY_MOBILE" />
+        </nz-form-control>
+      </nz-form-item>
       <!-- 申請時間 -->
-      <InputItem formControlName="CREATION_DATE" [editable]="false"
-        [content]="'Visitor.application.applyTime' | translate"></InputItem>
+      <nz-form-item>
+        <nz-form-label nzFor="applyTime">{{'Visitor.application.applyTime' | translate}}</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="CREATION_DATE" readonly />
+        </nz-form-control>
+      </nz-form-item>
       <!-- 費用部門 -->
       <!-- 還沒有寫 -->
+
       <List [className]="'date-picker-list'">
         <!-- 進廠時間 -->
-        <ListItem DatePicker [extra]="currentDateFormat(value, 'yyyy-mm-dd')" [arrow]="'horizontal'" [mode]="'date'"
-          formControlName="START_DATE" (onOk)="onOk($event)">
+        <ListItem DatePicker [extra]="startDateFormat(this.applyForm.value['START_DATE'], 'yyyy-mm-dd')"
+          [arrow]="'horizontal'" [mode]="'date'" formControlName="START_DATE">
           {{'Visitor.application.startTime' | translate}}
         </ListItem>
         <!-- 出廠時間 -->
-        <ListItem DatePicker [extra]="currentDateFormat(value, 'yyyy-mm-dd')" [arrow]="'horizontal'" [mode]="'date'"
-          formControlName="END_DATE" (onOk)="onOk($event)">
+        <ListItem DatePicker [extra]="currentDateFormat(this.applyForm.value['END_DATE'], 'yyyy-mm-dd')"
+          [arrow]="'horizontal'" [mode]="'date'" formControlName="END_DATE">
           {{'Visitor.application.endTime' | translate}}
         </ListItem>
       </List>
       <!-- 到訪公司 -->
-      <InputItem formControlName="ACESS_COMPANY_NAME" [content]="'Visitor.application.visitCompany' | translate">
-      </InputItem>
+      <nz-form-item>
+        <nz-form-label nzFor="visitCompany">{{'Visitor.application.visitCompany' | translate}}</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="ACESS_COMPANY_NAME" />
+        </nz-form-control>
+      </nz-form-item>
       <!-- 到訪事由 -->
-      <InputItem formControlName="ACESS_REASON" [content]="'Visitor.application.visitReason' | translate">
-      </InputItem>
-      <ion-item>
+      <nz-form-item>
+        <nz-form-label nzFor="visitReason">{{'Visitor.application.visitReason' | translate}}</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="ACESS_REASON" />
+        </nz-form-control>
+      </nz-form-item>
+      <!-- 特殊門禁 -->
+      <!-- <ion-item>
         <ion-label col-4><span>&nbsp;</span>{{'Visitor.application.specArea' | translate}}</ion-label>
-        <ion-select col-8 [cancelText]="'attendance.cancle' | translate" [okText]="'attendance.confirm' | translate"
+        <ion-select col-8 [cancelText]="'cancel' | translate" [okText]="'confirm' | translate"
           formControlName="specArea" multiple="true">
           <ion-select-option *ngFor="let item of specarealist" [value]="item.ID">{{item.AREA_NAME}}</ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-item> -->
       <List [renderHeader]="renderHeader">
         <!-- <CheckboxItem *ngFor="let i of checkItemListData" [name]="i.name" [value]="i.value" [(ngModel)]="i.checked" (onChange)="onChange($event)" ></CheckboxItem> -->
-        <CheckboxItem formControlName="FREE_MEAL" style="border-bottom: 1px solid #fdfdfd;">{{'Visitor.application.isEat' | translate}}</CheckboxItem>
+        <CheckboxItem formControlName="FREE_MEAL" style="border-bottom: 1px solid #fdfdfd;">
+          {{'Visitor.application.isEat' | translate}}</CheckboxItem>
         <CheckboxItem formControlName="NETWORK">{{'Visitor.application.isWifi' | translate}}</CheckboxItem>
       </List>
-      <div>
-          <InputItem formControlName="OVERSEER_IN" [content]="'Visitor.application.inOverseer' | translate">
-          </InputItem>
-          <InputItem formControlName="OVERSEER_INTEL" [clear]="true" [type]="'phone'" [error]="error"
-          (onChange)="inputChange($event)" [content]="'Visitor.application.inOverseerPhone' | translate"></InputItem>
-
-          <InputItem formControlName="OVERSEER_OUT" [content]="'Visitor.application.outOverseer' | translate">
-          </InputItem>
-          <InputItem formControlName="OVERSEER_OUTTEL" [clear]="true" [type]="'phone'" [error]="error"
-          (onChange)="inputChange($event)" [content]="'Visitor.application.outOverseerPhone' | translate"></InputItem>
-
-          <InputItem formControlName="CHARGE" [content]="'Visitor.application.workHeader' | translate">
-          </InputItem>
-          <InputItem formControlName="CHARGE_TEL" [clear]="true" [type]="'phone'" [error]="error"
-          (onChange)="inputChange($event)" [content]="'Visitor.application.workHeaderPhone' | translate"></InputItem>
+      <!-- <div nz-row [nzGutter]="24">
+        廠內現場監工姓名
+        <div nz-col>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="12" nzFor="inOverseer">{{'Visitor.application.inOverseer' | translate}}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <input nz-input formControlName="OVERSEER_IN" />
+          </nz-form-control>
+        </nz-form-item>
+        </div>
+        廠內現場監工電話
+        <nz-form-item>
+          <nz-form-label nzFor="inOverseerPhone">{{'Visitor.application.inOverseerPhone' | translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="OVERSEER_INTEL" />
+          </nz-form-control>
+        </nz-form-item>
+        廠外現場監工姓名
+        <nz-form-item>
+          <nz-form-label nzFor="outOverseer">{{'Visitor.application.outOverseer' | translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="OVERSEER_OUT" />
+          </nz-form-control>
+        </nz-form-item>
+        廠外現場監工電話
+        <nz-form-item>
+          <nz-form-label nzFor="outOverseerPhone">{{'Visitor.application.outOverseerPhone' | translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="OVERSEER_OUTTEL" />
+          </nz-form-control>
+        </nz-form-item>
+        施工方負責人姓名
+        <nz-form-item>
+          <nz-form-label nzFor="workHeader">{{'Visitor.application.workHeader' | translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="CHARGE" />
+          </nz-form-control>
+        </nz-form-item>
+        施工方負責人電話
+        <nz-form-item>
+          <nz-form-label nzFor="workHeaderPhone">{{'Visitor.application.workHeaderPhone' | translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="CHARGE_TEL" />
+          </nz-form-control>
+        </nz-form-item>
+      </div> -->
+      <!-- 到訪區域 -->
+      <!-- <ion-item [class.has-error]="myValidators.visitArea.error" [class.has-success]="myValidators.visitArea.pass">
+        <ion-label size="2"><span *ngIf="!isVisitor" class="red-point">*</span><span
+            *ngIf="isVisitor">&nbsp;</span>{{'Visitor.application.visitArea' | translate}}:</ion-label>
+        <ion-select size="10" [placeholder]="'Visitor.placeholder.visitArea_placeholder' | translate"
+          [cancelText]="'cancel' | translate" [okText]="'confirm' | translate" formControlName="visitArea"
+          multiple="true">
+          <ion-select-option *ngFor="let item of arealist" [value]="item.ID">{{item.AREA_NAME}}</ion-select-option>
+        </ion-select>
+      </ion-item> -->
+      <!-- 被邀訪客電話 -->
+      <div *ngIf="type !== 'build'">
+        <nz-form-item>
+          <nz-form-label nzFor="visitorPhone">{{'Visitor.application.visitorPhone' | translate}}</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="ACESS_TEL"
+              [placeholder]="'Visitor.placeholder.visitorPhone_placeholder' | translate" />
+          </nz-form-control>
+        </nz-form-item>
       </div>
+      <!-- 備註 -->
+      <nz-form-item>
+        <nz-form-label nzFor="remark">{{'Visitor.application.remark' | translate}}</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="REMARK" />
+        </nz-form-control>
+      </nz-form-item>
     </div>
   </form>
 

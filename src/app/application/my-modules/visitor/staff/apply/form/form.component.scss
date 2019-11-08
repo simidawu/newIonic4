@@ -1,5 +1,39 @@
+/**********NG-ZORRO樣式**********/
+nz-form-item {
+    margin: 0px;
+    margin-left: 15px;
+    border-bottom: 1px solid #f9f9f9;
+
+    nz-form-label {
+        padding: 0;
+        margin-right: 5px;
+        display: inline-block;
+        width: 6rem;
+        font-size: 17px;
+    }
+
+    nz-form-control {
+        display: inline-block;
+        width: calc(100% - 7rem);
+        float: none;
+    }
+}
+
+/*修改select默認樣式*/
 :host ::ng-deep .ant-select-selection {
     border: none;
+}
+
+/*修改input默認樣式*/
+:host ::ng-deep .ant-input {
+    border: none;
+}
+
+/*禁用ng-zorro input的focus狀態樣式*/
+:host ::ng-deep .ant-input:focus,
+.ant-input:hover {
+    border: none;
+    box-shadow: none;
 }
 
 .am-list-body {
@@ -38,3 +72,7 @@
     padding-top: 7px;
     padding-bottom: 7px;
 }
+
+.date-picker-list .am-list-item .am-list-line .am-list-extra {
+    flex-basis: initial;
+  }

@@ -7,8 +7,8 @@ export interface ApplyFormState {
   CREATION_DATE: string;
   CHARGE_DEPTNAME: string;
   ACESS_COMPANY_NAME: string;
-  START_DATE: string;
-  END_DATE: string;
+  START_DATE: Date;
+  END_DATE: Date;
   ACESS_REASON: string;
   specArea: any[];
   FREE_MEAL: boolean;

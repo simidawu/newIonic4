@@ -100,7 +100,7 @@ export class VisitorService {
       .then(res => {
         const data = res.json();
         return Promise.resolve(data);
-      })
+      });
   }
 
 
@@ -307,9 +307,18 @@ export class VisitorService {
 
 
   // 大門大樓今日預約列表
-  getTodayCheckList() {
-    return this.myHttp.get(Config.getTodayCheckListUrl);
+  getTodayCheckList(id?: any) {
+    if (id !== undefined) {
+      return this.myHttp.get(Config.getTodayCheckListUrl + '?id=' + id)
+      .then(res => {
+        const data = res.json();
+        return Promise.resolve(data);
+      });
+    } else {
+      return this.myHttp.get(Config.getTodayCheckListUrl);
+    }
   }
+
 
 
   // 門衛放行

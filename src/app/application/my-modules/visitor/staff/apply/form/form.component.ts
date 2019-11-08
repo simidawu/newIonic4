@@ -16,7 +16,7 @@ import { VFormMenuComponent } from '../../common/vform-menu/vform-menu.component
 import { AddEmployeesComponent } from '../../common/add-employees/add-employees.component';
 import { AddVisitorsComponent } from '../../common/add-visitors/add-visitors.component';
 import { AddGoodsComponent } from '../../common/add-goods/add-goods.component';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-form',
@@ -120,10 +120,12 @@ export class FormComponent implements OnInit {
         this.applyList.NETWORK = false;
       }
 
-      if (this.formData.APPLY_DATE !== '') {
-        this.applyList.CREATION_DATE = this.formData.APPLY_DATE;
-      }
-
+      this.applyList.CREATION_DATE = moment(this.formData.CREATION_DATE).format('YYYY-MM-DD');
+      // this.applyList.START_DATE = moment(this.formData.START_DATE).format('YYYY-MM-DD').toString();
+      this.applyList.START_DATE = new Date(this.applyList.START_DATE);
+      this.applyList.END_DATE = new Date(this.applyList.END_DATE);
+      // console.log(new Date(this.applyList.START_DATE));
+      // console.log(this.applyList.START_DATE);
       if (!this.isVisitor) {
         if (this.status === 'WAITING' || this.status === 'APPROVED') {
           this.cantEdit = true;
@@ -191,8 +193,8 @@ export class FormComponent implements OnInit {
         CREATION_DATE: '',
         CHARGE_DEPTNAME: '',
         ACESS_COMPANY_NAME: '',
-        START_DATE: '',
-        END_DATE: '',
+        START_DATE: new Date(),
+        END_DATE: new Date(),
         ACESS_REASON: '',
         specArea: [],
         FREE_MEAL: false,
@@ -237,7 +239,7 @@ export class FormComponent implements OnInit {
     if (this.type === 'vip' || this.type === 'ctm' || this.type === 'emp') {
       this.applyList.NETWORK = true;
     }
-
+    console.log(this.applyForm);
   }
 
   subscribeTranslateText() {
@@ -298,11 +300,11 @@ export class FormComponent implements OnInit {
     const fb = new FormBuilder();
     this.applyForm = fb.group({
       ID: [form.ID],
-      DOCNO: [{ value: form.DOCNO, disabled: true }],
+      DOCNO: [form.DOCNO],
       APPLY_NAME: [{ value: form.APPLY_NAME, disabled: this.cantEdit }, [Validators.required]],
       APPLY_TEL: [{ value: form.APPLY_TEL, disabled: this.cantEdit }],
       APPLY_MOBILE: [{ value: form.APPLY_MOBILE, disabled: this.cantEdit }, [Validators.required]],
-      CREATION_DATE: [{ value: form.CREATION_DATE, disabled: true }],
+      CREATION_DATE: [form.CREATION_DATE],
       CHARGE_DEPTNAME: [{ value: form.CHARGE_DEPTNAME, disabled: this.cantEdit },
       (this.type === 'vip' || this.type === 'ctm' || this.type === 'emp') && !this.isVisitor ? [Validators.required] : ''],
       ACESS_COMPANY_NAME: [{ value: form.ACESS_COMPANY_NAME, disabled: this.cantEdit }, [Validators.required]],
@@ -329,15 +331,10 @@ export class FormComponent implements OnInit {
     );
   }
 
-
-
-  currentDateFormat(date: Date, format: string = 'yyyy-mm-dd HH:MM'): any {
+  startDateFormat(date, format: string = 'yyyy-mm-dd HH:MM'): any {
     const pad = (n: number): string => (n < 10 ? `0${n}` : n.toString());
-    if (date.toString() === '') {
-      date = new Date();
-    }
     return format
-      .replace('yyyy', pad(date.getFullYear()))
+      .replace('yyyy', date.getFullYear())
       .replace('mm', pad(date.getMonth() + 1))
       .replace('dd', pad(date.getDate()))
       .replace('HH', pad(date.getHours()))
@@ -345,10 +342,36 @@ export class FormComponent implements OnInit {
       .replace('ss', pad(date.getSeconds()));
   }
 
-  onOk(result: Date) {
-    this.name = this.currentDateFormat(result, 'yyyy-mm-dd');
-    this.values = result;
+  currentDateFormat(date, format: string = 'yyyy-mm-dd HH:MM'): any {
+    const pad = (n: number): string => (n < 10 ? `0${n}` : n.toString());
+    return format
+      .replace('yyyy', date.getFullYear())
+      .replace('mm', pad(date.getMonth() + 1))
+      .replace('dd', pad(date.getDate()))
+      .replace('HH', pad(date.getHours()))
+      .replace('MM', pad(date.getMinutes()))
+      .replace('ss', pad(date.getSeconds()));
   }
+
+  // currentDateFormat(date, format: string = 'yyyy-mm-dd HH:MM'): any {
+  //   const pad = (n: number): string => (n < 10 ? `0${n}` : n.toString());
+  //   // console.log(date);
+  //   // console.log(typeof(date));
+  //   let dates = new Date(date);
+  //   // console.log(dates);
+  //   return format
+  //     .replace('yyyy', pad(dates.getFullYear()))
+  //     .replace('mm', pad(dates.getMonth() + 1))
+  //     .replace('dd', pad(dates.getDate()))
+  //     .replace('HH', pad(dates.getHours()))
+  //     .replace('MM', pad(dates.getMinutes()))
+  //     .replace('ss', pad(dates.getSeconds()));
+  // }
+
+  // onOk(result: Date) {
+  //   this.name = this.currentDateFormat(result, 'yyyy-mm-dd');
+  //   this.values = result;
+  // }
 
   formatIt(date: Date, form: string) {
     const pad = (n: number) => (n < 10 ? `0${n}` : n);
@@ -573,6 +596,10 @@ export class FormComponent implements OnInit {
       bind,
     );
     return newValidator;
+  }
+
+  goback() {
+    history.go(-1);
   }
 
   async presentPopover(myEvent: any) {

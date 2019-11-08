@@ -79,8 +79,8 @@
       "inOverseerPhone": "廠內現場監工電話",
       "outOverseer": "廠外現場監工姓名",
       "outOverseerPhone": "廠外現場監工電話",
-      "workHeader": "施工單位負責人姓名",
-      "workHeaderPhone": "施工單位負責人電話",
+      "workHeader": "施工方負責人姓名",
+      "workHeaderPhone": "施工方負責人電話",
       "visitors": "到訪人員",
       "visitorcard": "身份證號",
       "ename": "員工英文名",
@@ -107,7 +107,7 @@
       "tosign": "去簽到",
       "apply_success": "簽到成功",
       "apply_failed": "簽到失敗",
-      "delay":"延期"
+      "delay": "延期"
     },
     "error": {
       "applicant_required_err": "请填写申请人姓名",
@@ -159,7 +159,7 @@
       "gatelist": "大門通行管理",
       "floorlist": "大樓通行管理",
       "mainlist": "今日預約列表",
-      "checklist": "物品檢查清單",
+      "checklist": "檢查清單",
       "visitorshistory": "人員放行記錄",
       "goodshistory": "物品放行記錄",
       "intervaltime": "進出時間",
@@ -200,6 +200,7 @@
   "alert": "警告",
   "back": "返回",
   "cancel": "取消",
+  "close_success": "關閉成功",
   "confirm": "確定",
   "complete": "完成",
   "delete": "刪除",

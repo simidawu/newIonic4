@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>返回
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end" *ngIf="!isVisitor">
+      <ion-button *ngIf="STATUS == 'NEW' || STATUS == 'CANCELED' || STATUS == 'REJECTED'" (click)="delete()">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="STATUS !== '' || STATUS !== 'NEW'" (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="applyForm" *ngIf="applyForm" (ngSubmit)="saveForm()">
+    <List [className]="'date-picker-list'">
+      <ListItem DatePicker [extra]="startDateFormat(this.applyForm.value['START_DATE'], 'yyyy-mm-dd')"
+        [arrow]="'horizontal'" [mode]="'date'" formControlName="START_DATE">
+        {{'Visitor.application.startTime' | translate}}
+      </ListItem>
+      <ListItem DatePicker [extra]="currentDateFormat(this.applyForm.value['END_DATE'], 'yyyy-mm-dd')"
+          [arrow]="'horizontal'" [mode]="'date'" formControlName="END_DATE">
+          {{'Visitor.application.endTime' | translate}}
+        </ListItem>
+    </List>
+    <nz-form-item>
+      <nz-form-label nzFor="visitCompany">{{'Visitor.application.visitCompany' | translate}}</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="ACESS_COMPANY_NAME" />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+</ion-content>

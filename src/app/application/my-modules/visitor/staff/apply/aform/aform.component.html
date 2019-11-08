@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <!-- <ion-back-button defaultHref="/"></ion-back-button> -->
+      <ion-button (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>返回
+      </ion-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
     <ion-buttons slot="end" *ngIf="!isVisitor">
@@ -139,13 +142,13 @@
           <!-- 是否就餐 -->
           <ion-item *ngIf="!isVisitor">
             <ion-label size="4"><span>&nbsp;</span>{{'Visitor.application.isEat' | translate}}:</ion-label>
-            <ion-checkbox color="#3773F7" item-end formControlName="FREE_MEAL"></ion-checkbox>
+            <ion-checkbox color="primary" slot="end" formControlName="FREE_MEAL"></ion-checkbox>
           </ion-item>
         </div>
         <!-- 無線需求 -->
         <ion-item *ngIf="type !== 'build'">
           <ion-label size="4"><span>&nbsp;</span>{{'Visitor.application.isWifi' | translate}}:</ion-label>
-          <ion-checkbox color="#3773F7" item-end formControlName="NETWORK"></ion-checkbox>
+          <ion-checkbox color="primary" slot="end" formControlName="NETWORK"></ion-checkbox>
         </ion-item>
         <div *ngIf="type == 'build'">
           <!-- 廠內現場監工姓名 -->
@@ -218,9 +221,9 @@
         <ion-item-divider *ngIf="myValidators.visitArea.error" class='alert'>{{myValidators.visitArea.error}}
         </ion-item-divider>
         <ion-item [class.has-error]="myValidators.visitArea.error" [class.has-success]="myValidators.visitArea.pass">
-          <ion-label size="4"><span *ngIf="!isVisitor" class="red-point">*</span><span
+          <ion-label size="2"><span *ngIf="!isVisitor" class="red-point">*</span><span
               *ngIf="isVisitor">&nbsp;</span>{{'Visitor.application.visitArea' | translate}}:</ion-label>
-          <ion-select col-8 [placeholder]="'Visitor.placeholder.visitArea_placeholder' | translate"
+          <ion-select size="10" [placeholder]="'Visitor.placeholder.visitArea_placeholder' | translate"
             [cancelText]="'cancel' | translate" [okText]="'confirm' | translate" formControlName="visitArea"
             multiple="true">
             <ion-select-option *ngFor="let item of arealist" [value]="item.ID">{{item.AREA_NAME}}</ion-select-option>

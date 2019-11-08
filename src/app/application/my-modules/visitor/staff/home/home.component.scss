@@ -2,51 +2,49 @@ ion-content {
     background: #ccc;
 
     ion-card {
-        margin:.8rem !important;
-        color:#333;
+        margin: .8rem !important;
+        color: #333;
 
         ion-card-header {
             padding-bottom: 0px !important;
-    
+
             ion-card-subtitle {
                 font-size: 1rem;
-        
+
                 .order-status {
                     float: right;
-                    // margin-right: 2rem;
                     font-weight: 400;
                 }
-        
+
                 .approve {
                     color: #0ec254;
                 }
-        
+
                 .reject {
                     color: red;
                 }
-        
+
                 .waiting {
                     color: #3880ff;
                 }
-        
+
                 .invaild {
                     color: #555;
                 }
             }
-        
+
             ion-card-title {
                 font-size: 1.6rem;
             }
         }
-    
+
         ion-card-content {
             padding-top: 0 !important;
-            // color: #333 !important;
             font-size: 1.4rem;
             font-weight: bold;
         }
     }
-   
+
 }
 
 .no-data {

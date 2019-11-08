@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/application/visitor/mainlist"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+  <ion-segment mode="md" [value]="page" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="detail">
+      <ion-label>{{'Visitor.check.checklist' | translate }}</ion-label>
+      <div class="bolder-sm"></div>
+    </ion-segment-button>
+    <ion-segment-button value="visitor">
+      <ion-label>{{'Visitor.check.visitorshistory' | translate }}</ion-label>
+      <div class="bolder-sm"></div>
+    </ion-segment-button>
+    <ion-segment-button value="goods">
+      <ion-label>{{'Visitor.check.goodshistory' | translate }}</ion-label>
+      <div class="bolder-sm"></div>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="page">
+    <form #templateForm="ngForm" *ngSwitchCase="'detail'">
+      <ion-list>
+        <ion-item>
+          <ion-label col-4><span class="red-point">*</span>{{'Visitor.check.intervaltime' | translate }}:</ion-label>
+          <ion-input [(ngModel)]='intervaltime' name="intervaltime"></ion-input>
+        </ion-item>
+        <ion-item *ngIf=" type == 'gate' ">
+          <ion-label col-4><span class="red-point">*</span>{{'Visitor.check.status' | translate }}:</ion-label>
+          <ion-input [(ngModel)]='status' name="status" col-8></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label col-4><span class="red-point">*</span>{{'Visitor.application.visitors' | translate }}:</ion-label>
+          <ion-button item-end (click)="toVisitorDetail(visitorList)" *ngIf=" type == 'gate' ">
+            {{'Visitor.application.addvisitor' | translate}}</ion-button>
+        </ion-item>
+        <div class="person-list" *ngIf="visitorList.length >0">
+          <div class="person-item" *ngFor="let p of visitorList;let i=index">
+            <div class="person-name">
+              {{p.PERSON_NAME}}
+              <span class="person-cardID" *ngIf="p.STATUS == '1'">{{p.CREDENTIALS_NO}}</span>
+              <span class="person-cardID" *ngIf="p.STATUS !== '1'">{{p.CREDENTIALS_NO_EN}}</span>
+            </div>
+            <ion-checkbox (ionChange)="selectPerson(p,i)" [checked]="p.isChoose" *ngIf=" type == 'gate' ">
+            </ion-checkbox>
+          </div>
+        </div>
+        <ion-item>
+          <ion-label col-4><span class="red-point">*</span>{{'Visitor.application.goodsList' | translate }}:</ion-label>
+          <ion-button item-end (click)="toGoodDetail(goodsList)" *ngIf=" type == 'gate' ">
+            {{'Visitor.application.addgoods' | translate}}</ion-button>
+        </ion-item>
+        <div class="person-list" *ngIf="goodsList.length >0">
+          <div class="person-item" *ngFor="let g of goodsList;let i=index">
+            <div class="person-name">{{g.GOODS_BRAND}}{{g.GOODS_MODEL}}{{g.GOODS_NAME}}<span
+                class="person-cardID">{{g.GOODS_QUANTITY}}{{g.GOODS_UNIT}}</span></div>
+            <ion-checkbox (ionChange)="selectGood(g,i)" [checked]="g.isChoose" *ngIf=" type == 'gate' "></ion-checkbox>
+          </div>
+        </div>
+      </ion-list>
+      <ion-button expand="block" type="submit" (tap)="submitForm()" *ngIf=" type == 'gate' ">
+        <span>{{'submit' | translate}}</span></ion-button>
+      <ion-button expand="block" style="margin:1rem 0;" (tap)="finishForm()" *ngIf=" type == 'gate' && canFinish">
+        <span>{{'Visitor.check.finish' | translate}}</span></ion-button>
+    </form>
+    <div *ngSwitchCase="'visitor'">
+      <div *ngIf="visitorsData.length !== 0">
+        <ion-card *ngFor="let item of visitorsData">
+          <ion-card-header>
+            <ion-card-subtitle>{{item[0].CREATION_DATE}}</ion-card-subtitle>
+          </ion-card-header>
+          <div *ngFor="let data of item" class="data-list">
+            <span class="data-name">{{data.DATA}}</span>
+            <span class="data-status"
+              [ngClass]="{'enter': data.TYPE =='in', 'leave': data.TYPE !=='out'}">{{data.CNTYPE}}</span>
+          </div>
+        </ion-card>
+      </div>
+      <div class="no-data" *ngIf="visitorsData.length == 0">{{'Visitor.check.no_data' | translate }}</div>
+    </div>
+    <div *ngSwitchCase="'goods'">
+      <div *ngIf="goodsData.length !== 0">
+        <ion-card *ngFor="let item of goodsData">
+          <ion-card-header>
+            <ion-card-subtitle>{{item[0].CREATION_DATE}}</ion-card-subtitle>
+          </ion-card-header>
+          <div *ngFor="let data of item" class="data-list">
+            <span class="data-name">{{data.DATA}}</span>
+            <span class="data-status"
+              [ngClass]="{'enter': data.TYPE =='in', 'leave': data.TYPE !=='out'}">{{data.CNTYPE}}</span>
+          </div>
+        </ion-card>
+      </div>
+      <div class="no-data" *ngIf="goodsData.length == 0">{{'Visitor.check.no_data' | translate }}</div>
+    </div>
+  </div>
+</ion-content>

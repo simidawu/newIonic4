@@ -89,7 +89,13 @@ export class HomeComponent implements OnInit {
 
 
   toDetail(data: any) {
-    this.router.navigate(['/tabs/application/visitor/aform'], {
+    // this.navCtrl.navigateForward(['/tabs/application/visitor/aform'], {
+    //   queryParams: {
+    //     id: data.ID,
+    //     type: data.TYPE
+    //   }
+    // });
+    this.router.navigate(['/tabs/application/visitor/form'], {
       queryParams: {
         id: data.ID,
         type: data.TYPE

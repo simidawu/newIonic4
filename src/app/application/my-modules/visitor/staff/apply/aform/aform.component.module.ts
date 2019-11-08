@@ -1,6 +1,5 @@
-import { SharedModule } from 'src/app/shared/shared.module';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { AformComponent } from './aform.component';
 
 @NgModule({
