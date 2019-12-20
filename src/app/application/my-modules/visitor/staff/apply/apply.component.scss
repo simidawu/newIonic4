@@ -15,8 +15,12 @@ ion-avatar img {
     height: 36px;
 }
 
-ion-label > p {
+ion-label p {
     font-size: 0.6rem;
+} 
+
+ion-button {
+    --background: #fff ;
 }
 
 ion-icon {

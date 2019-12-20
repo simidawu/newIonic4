@@ -1,0 +1,48 @@
+.my-detail {
+  button {
+    font-size: 150%;
+
+    ion-note {
+      font-size: 90%;
+
+      .iconfontyyy {
+        font-size: 150%;
+      }
+    }
+  }
+
+  .person {
+    overflow: hidden;
+    width: $headImgSize;
+    height: $headImgSize;
+    border-radius: 2*$headImgSize;
+    border: solid 2px #EEB174;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .noArrow {
+    .item-inner {
+      background-image: url(''); // background-size: 32px 32px;
+    }
+  }
+
+  .mailContent {
+    display: block;
+    color: #aeacb4;
+    float: right;
+    text-align: right;
+    width: 80%; // font-size: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.error {
+  color: red;
+  text-align: center;
+}

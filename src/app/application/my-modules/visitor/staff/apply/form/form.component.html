@@ -84,13 +84,13 @@
         </nz-form-control>
       </nz-form-item>
       <!-- 特殊門禁 -->
-      <!-- <ion-item>
+      <ion-item>
         <ion-label col-4><span>&nbsp;</span>{{'Visitor.application.specArea' | translate}}</ion-label>
         <ion-select col-8 [cancelText]="'cancel' | translate" [okText]="'confirm' | translate"
           formControlName="specArea" multiple="true">
           <ion-select-option *ngFor="let item of specarealist" [value]="item.ID">{{item.AREA_NAME}}</ion-select-option>
         </ion-select>
-      </ion-item> -->
+      </ion-item>
       <List [renderHeader]="renderHeader">
         <!-- <CheckboxItem *ngFor="let i of checkItemListData" [name]="i.name" [value]="i.value" [(ngModel)]="i.checked" (onChange)="onChange($event)" ></CheckboxItem> -->
         <CheckboxItem formControlName="FREE_MEAL" style="border-bottom: 1px solid #fdfdfd;">

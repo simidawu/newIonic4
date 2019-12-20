@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, Events, PopoverController } from '@ionic/angular';
+import { AlertController, Events, PopoverController, NavController } from '@ionic/angular';
 import { VisitorService } from '../../../shared/service/visitor.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PluginService } from '../../../../../../core/services/plugin.service';
@@ -17,6 +17,7 @@ export class CheckDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public alertCtrl: AlertController,
+    public navCtrl: NavController,
     public popoverCtrl: PopoverController,
     private events: Events,
     private plugin: PluginService,
@@ -30,7 +31,7 @@ export class CheckDetailComponent implements OnInit {
   visitorlist: any;
   goodslist: any;
 
-  page = 'detail';
+  page = '';
   title = '';
   intervaltime = '';  // 進出時間
   id = 0; // 數據id
@@ -48,20 +49,22 @@ export class CheckDetailComponent implements OnInit {
 
   async ionViewWillEnter() {
     this.route.queryParams.subscribe((p) => {
-      // console.log(p);
       this.id = p.id;
       this.type = p.type;
       this.iostatus = p.iostatus;
     });
+    // 重置默认显示页面
+    this.page = 'detail';
     // 獲取單據信息
     const res = await this.visitorService.getTodayCheckList(this.id);
-    // console.log(res);
     this.FormData = res[0];
-    // console.log(this.FormData);
     // 進出時間
     this.intervaltime = moment(this.FormData.START_DATE).format('YYYY-MM-DD') + '—' + moment(this.FormData.END_DATE).format('YYYY-MM-DD');
     // 身份证显示
+    console.log("进出状态：" + this.iostatus);
+    console.log(this.FormData);
     if (this.iostatus === 'in' && this.FormData.invisitorsdata.length > 0) {
+      console.log(this.iostatus);
       this.FormData.invisitorsdata.forEach((e: any) => {
         if (e.CREDENTIALS_NO == null) {
           e.CREDENTIALS_NO_EN = '';
@@ -75,8 +78,9 @@ export class CheckDetailComponent implements OnInit {
           }
         }
       });
-    } else if (this.iostatus === 'out' && this.FormData.invisitorsdata.length > 0) {
-      this.FormData.invisitorsdata.forEach((e: any) => {
+    } else if (this.iostatus === 'out' && this.FormData.outvisitorsdata.length > 0) {
+      console.log(this.iostatus);
+      this.FormData.outvisitorsdata.forEach((e: any) => {
         if (e.CREDENTIALS_NO == null) {
           e.CREDENTIALS_NO_EN = '';
         } else {
@@ -123,27 +127,27 @@ export class CheckDetailComponent implements OnInit {
     this.title = this.translateTexts['Visitor.check.checklist'];
 
     this.translate
-    .get([
-      'Visitor.add.editvisitor',
-      'Visitor.add.addgoods',
-      'Visitor.check.apply_enter',
-      'Visitor.check.apply_leave',
-      'Visitor.check.checklist',
-      'Visitor.check.visitorshistory',
-      'Visitor.check.goodshistory',
-      'Visitor.check.visitor_err',
-      'Visitor.check.finish',
-      'Visitor.check.finish_message',
-      'Visitor.check.enterstatu',
-      'Visitor.check.leavestatu',
-      'submit_success',
-      'close_success',
-      'cancel',
-      'confirm',
-    ])
-    .subscribe(res => {
-      this.translateTexts = res;
-    });
+      .get([
+        'Visitor.add.editvisitor',
+        'Visitor.add.addgoods',
+        'Visitor.check.apply_enter',
+        'Visitor.check.apply_leave',
+        'Visitor.check.checklist',
+        'Visitor.check.visitorshistory',
+        'Visitor.check.goodshistory',
+        'Visitor.check.visitor_err',
+        'Visitor.check.finish',
+        'Visitor.check.finish_message',
+        'Visitor.check.enterstatu',
+        'Visitor.check.leavestatu',
+        'submit_success',
+        'close_success',
+        'cancel',
+        'confirm',
+      ])
+      .subscribe(res => {
+        this.translateTexts = res;
+      });
     // this.events.subscribe('service:fillinGoods', (data: any) => {
     //   this.goodsList = data.data;
     // });
@@ -215,7 +219,6 @@ export class CheckDetailComponent implements OnInit {
     } else {
       this.title = this.translateTexts['Visitor.check.goodshistory'];
     }
-    console.log(this.page);
   }
 
   selectPerson(data: any, index: number) {
@@ -238,68 +241,65 @@ export class CheckDetailComponent implements OnInit {
     // this.navCtrl.push('AddGoodsComponent', { formPage: this.data.TYPE, data: data, title: this.translateTexts['Visitor.add.addgoods'] });
   }
 
-  // toVisitorDetail(data: any) {
-  //   if (this.data.TYPE === 'emp') {
-  //     this.navCtrl.push('AddEmployeesComponent', { data: data, title: this.translateTexts['Visitor.add.editvisitor'] });
-  //   } else {
-  //     this.navCtrl.push('AddVisitorsComponent', { data: data, title: this.translateTexts['Visitor.add.editvisitor'], type: this.data.TYPE });
-  //   }
-  // }
+  toVisitorDetail(data: any) {
+    //   if (this.data.TYPE === 'emp') {
+    //     this.navCtrl.push('AddEmployeesComponent', { data: data, title: this.translateTexts['Visitor.add.editvisitor'] });
+    //   } else {
+    //     this.navCtrl.push('AddVisitorsComponent', { data: data, title: this.translateTexts['Visitor.add.editvisitor'], type: this.data.TYPE });
+    //   }
+  }
 
-  // presentPopover(myEvent: any) {
-  //   let popover = this.popoverCtrl.create('VFormMenuComponent', { this: this, data: this.data.ID, type: 'check' });
-  //   popover.present({
-  //     ev: myEvent,
-  //   });
-  // }
 
-  // submitForm() {
-  //   // 保安放行：先更新或添加访客表和物品表，再插入一条记录到history；访客表必须先加上STATUS和DOCUMENT_ID再更新或插入；物品表必修先加上DOCUMENT_ID
-  //   let allData: any = {};
-  //   allData.data = {
-  //     ID: '',
-  //     VISITOR_ID: '',
-  //     GOOD_ID: '',
-  //     TYPE: this.iostatus,
-  //     AREA: '',
-  //     DOCUMENT_ID: this.data.ID,
-  //   };
+  submitForm() {
+    // 保安放行：先更新或添加访客表和物品表，再插入一条记录到history；访客表必须先加上STATUS和DOCUMENT_ID再更新或插入；物品表必修先加上DOCUMENT_ID
+    let allData: any = {};
+    allData.data = {
+      ID: '',
+      VISITOR_ID: '',
+      GOOD_ID: '',
+      TYPE: this.iostatus,
+      AREA: '',
+      DOCUMENT_ID: this.id,
+    };
 
-  //   if (this.visitorList.length > 0) {
-  //     let times = 0;
-  //     this.visitorList.forEach(e => {
-  //       if (e.isChoose) {
-  //         times++;
-  //       }
-  //       e.DOCUMENT_ID = this.data.ID;
-  //       e.STATUS = '2';   // 2保安发放
-  //     });
-  //     if (times == 0) {
-  //       this.plugin.showToast(this.translateTexts['Visitor.check.visitor_err']);
-  //       return false;
-  //     }
-  //   }
+    if (this.visitorList.length > 0) {
+      let times = 0;
+      this.visitorList.forEach(e => {
+        if (e.isChoose) {
+          times++;
+        }
+        e.DOCUMENT_ID = this.id;
+        e.STATUS = '2';   // 2保安发放
+      });
+      if (times === 0) {
+        this.plugin.showToast(this.translateTexts['Visitor.check.visitor_err']);
+        return false;
+      }
+    }
 
-  //   if (this.goodsList.length > 0) {
-  //     this.goodsList.forEach(e => {
-  //       if (e.DOCUMENT_ID == undefined) {
-  //         e.DOCUMENT_ID = this.data.ID;
-  //       }
-  //     });
-  //   }
-  //   allData.visitorsdata = this.visitorList;
-  //   allData.goodsdata = this.goodsList;
-  //   allData.isoutside = this.isOutside;
-  //   allData.applyid = this.applyid;
-  //   try {
-  //     this.visitorService.postCheckData(allData);
-  //     this.plugin.showToast(this.translateTexts['submit_success']);
-  //     this.navCtrl.getPrevious().data.type = this.type;
-  //     this.navCtrl.pop();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+    if (this.goodsList.length > 0) {
+      this.goodsList.forEach(e => {
+        if (e.DOCUMENT_ID === undefined) {
+          e.DOCUMENT_ID = this.id;
+        }
+      });
+    }
+    allData.visitorsdata = this.visitorList;
+    allData.goodsdata = this.goodsList;
+    allData.isoutside = this.isOutside;
+    allData.applyid = this.applyid;
+    try {
+      this.visitorService.postCheckData(allData);
+      this.plugin.showToast(this.translateTexts['submit_success']);
+      setTimeout(() => {
+        this.goback();
+      }, 1000);
+      // this.navCtrl.getPrevious().data.type = this.type;
+      // this.navCtrl.pop();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   // 单据终结
   async finishForm() {
@@ -317,14 +317,13 @@ export class CheckDetailComponent implements OnInit {
           handler: () => {
             this.visitorService.isSameHistory(this.id).then(r => {
               let res = r.json();
-              if (res[0]['INCOUNT'] == res[1]['OUTCOUNT']) {
+              if (res[0]['INCOUNT'] === res[1]['OUTCOUNT']) {
                 let sdata = {
                   ID: this.id,
                   STATUS: 'FINISHED'
                 }
                 this.visitorService.updateFormStatus(sdata);
                 this.plugin.showToast(this.translateTexts['reservation.report.closeSucc']);
-                // this.navCtrl.pop();
               }
             });
           }
@@ -332,6 +331,14 @@ export class CheckDetailComponent implements OnInit {
       ]
     });
     await confirm.present();
+  }
+
+  goback() {
+    this.navCtrl.navigateBack(['/tabs/application/visitor/mainlist'], {
+      queryParams: {
+        type: this.type
+      }
+    });
   }
 
 }

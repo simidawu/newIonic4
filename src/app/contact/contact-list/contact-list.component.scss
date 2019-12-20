@@ -1,0 +1,16 @@
+.separator {
+  width: 100%;
+  line-height: 0px;
+  text-align: center;
+
+  .line {
+    width: 90%;
+    display: inline-block;
+    height: 1px;
+    background: #eee;
+  }
+}
+
+ion-item {
+  --inner-border-width: 0px;
+}

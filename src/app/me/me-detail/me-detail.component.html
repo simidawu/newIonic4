@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/me"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'Me.metitle' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="user">
+  <List [className]="'my-list'">
+    <ListItem style="min-height: 70px;" [arrow]="'horizontal'">{{'Me.avatar' | translate}}<img style="float: right;min-height: 50px;min-width: 50px;border-radius: 5px;" src="assets/icon/bts1.jpg"></ListItem>
+    <ListItem>{{'Me.name' | translate}}<Brief>{{user.nickname}}</Brief></ListItem>
+    <ListItem [arrow]="'horizontal'" (onClick)="showMyCradQr()">{{'Me.VCard' | translate}}<img style="float: right;" src="assets/icon/qr.png"></ListItem>
+    <ListItem [arrow]="'horizontal'" (onClick)="changeDetailRequest(1)()">{{'Me.mobile' | translate}}<Brief> {{user.mobile}}</Brief></ListItem>
+    <ListItem >{{'Me.telephone' | translate}}<Brief> {{user.telephone}}</Brief></ListItem>
+    <ListItem>{{'Me.email' | translate}}<Brief> {{user.email}}</Brief></ListItem>
+  </List>
+  <div class="error" *ngIf="errMes">{{errMes}}</div>
+</ion-content>

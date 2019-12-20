@@ -26,6 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TabsModule } from './tabs/tabs.module';
 import { LoginService } from './login/shared/service/login.service';
+import { DatabaseService } from './shared/service/database.service';
 
 
 export function createTranslateHttpLoader(http: HttpClient) {
@@ -65,6 +66,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
     Store,
     LoginService,
     LocalStorageService,
+    DatabaseService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]

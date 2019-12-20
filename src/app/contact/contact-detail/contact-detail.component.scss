@@ -1,0 +1,116 @@
+ion-toolbar {
+  --color: #fff;
+  --border-style: none;
+  // --background: #a1c4fd; 
+  // --background: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 190%);
+  --background: linear-gradient(to right, #66a6ff 0%, #89f7fe 190%);
+  // --background: #373b44; 
+  // --background: -webkit-linear-gradient(to right, #373b44, #3880ff);
+  // --background: linear-gradient(to right, #373b44, #3880ff);
+}
+
+ion-back-button {
+  --color: #fff;
+}
+
+ion-content {
+  --color: #fff;
+  // --background: linear-gradient(to bottom right, #a1c4fd 0%, #c2e9fb 100%);
+  --background: linear-gradient(to bottom right, #66a6ff 0%, #89f7fe 100%);
+  // --background: #373b44;
+  // /* fallback for old browsers */
+  // --background: -webkit-linear-gradient(to right, #373b44, #3880ff);
+  // /* Chrome 10-25, Safari 5.1-6 */
+  // --background: linear-gradient(to right, #373b44, #3880ff);
+  // /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+ion-list {
+  margin-top: 1rem;
+
+  ion-item {
+    --inner-border-width: 0px;
+
+    ion-label {
+      // text-align: center !important;
+
+      div {
+        display: inline-block;
+      }
+
+      .title {
+        color: #888;
+      }
+    }
+  }
+}
+
+
+
+.separator {
+  width: 100%;
+  line-height: 0px;
+  text-align: center;
+
+  .line {
+    width: 90%;
+    display: inline-block;
+    height: 1px;
+    background: #eee;
+  }
+}
+
+.content-container {
+  width: 100%;
+  height: 80%;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+
+
+  ion-card {
+    background: #fff;
+    margin: 0;
+    margin-bottom: -6px;
+    height: 100%;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .user-avatar {
+    position: absolute;
+    top: -4rem;
+    right: 68%;
+    z-index: 99;
+    // margin-left: -50px;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+
+
+
+  .user-info {
+    height: 100px;
+    margin: 0 1rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 15px 15px 0 0 !important;
+
+    ion-card-header {
+      margin-top: 1.4rem !important;
+      color: #fff !important;
+
+
+      .user-name {
+        font-size: 1.2rem !important;
+      }
+
+      .user-position {
+        font-size: .8rem !important;
+      }
+    }
+  }
+}

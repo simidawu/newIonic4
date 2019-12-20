@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/application/visitor/mainlist"></ion-back-button>
+      <ion-button (click)="goback()">
+        <ion-icon name="arrow-back"></ion-icon>返回
+      </ion-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
@@ -51,7 +53,7 @@
         </div>
         <ion-item>
           <ion-label col-4><span class="red-point">*</span>{{'Visitor.application.goodsList' | translate }}:</ion-label>
-          <ion-button item-end (click)="toGoodDetail(goodsList)" *ngIf=" type == 'gate' ">
+          <ion-button slot="end" (click)="toGoodDetail(goodsList)" *ngIf=" type == 'gate' ">
             {{'Visitor.application.addgoods' | translate}}</ion-button>
         </ion-item>
         <div class="person-list" *ngIf="goodsList.length >0">
@@ -62,10 +64,10 @@
           </div>
         </div>
       </ion-list>
-      <ion-button expand="block" type="submit" (tap)="submitForm()" *ngIf=" type == 'gate' ">
-        <span>{{'submit' | translate}}</span></ion-button>
-      <ion-button expand="block" style="margin:1rem 0;" (tap)="finishForm()" *ngIf=" type == 'gate' && canFinish">
-        <span>{{'Visitor.check.finish' | translate}}</span></ion-button>
+      <ion-button class="form-btn" expand="block" (click)="submitForm()" *ngIf=" type == 'gate' ">{{'submit' | translate}}
+      </ion-button>
+      <ion-button class="form-btn" expand="block" (click)="finishForm()" *ngIf=" type == 'gate' && canFinish">
+        {{'Visitor.check.finish' | translate}}</ion-button>
     </form>
     <div *ngSwitchCase="'visitor'">
       <div *ngIf="visitorsData.length !== 0">

@@ -48,16 +48,22 @@ ion-content {
     .person-cardID {
       margin-left: 10px;
     }
+
+    ion-checkbox {
+      max-width: 22px;
+      max-height: 22px;
+    }
+
   }
 }
 
-ion-button {
-  margin: 0 1rem;
+.form-btn {
+  margin: 0 .6rem;
 }
 
 ion-card {
-  background: #fafafa !important;
-  
+  // background: #fafafa !important;
+
   ion-card-header {
     ion-card-subtitle {
       color: #3880ff;
@@ -92,7 +98,7 @@ ion-card {
 
 
 .no-data {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 400;
   color: #999;
   text-align: center;

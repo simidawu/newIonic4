@@ -25,6 +25,7 @@ export class ApplicationComponent implements OnInit {
       this.items = ms;
       this.itemsByGroup = this.selectItems(this.items);
     });
+    // console.log(this.itemsByGroup);
   }
 
   // 作用：用于把一维数组的数据按group分成二维数组存储

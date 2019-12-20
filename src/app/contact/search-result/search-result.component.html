@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/contact"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{typeDesc}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <sg-contact-list [contacter]="personList" (onClick)="goToDetailPage($event)"></sg-contact-list>
+</ion-content>

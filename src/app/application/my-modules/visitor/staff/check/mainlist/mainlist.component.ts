@@ -35,6 +35,8 @@ export class MainlistComponent implements OnInit {
 
 
   ionViewWillEnter() {
+    console.log('back');
+    console.log(this.type);
     this.getApply();
   }
 

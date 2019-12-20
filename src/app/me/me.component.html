@@ -4,18 +4,27 @@
       <img src="assets/icon/bts1.jpg">
     </ion-avatar>
     <div class="user-infro">
-      <div class="user-nickname">吴楚滢</div>
-      <div class="user-username">simida.wu</div>
-      <span class="user-position">助理工程师</span>
+      <div class="user-nickname">{{user.nickname}}</div>
+      <div class="user-username">{{user.username}}</div>
+      <span class="user-position">{{user.position}}</span>
     </div>
   </div>
   <ion-card class="menu-box">
+    <ion-card class="card-list" (click)="toDetail()">
+      <ion-card-content>
+        <ion-thumbnail slot="start" class="card-list-icon">
+          <ion-img src="assets/icon/my.png"></ion-img>
+        </ion-thumbnail>
+        <span>{{'Me.detail' | translate}}</span>
+        <ion-img class="card-list-btn" src="assets/icon/next.png"></ion-img>
+      </ion-card-content>
+    </ion-card>
     <ion-card class="card-list">
       <ion-card-content>
         <ion-thumbnail slot="start" class="card-list-icon">
           <ion-img src="assets/icon/scan.png"></ion-img>
         </ion-thumbnail>
-        <span>扫一扫</span>
+        <span>{{'Me.scan' | translate}}</span>
         <ion-img class="card-list-btn" src="assets/icon/next.png"></ion-img>
       </ion-card-content>
     </ion-card>
@@ -24,7 +33,7 @@
         <ion-thumbnail slot="start" class="card-list-icon">
           <ion-img src="assets/icon/setting.png"></ion-img>
         </ion-thumbnail>
-        <span>设置</span>
+        <span>{{'Me.set' | translate}}</span>
         <ion-img class="card-list-btn" src="assets/icon/next.png"></ion-img>
       </ion-card-content>
     </ion-card>

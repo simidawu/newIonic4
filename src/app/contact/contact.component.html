@@ -1,8 +1,25 @@
 <ion-toolbar>
   <ion-title>{{'App.contact' | translate}}</ion-title>
-  <ion-buttons slot="primary">
-    <ion-button color="primary">
-      {{'edit' | translate}}
-    </ion-button>
-  </ion-buttons>
 </ion-toolbar>
+<ion-content>
+  <ion-searchbar clearIcon="focus" placeholder="请输入英文名/工号/中文名" (ionInput)="getItems($event)" (ionClear)="clearFilter()">
+  </ion-searchbar>
+  <div class="main-wrapper" *ngIf="!searchFilter">
+    <div class="btn-box">
+      <div class="btn-item" (click)="goToSearchDetail('sameDept')">
+        <img src="assets/icon/tongshi.png">
+        部门同仁
+      </div>
+      <div class="btn-item" (click)="goToSearchDetail('subordinated')">
+        <img src="assets/icon/xiashu.png">
+        我的下属
+      </div>
+    </div>
+    <div>
+      <sg-contact-list [contacter]="contacter" (onClick)="goToDetailPage($event)"></sg-contact-list>
+    </div>
+  </div>
+  <div *ngIf="searchFilter">
+    <sg-contact-list [contacter]="searchResult" (onClick)="goToDetailPage($event)"></sg-contact-list>
+  </div>
+</ion-content>
